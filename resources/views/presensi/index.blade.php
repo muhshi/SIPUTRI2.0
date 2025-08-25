@@ -9,6 +9,25 @@
 </head>
 <body>
 <style>
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 14px;
+        background: transparent;
+        border: 2px solid #0d6efd;
+        color: #0d6efd;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        margin-bottom: 20px;
+    }
+    .back-button:hover {
+        background: #0d6efd;
+        color: white;
+    }
+
     table {
         border-radius: 12px;
         overflow: hidden;
@@ -34,11 +53,9 @@
     }
 </style>
 
-
-    <a href="/" class="btn btn-secondary" style="position: absolute; top: 20px; left: 20px;">
-    ← Kembali ke Halaman Utama
-    </a>
 <div class="container mt-4">
+    <a href="/" class="back-button">← Kembali</a>
+
     <h3 class="mb-3">Presensi Pegawai</h3>
 
     @if(session('success'))
