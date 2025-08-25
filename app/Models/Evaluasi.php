@@ -10,6 +10,6 @@ class Evaluasi extends Model
 
     public function pegawai()
     {
-        return $this->belongsTo(Pegawai::class);
+        return $this->belongsTo(Pegawai::class, 'pegawai_id');
     }
 }

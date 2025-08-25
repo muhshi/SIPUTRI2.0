@@ -99,7 +99,6 @@ class EvaluasiController extends Controller
         Evaluasi::create([
             'pegawai_id' => $request->pegawai_id,
             'rating' => $request->rating,
-            'user_id' => auth()->id() ?? null,
         ]);
 
         return redirect()->back()->with('success', 'Terima kasih atas penilaian Anda!');

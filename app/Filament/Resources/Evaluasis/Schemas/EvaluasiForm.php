@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Evaluasis\Schemas;
 
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Schemas\Schema;
 
 class EvaluasiForm
@@ -12,8 +12,9 @@ class EvaluasiForm
         return $schema
             ->components([
                 TextInput::make('pegawai_id')
-                    ->required()
-                    ->numeric(),
+                    ->label('pegawai', 'nama')
+                    ->required(),
+
                 TextInput::make('rating')
                     ->required()
                     ->numeric(),
