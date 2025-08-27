@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('evaluasis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pegawai_id')->constrained('pegawais')->onDelete('cascade');
+            $table->foreignId('pengunjung_id')->constrained('kunjungans')->onDelete('cascade');
             $table->unsignedTinyInteger('rating');
             $table->timestamps();
         });

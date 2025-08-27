@@ -10,18 +10,27 @@ class EvaluasiController extends Controller
     public function index()
     {
         $nama = session('nama_pengunjung', 'Pengunjung');
+        $pengunjungId = session('pengunjung_id');
+
+        // Jika tidak ada session pengunjung, redirect ke form
+        if (!$pengunjungId) {
+            return redirect()->route('pengunjung.form')->with('error', 'Silahkan isi form kunjungan terlebih dahulu.');
+        }
+
+        // Cek apakah sudah memberi evaluasi
+        $sudahEvaluasi = Evaluasi::where('pengunjung_id', $pengunjungId)->exists();
 
         $pegawai = [
             [
                 'id' => 1,
                 'nama' => 'Henri Wagiyanto S.Pt., M.Ec.Dev., M.A.',
-                'gambar' => '1.jpg',
+                'gambar' => '11.jpg',
                 'jabatan' => 'Pengarah',
             ],
             [
                 'id' => 2,
                 'nama' => 'M. Masykuri Zaen, S.ST.',
-                'gambar' => '2.jpg',
+                'gambar' => '22.jpg',
                 'jabatan' => 'Koordinator',
             ],
             [
@@ -86,21 +95,37 @@ class EvaluasiController extends Controller
             ],
         ];
 
-        return view('evaluasi.evaluasi', compact('nama', 'pegawai'));
+        return view('evaluasi.evaluasi', compact('nama', 'pegawai', 'sudahEvaluasi'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'pegawai_id' => 'required|exists:pegawais,id',
+            'pegawai_id' => 'required|integer',
             'rating' => 'required|integer|min:1|max:5',
         ]);
 
+        $pengunjungId = session('pengunjung_id');
+
+        if (!$pengunjungId) {
+            return redirect()->route('pengunjung.form')->with('error', 'Session tidak ditemukan. Silahkan isi form terlebih dahulu.');
+        }
+
+        // Double-check apakah sudah ada evaluasi untuk pengunjung ini
+        $sudah = Evaluasi::where('pengunjung_id', $pengunjungId)->exists();
+
+        if ($sudah) {
+            return back()->with('error', 'Anda sudah memberikan penilaian sebelumnya.');
+        }
+
+        // Simpan rating
         Evaluasi::create([
             'pegawai_id' => $request->pegawai_id,
             'rating' => $request->rating,
+            'pengunjung_id' => session('pengunjung_id'),
+
         ]);
 
-        return redirect()->back()->with('success', 'Terima kasih atas penilaian Anda!');
+        return redirect()->route('evaluasi.index')->with('success', 'Terima kasih atas penilaian Anda!');
     }
 }

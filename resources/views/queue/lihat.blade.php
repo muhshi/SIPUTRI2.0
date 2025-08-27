@@ -8,6 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .back-button {
+            position: absolute;
+            top: 30px;
+            left: 100px;
             display: inline-flex;
             align-items: center;
             padding: 8px 14px;
@@ -19,41 +22,103 @@
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
-            margin-bottom: 20px;
         }
         .back-button:hover {
             background: #0d6efd;
             color: white;
         }
+        body {
+            background: #f5f7fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .card-status {
+            background: linear-gradient(135deg, #e0f0ff, #dceaff);
+            border-left: 5px solid #0d6efd;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .card-status h4 {
+            font-weight: 700;
+            color: #444;
+        }
+
+        .card-status p {
+            margin: 0;
+            color: #777;
+        }
+
+        .total-box {
+            background-color: white;
+            border: 2px dashed #0d6efd;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            margin: auto;
+            margin-bottom: 30px;
+            width: 250px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .total-box h2 {
+            color: #0d6efd;
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .total-box small {
+            color: #666;
+        }
+
+        table th, table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-back {
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 576px) {
+            .total-box {
+                width: 100%;
+            }
+
+            .card-status {
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container py-4">
-        <a href="/" class="back-button">← Kembali</a>
-        <h2 class="text-center mb-4">Daftar Antrian Hari Ini</h2>
+    <div class="container my-5">
+        <a href="/" class="btn btn-outline-primary btn-sm btn-back">← Kembali</a>
+        <h2 class="text-center mb-4 fw-bold text-dark">📋 Daftar Antrian Hari Ini</h2>
 
         <!-- Box: Antrian yang Sedang Dipanggil -->
-        <div class="alert alert-primary text-center">
-            <h4>🔔 Sedang Berjalan:</h4>
+        <div class="card-status">
+            <h5 class="text-primary">🔔 Sedang Berjalan:</h5>
             @if ($current)
                 <h1 class="display-4">A{{ str_pad($current->nomor, 3, '0', STR_PAD_LEFT) }}</h1>
                 <p>Layanan: {{ $current->layanan }}</p>
             @else
-                <h1 class="display-4 text-muted">Belum ada antrian</h1>
+                <h4 class="mt-2 text-muted">Belum ada antrian</h4>
                 <p>Silahkan ambil antrian terlebih dahulu.</p>
             @endif
         </div>
 
         <!-- Statistik Antrian Hari Ini -->
-        <div class="row text-center mb-4">
-            <div class="col-md-4 offset-md-4">
-                <div class="card border-info">
-                    <div class="card-body">
-                        <h5>Total Antrian</h5>
-                        <h3>{{ $total }}</h3>
-                    </div>
-                </div>
-            </div>
+        <div class="total-box">
+            <h5>Total Antrian</h5>
+            <h3>{{ $total }}</h3>
         </div>
 
         @php
@@ -62,7 +127,7 @@
 
         <!-- Tabel Antrian -->
         <div class="table-responsive">
-            <table class="table table-bordered table-striped align-middle">
+            <table class="table table-bordered table-hover bg-white">
                 <thead class="table-light">
                     <tr>
                         <th>No</th>
@@ -81,7 +146,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center">Belum ada antrian hari ini.</td>
+                            <td colspan="4" class="text-center text-muted">Belum ada antrian hari ini.</td>
                         </tr>
                     @endforelse
                 </tbody>

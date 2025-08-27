@@ -10,6 +10,9 @@
 <body>
 <style>
     .back-button {
+        position: absolute;
+        top: 20px;
+        left: 70px;
         display: inline-flex;
         align-items: center;
         padding: 8px 14px;
@@ -21,7 +24,6 @@
         cursor: pointer;
         transition: all 0.3s;
         text-decoration: none;
-        margin-bottom: 20px;
     }
     .back-button:hover {
         background: #0d6efd;

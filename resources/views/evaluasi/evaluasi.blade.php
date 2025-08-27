@@ -6,26 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Tombol kembali */
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            padding: 8px 14px;
-            background: transparent;
-            border: 2px solid #0d6efd;
-            color: #0d6efd;
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            margin-bottom: 20px;
-        }
         .back-button:hover {
             background: #0d6efd;
             color: white;
         }
 
+        .greeting-box {
+            background-color: #d6f0ff;
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 18px;
+            font-weight: 500;
+        }
         /* Grid Card */
         .card-container {
             display: grid;
@@ -88,22 +82,16 @@
         }
     </style>
 </head>
-<body class="bg-light">
+<body>
 
 <div class="container mt-4 mb-5">
-    <a href="/" class="back-button">← Kembali</a>
+    <a href="/" class="btn btn-outline-primary btn-sm mb-4">← Kembali</a>
 
-    <h2 class="text-center mb-4">Evaluasi Pelayanan</h2>
+    <h2 class="text-center mb-3 fw-bold">Evaluasi Pelayanan</h2>
 
-    <div class="alert alert-info text-center">
+    <div class="greeting-box">
         Halo, <strong>{{ $nama }}</strong> 👋
     </div>
-
-    @if (session('success'))
-        <div class="alert alert-success text-center">
-            {{ session('success') }}
-        </div>
-    @endif
 
     <form action="{{ route('evaluasi.store') }}" method="POST" id="evaluasiForm">
         @csrf
@@ -126,8 +114,19 @@
         </div>
 
         <div class="text-center mt-4">
-            <button type="submit" class="btn btn-primary btn-lg">Kirim Penilaian</button>
-        </div>
+            <button
+                type="submit"
+                class="btn btn-primary btn-lg"
+                @if(!empty($sudahEvaluasi) && $sudahEvaluasi) disabled @endif
+            >
+                @if(!empty($sudahEvaluasi) && $sudahEvaluasi)
+                    Penilaian sudah terkirim
+                @else
+                    Kirim Penilaian
+                @endif
+            </button>
+      </div>
+
     </form>
 </div>
 
@@ -158,8 +157,99 @@
             });
         });
     });
+
+        // Klik di luar card -> batal pilih
+    document.addEventListener('click', function (e) {
+        // cek apakah klik bukan di dalam card dan bukan di dalam tombol submit
+        if (!e.target.closest('.pegawai-card') && !e.target.closest('button[type="submit"]')) {
+            // hapus semua active
+            document.querySelectorAll('.pegawai-card').forEach(c => c.classList.remove('active'));
+            // hapus efek dim
+            document.getElementById('cards').classList.remove('dim');
+            // kosongkan hidden input
+            document.getElementById('pegawai_id').value = '';
+            document.getElementById('rating').value = '';
+
+            // kembalikan semua bintang ke abu-abu
+            document.querySelectorAll('.pegawai-card .star').forEach(s => {
+            s.style.color = 'gray';
+            });
+        }
+    });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Flag dari server: sudah evaluasi atau belum
+    const sudahEvaluasi = {{ isset($sudahEvaluasi) && $sudahEvaluasi ? 'true' : 'false' }};
+
+    // Jika sudah evaluasi: kunci semua interaksi kartu + ubah tampilan tombol
+    if (sudahEvaluasi) {
+        document.querySelectorAll('.pegawai-card').forEach(card => {
+            card.style.pointerEvents = 'none'; // tidak bisa diklik
+            card.style.opacity = '0.6';        // indikator visual dikunci (opsional)
+        });
+
+        const btn = document.querySelector("button[type='submit']");
+        if (btn) {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-secondary'); // tampilkan gaya non-aktif
+        }
+    }
+
+    // Validasi ringan di sisi client sebelum submit
+    const form = document.getElementById('evaluasiForm');
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            // Jika sudah evaluasi, cegah submit (pengaman tambahan di client)
+            if (sudahEvaluasi) {
+                e.preventDefault();
+                return;
+            }
+
+            // Pastikan user sudah memilih pegawai & rating
+            const pegawaiId = document.getElementById('pegawai_id').value;
+            const rating = document.getElementById('rating').value;
+
+            if (!pegawaiId || !rating) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops!',
+                    text: 'Silakan pilih pegawai dan beri rating terlebih dahulu.',
+                    confirmButtonText: 'OK'
+            });
+        });
+    }
+});
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    @if (session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session("success") }}',
+            timer: 3500,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            position: 'top-end',
+            toast: true
+        });
+    @endif
+
+    @if(!session('success') && !empty($sudahEvaluasi) && $sudahEvaluasi)
+        Swal.fire({
+            icon: 'info',
+            title: 'Perhatian',
+            text: 'Anda sudah memberikan penilaian. Terimakasih🙏',
+            confirmButtonText: 'OK'
+        });
+    @endif
+});
+</script>
 </body>
 </html>

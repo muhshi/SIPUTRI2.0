@@ -35,10 +35,14 @@ class PengunjungController extends Controller
         $kunjungan = Kunjungan::create($validated);
 
         // Simpan nama ke session supaya bisa dipanggil di evaluasi
-        session(['nama_pengunjung' => $validated['nama']]);
+        session([
+            'nama_pengunjung' => $validated['nama'],
+            'pengunjung_id'   => $kunjungan->id
+        ]);
 
         // Redirect ke halaman utama
         return redirect()->route('welcome')
-                         ->with('tamu', $kunjungan->nama)->with('success','Data pengunjung berhasil disimpan!');
+                         ->with('tamu', $kunjungan->nama)
+                         ->with('success','Data pengunjung berhasil disimpan!');
     }
 }
