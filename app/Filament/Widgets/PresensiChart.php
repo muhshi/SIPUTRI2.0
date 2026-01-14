@@ -17,14 +17,21 @@ class PresensiChart extends ChartWidget
     {
         $year = (int) now()->format('Y');
 
-        $totals = Presensi::selectRaw('MONTH(tanggal) as bulan, COUNT(*) as total')
+        $driver = \Illuminate\Support\Facades\DB::connection()->getDriverName();
+
+        // SQLite does not support MONTH(), so we use strftime
+        $monthExpression = $driver === 'sqlite'
+            ? "CAST(strftime('%m', tanggal) AS INTEGER)"
+            : "MONTH(tanggal)";
+
+        $totals = Presensi::selectRaw("$monthExpression as bulan, COUNT(*) as total")
             ->whereYear('tanggal', $year)
             ->groupBy('bulan')
             ->orderBy('bulan')
             ->pluck('total', 'bulan')
             ->all();
 
-        $labels = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+        $labels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
         $data = [];
         for ($m = 1; $m <= 12; $m++) {
             $data[] = $totals[$m] ?? 0;
