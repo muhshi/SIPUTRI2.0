@@ -34,39 +34,69 @@ class PresensiController extends Controller
     }
 
     // Submit presensi (masuk / selesai)
+    // Submit presensi (masuk / selesai) with Image
     public function store(Request $request)
     {
         $pegawaiId = $request->pegawai_id;
+        $image = $request->image;
         $today = Carbon::today()->toDateString();
+
+        if (!$image) {
+            return response()->json(['status' => 'error', 'message' => 'Foto tidak ditemukan.']);
+        }
+
+        // Process Base64 Image
+        $image_parts = explode(";base64,", $image);
+        $image_base64 = base64_decode($image_parts[1]);
+        $fileName = 'presensi_' . $pegawaiId . '_' . time() . '.jpg';
+        $filePath = 'presensi/' . $fileName;
+
+        // Save Image to Storage
+        \Illuminate\Support\Facades\Storage::disk('public')->put($filePath, $image_base64);
 
         $presensi = Presensi::where('pegawai_id', $pegawaiId)
             ->where('tanggal', $today)
             ->first();
 
         if (!$presensi) {
-            // jika belum ada, isi jam_masuk
+            // Check-in (Masuk)
             Presensi::create([
                 'pegawai_id' => $pegawaiId,
-                'tanggal'    => $today,
-                'jam_masuk'  => Carbon::now()->format('H:i:s'),
-                'status'     => 'Hadir',
+                'tanggal' => $today,
+                'jam_masuk' => Carbon::now()->format('H:i:s'),
+                'foto_masuk' => $filePath,
+                'status' => 'Hadir',
             ]);
-            return redirect()->route('presensi.index')->with('success', 'Absensi masuk berhasil.');
+            return response()->json([
+                'status' => 'success',
+                'type' => 'masuk',
+                'message' => 'Halo, Selamat Bekerja! Absensi Masuk Berhasil.'
+            ]);
         }
 
-        if ($presensi && !$presensi->jam_selesai) {
-            // jika sudah ada jam_masuk tapi belum selesai
+        if ($presensi) {
+            // Check-out / Update Check-out (Pulang)
+            // Logic: Foto selanjutnya updates jam_selesai and foto_keluar
+
+            // Delete old foto_keluar if exists (optional to save space)
+            if ($presensi->foto_keluar) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($presensi->foto_keluar);
+            }
+
             $presensi->update([
                 'jam_selesai' => Carbon::now()->format('H:i:s'),
+                'foto_keluar' => $filePath
             ]);
-            return redirect()->route('presensi.index')->with('success', 'Absensi selesai berhasil.');
+
+            return response()->json([
+                'status' => 'success',
+                'type' => 'pulang',
+                'message' => 'Hati-hati di jalan! Absensi Pulang Berhasil Diupdate.'
+            ]);
         }
 
-        return redirect()->route('presensi.index')->with('error', 'Anda sudah lengkap presensi hari ini.');
+        return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan sistem.']);
     }
-    
-    public function pegawai()
-    {
-        return $this->belongsTo(Pegawai::class, 'pegawai_id');
-    }
+
+    // Relationship removed (incorrectly placed in Controller)
 }
