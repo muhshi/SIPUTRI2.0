@@ -12,6 +12,7 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
@@ -38,21 +39,54 @@ class PresensiResource extends Resource
 
     public static function table(Table $table): Table
     {
-    return $table
-        ->columns([
-            TextColumn::make('pegawai.nama')->label('Nama Pegawai')->sortable()->searchable(),
-            TextColumn::make('tanggal')->date(),
-            TextColumn::make('jam_masuk')->time(),
-            TextColumn::make('jam_selesai')->time(),
-            TextColumn::make('status'),
-        ])
-        ->filters([
-            // your filters
-        ]);
+        return $table
+            ->columns([
+                TextColumn::make('pegawai.nama')
+                    ->label('Nama Pegawai')
+                    ->searchable()
+                    ->sortable(),
+                ImageColumn::make('foto_masuk')
+                    ->label('Foto Masuk')
+                    ->disk('public')
+                    ->square(),
+                TextColumn::make('jam_masuk')
+                    ->time()
+                    ->sortable(),
+                ImageColumn::make('foto_keluar')
+                    ->label('Foto Keluar')
+                    ->disk('public')
+                    ->square(),
+                TextColumn::make('jam_selesai')
+                    ->label('Jam Pulang')
+                    ->time()
+                    ->sortable(),
+                TextColumn::make('tanggal')
+                    ->date()
+                    ->sortable(),
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'Hadir' => 'success',
+                        'Izin' => 'warning',
+                        'Sakit' => 'danger',
+                        default => 'gray',
+                    }),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                // your filters
+            ]);
     }
 
     public static function getRelations(): array
-    { 
+    {
         return [
             //
         ];
