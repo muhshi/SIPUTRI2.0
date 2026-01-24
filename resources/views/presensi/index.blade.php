@@ -189,7 +189,20 @@
                     image: imageData
                 })
             })
-                .then(response => response.json())
+                .then(async response => {
+                    if (!response.ok) {
+                        const text = await response.text();
+                        // Try to parse JSON error if possible
+                        try {
+                            const json = JSON.parse(text);
+                            if (json.message) throw new Error(json.message);
+                        } catch (e) {
+                            // ignore
+                        }
+                        throw new Error(`Server Error: ${response.status} ${response.statusText}\n${text.substring(0, 500)}`);
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     if (data.status === 'success') {
                         Swal.fire({
@@ -214,7 +227,7 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Terjadi Kesalahan',
-                        text: 'Gagal menghubungi server.',
+                        text: error.message || 'Gagal menghubungi server.',
                     });
                 });
         }
