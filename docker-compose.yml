@@ -10,7 +10,8 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8083:80"
+      - "8010:80"
+
     volumes:
       - .:/app
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
