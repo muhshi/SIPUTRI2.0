@@ -178,7 +178,7 @@
                 }
             });
 
-            fetch('{{ route("presensi.store") }}', {
+            fetch('/presensi', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
