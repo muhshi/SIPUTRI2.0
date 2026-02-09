@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Struk Antrian</title>
@@ -12,7 +13,8 @@
         }
 
         .antrian-number {
-            font-size: 48px; /* PERBESAR di sini */
+            font-size: 48px;
+            /* PERBESAR di sini */
             font-weight: bold;
             margin: 10px 0;
         }
@@ -31,6 +33,7 @@
         }
     </style>
 </head>
+
 <body onload="window.print()">
     <hr>
     <div>BADAN PUSAT STATISTIK</div>
@@ -46,7 +49,19 @@
     <div>Silakan menunggu hingga</div>
     <div>nomor Anda dipanggil oleh petugas</div>
     <hr>
+    ...
     <div>Terima kasih atas kunjungan Anda</div>
     <hr>
+
+    <script>
+        window.onload = function () {
+            window.print();
+        };
+
+        window.onafterprint = function () {
+            window.location.href = "/";
+        };
+    </script>
 </body>
+
 </html>

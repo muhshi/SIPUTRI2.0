@@ -1,0 +1,25 @@
+The "3.1" constraint for "maatwebsite/excel" appears too strict and will likely not match what you want. See https://getcomposer.org/constraints
+./composer.json has been updated
+Running composer update maatwebsite/excel pxlrbt/filament-excel barryvdh/laravel-dompdf --with-all-dependencies
+Loading composer repositories with package information
+Updating dependencies
+Your requirements could not be resolved to an installable set of packages.
+
+  Problem 1
+    - Root composer.json requires phpunit/phpunit ^11.5.3, found phpunit/phpunit[11.5.3, ..., 11.5.50] but these were not loaded, because they are affected by security advisories. To ignore the advisories, add ("PKSA-z3gr-8qht-p93v") to the audit "ignore" config. To turn the feature off entirely, you can set "block-insecure" to false in your "audit" config.
+  Problem 2
+    - laravel/tinker is locked to version v2.10.1 and an update of this package was not requested.
+    - laravel/tinker v2.10.1 requires psy/psysh ^0.11.1|^0.12.0 -> found psy/psysh[v0.11.1, ..., v0.12.19] but these were not loaded, because they are affected by security advisories. To ignore the advisories, add ("PKSA-4s4z-t146-6123") to the audit "ignore" config. To turn the feature off entirely, you can set "block-insecure" to false in your "audit" config.
+  Problem 3
+    - Root composer.json requires maatwebsite/excel 3.1 -> satisfiable by maatwebsite/excel[3.1.0].
+    - maatwebsite/excel 3.1.0 requires php ^7.0 -> your php version (8.4.15) does not satisfy that requirement.
+  Problem 4
+    - Root composer.json requires pxlrbt/filament-excel * -> satisfiable by pxlrbt/filament-excel[v1.1.14, v1.1.15, v2.3.3, ..., v2.5.0, v3.0.0, ..., v3.4.0].
+    - maatwebsite/excel 3.1.0 requires php ^7.0 -> your php version (8.4.15) does not satisfy that requirement.
+    - pxlrbt/filament-excel v1.1.14 requires filament/filament ^2.13.24|^3.0 -> found filament/filament[v2.13.24, ..., v2.17.59, v3.0.0, ..., v3.3.47] but it conflicts with your root composer.json require (^4.0).
+    - pxlrbt/filament-excel[v1.1.15, v2.3.3, ..., v2.5.0] require filament/filament ^3.0.0-stable -> found filament/filament[v3.0.0, ..., v3.3.47] but it conflicts with your root composer.json require (^4.0).
+    - pxlrbt/filament-excel[v3.0.0, ..., v3.4.0] require maatwebsite/excel ^3.1 -> satisfiable by maatwebsite/excel[3.1.0].
+
+You can also try re-running composer require with an explicit version constraint, e.g. "composer require pxlrbt/filament-excel:*" to figure out if any version is installable, or "composer require pxlrbt/filament-excel:^2.1" if you know which you need.
+
+Installation failed, reverting ./composer.json and ./composer.lock to their original content.

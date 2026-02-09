@@ -24,3 +24,6 @@ Route::post('/evaluasi/store', [EvaluasiController::class, 'store'])->name('eval
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
+Route::get('/print/kunjungan', \App\Http\Controllers\PrintKunjunganController::class)->name('print.kunjungan');//->middleware('auth'); // Uncomment middleware if auth is required and working
+
