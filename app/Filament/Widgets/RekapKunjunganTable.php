@@ -11,6 +11,7 @@ use Filament\Widgets\TableWidget;
 class RekapKunjunganTable extends TableWidget
 {
     protected static ?int $sort = 20;
+    protected static bool $isDiscovered = false;
 
     protected int|string|array $columnSpan = 6;
 

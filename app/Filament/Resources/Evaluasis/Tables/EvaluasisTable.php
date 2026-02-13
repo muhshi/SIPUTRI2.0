@@ -14,7 +14,7 @@ class EvaluasisTable
     {
         return $table
             ->columns([
-                TextColumn::make('pegawai.nama')
+                TextColumn::make('pegawai.nama_pegawai')
                     ->label('Nama Pegawai')
                     ->sortable()
                     ->searchable(),

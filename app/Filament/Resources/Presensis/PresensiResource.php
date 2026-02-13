@@ -41,7 +41,7 @@ class PresensiResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('pegawai.nama')
+                TextColumn::make('pegawai.nama_pegawai')
                     ->label('Nama Pegawai')
                     ->searchable()
                     ->sortable(),

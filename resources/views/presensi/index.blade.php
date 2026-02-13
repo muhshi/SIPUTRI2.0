@@ -7,9 +7,75 @@
     <title>Presensi Pegawai - Camera</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jQuery (required by Select2) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Select2 CSS & JS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- SweetAlert2 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
+    <style>
+        /* Select2 custom styling to match Tailwind design */
+        .select2-container--default .select2-selection--single {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            height: 46px;
+            padding: 6px 12px;
+            font-size: 0.875rem;
+            color: #111827;
+            transition: all 0.15s;
+        }
+
+        .select2-container--default .select2-selection--single:hover {
+            border-color: #93c5fd;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 32px;
+            padding-left: 0;
+            color: #111827;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__placeholder {
+            color: #9ca3af;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 44px;
+            right: 8px;
+        }
+
+        .select2-container--default.select2-container--open .select2-selection--single {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .select2-dropdown {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .select2-results__option--highlighted[aria-selected] {
+            background-color: #3b82f6 !important;
+        }
+
+        .select2-search--dropdown .select2-search__field {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.375rem;
+            padding: 8px 12px;
+            font-size: 0.875rem;
+        }
+
+        .select2-search--dropdown .select2-search__field:focus {
+            border-color: #3b82f6;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4 font-sans">
@@ -58,19 +124,12 @@
             <div class="space-y-4">
                 <!-- Employee Selection (Ideally this should be auto-detected from Auth) -->
                 <div class="relative">
-                    <select id="pegawai_id"
-                        class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-3 pr-10 appearance-none transition-all">
-                        <option value="" disabled selected>-- Pilih Nama Anda --</option>
+                    <select id="pegawai_id" style="width: 100%">
+                        <option value="">-- Pilih Nama Anda --</option>
                         @foreach($pegawais as $p)
-                            <option value="{{ $p->id }}">{{ $p->nama }}</option>
+                            <option value="{{ $p->id }}">{{ $p->nama_pegawai }}</option>
                         @endforeach
                     </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-                        <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                            <path
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                        </svg>
-                    </div>
                 </div>
 
                 <input type="hidden" name="image" id="image_data">
@@ -104,6 +163,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Initialize Select2 searchable dropdown
+        $(document).ready(function () {
+            $('#pegawai_id').select2({
+                placeholder: '-- Pilih Nama Anda --',
+                allowClear: true
+            });
+        });
+    </script>
 
     <script language="JavaScript">
         Webcam.set({

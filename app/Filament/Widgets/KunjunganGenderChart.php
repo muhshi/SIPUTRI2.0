@@ -49,28 +49,32 @@ class KunjunganGenderChart extends ChartWidget
         $start = Carbon::createFromDate($year, $startMonth, 1)->startOfMonth();
         $end = $start->copy()->addMonths(2)->endOfMonth();
 
-        $data = Kunjungan::select('jenis_kelamin', DB::raw('count(*) as count'))
+        $rawData = Kunjungan::select('jenis_kelamin', DB::raw('count(*) as count'))
             ->whereBetween('tanggal', [$start, $end])
             ->whereNotNull('jenis_kelamin')
             ->groupBy('jenis_kelamin')
             ->pluck('count', 'jenis_kelamin');
 
+        // Mapping eksplisit
+        $laki = $rawData['L'] ?? $rawData['laki-laki'] ?? $rawData[1] ?? 0;
+        $perempuan = $rawData['P'] ?? $rawData['perempuan'] ?? $rawData[2] ?? 0;
+
         return [
             'datasets' => [
                 [
                     'label' => 'Kunjungan',
-                    'data' => $data->values(),
+                    'data' => [$laki, $perempuan],
                     'backgroundColor' => [
-                        '#60a5fa', // Blue-400
-                        '#f472b6', // Pink-400
-                        '#94a3b8', // Slate-400
+                        '#3b82f6', // Biru = Laki-laki
+                        '#ec4899', // Pink = Perempuan
                     ],
                     'borderWidth' => 0,
                 ],
             ],
-            'labels' => $data->keys(),
+            'labels' => ['Laki-laki', 'Perempuan'],
         ];
     }
+
 
     protected function getType(): string
     {

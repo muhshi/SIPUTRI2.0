@@ -14,9 +14,11 @@ class PresensiForm
     {
         return $schema
             ->components([
-                TextInput::make('pegawai_id')
-                    ->required()
-                    ->numeric(),
+                \Filament\Forms\Components\Select::make('pegawai_id')
+                    ->label('Pegawai')
+                    ->options(\App\Models\PegawaiPst::all()->pluck('nama_pegawai', 'id'))
+                    ->searchable()
+                    ->required(),
                 DatePicker::make('tanggal')
                     ->required(),
                 TimePicker::make('jam_masuk'),

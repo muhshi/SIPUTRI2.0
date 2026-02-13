@@ -21,6 +21,6 @@ class Presensi extends Model
 
     public function pegawai()
     {
-        return $this->belongsTo(Pegawai::class);
+        return $this->belongsTo(PegawaiPst::class, 'pegawai_id');
     }
 }

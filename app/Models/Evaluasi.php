@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Evaluasi extends Model
 {
-    protected $fillable = ['pegawai_id', 'rating', 'pengunjung_id'];
+    protected $fillable = [
+        'pegawai_id',
+        'rating',
+        'pengunjung_id'
+    ];
 
     public function pegawai()
     {
-        return $this->belongsTo(Pegawai::class, 'pegawai_id');
+        return $this->belongsTo(PegawaiPst::class, 'pegawai_id');
     }
 }
