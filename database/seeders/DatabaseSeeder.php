@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([PegawaiPstSeeder::class]);
         $this->call([AdminSeeder::class]);
+        $this->call([KunjunganPstSeeder::class]);
 
         // User::factory(10)->create();
 
