@@ -38,8 +38,13 @@ class RekapKunjunganSetahunChart extends ChartWidget
         $monthlyData = collect(range(1, 12))->mapWithKeys(fn($month) => [$month => 0]);
 
         // Ambil data dari database
+        $driver = DB::connection()->getDriverName();
+        $monthExpr = $driver === 'sqlite'
+            ? "strftime('%m', tanggal)"
+            : "MONTH(tanggal)";
+
         $data = Kunjungan::select(
-            DB::raw("strftime('%m', tanggal) as month"),
+            DB::raw("$monthExpr as month"),
             DB::raw('count(*) as count')
         )
             ->whereYear('tanggal', $year)
