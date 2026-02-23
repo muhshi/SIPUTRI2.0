@@ -13,12 +13,20 @@ class PresensiController extends Controller
     public function index()
     {
         $pegawais = PegawaiPst::orderBy('nama_pegawai')->get();
+
+        // Data presensi hari ini (untuk tabel / list jika ada)
         $presensis = Presensi::with('pegawai')
             ->whereDate('tanggal', today())
             ->get();
 
-        return view('presensi.index', compact('pegawais', 'presensis'));
+        // 🔥 TAMBAHAN: untuk cek status tombol Masuk / Pulang
+        $todayPresensi = Presensi::whereDate('tanggal', today())
+            ->get()
+            ->keyBy('pegawai_id');
+
+        return view('presensi.index', compact('pegawais', 'presensis', 'todayPresensi'));
     }
+
 
     // Halaman form presensi untuk pegawai tertentu
     public function form(Request $request)
@@ -60,7 +68,9 @@ class PresensiController extends Controller
                 ->first();
 
             if (!$presensi) {
-                // Check-in (Masuk)
+                // ======================
+                // PRESENSI MASUK
+                // ======================
                 Presensi::create([
                     'pegawai_id' => $pegawaiId,
                     'tanggal' => $today,
@@ -68,6 +78,7 @@ class PresensiController extends Controller
                     'foto_masuk' => $filePath,
                     'status' => 'Hadir',
                 ]);
+
                 return response()->json([
                     'status' => 'success',
                     'type' => 'masuk',
@@ -75,11 +86,11 @@ class PresensiController extends Controller
                 ]);
             }
 
-            if ($presensi) {
-                // Check-out / Update Check-out (Pulang)
-                // Logic: Foto selanjutnya updates jam_selesai and foto_keluar
+            if ($presensi && !$presensi->jam_selesai) {
+                // ======================
+                // PRESENSI PULANG
+                // ======================
 
-                // Delete old foto_keluar if exists (optional to save space)
                 if ($presensi->foto_keluar) {
                     \Illuminate\Support\Facades\Storage::disk('public')->delete($presensi->foto_keluar);
                 }
@@ -92,10 +103,9 @@ class PresensiController extends Controller
                 return response()->json([
                     'status' => 'success',
                     'type' => 'pulang',
-                    'message' => 'Hati-hati di jalan! Absensi Pulang Berhasil Diupdate.'
+                    'message' => 'Hati-hati di jalan! Absensi Pulang Berhasil.'
                 ]);
             }
-
             return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan sistem.']);
 
         } catch (\Throwable $e) {
