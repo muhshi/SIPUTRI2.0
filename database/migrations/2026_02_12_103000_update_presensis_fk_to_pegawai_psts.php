@@ -48,9 +48,21 @@ return new class extends Migration {
             DB::statement('PRAGMA foreign_keys = ON;');
         } else {
             // MySQL / MariaDB / PostgreSQL — use standard Schema Builder
-            Schema::table('presensis', function (Blueprint $table) {
-                $table->dropForeign(['pegawai_id']);
-            });
+            // Check if old FK exists before dropping (handles partial migration runs)
+            $fkExists = DB::select("
+                SELECT CONSTRAINT_NAME 
+                FROM information_schema.TABLE_CONSTRAINTS 
+                WHERE TABLE_SCHEMA = DATABASE()
+                  AND TABLE_NAME = 'presensis' 
+                  AND CONSTRAINT_NAME = 'presensis_pegawai_id_foreign'
+                  AND CONSTRAINT_TYPE = 'FOREIGN KEY'
+            ");
+
+            if (!empty($fkExists)) {
+                Schema::table('presensis', function (Blueprint $table) {
+                    $table->dropForeign(['pegawai_id']);
+                });
+            }
 
             Schema::table('presensis', function (Blueprint $table) {
                 $table->foreign('pegawai_id')
