@@ -38,6 +38,9 @@ class PegawaiPstForm
                     ->disk('public')
                     ->directory('pegawai-pst-photos')
                     ->maxSize(5120) // 5 MB
+                    ->imageResizeMode('cover')
+                    ->imageResizeTargetWidth('800')
+                    ->imageResizeTargetHeight('800')
                     ->imageEditor()
                     ->nullable()
                     ->columnSpanFull(),

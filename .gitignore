@@ -18,6 +18,8 @@
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/app/public/pegawai-pst-photos/*
+!/storage/app/public/pegawai-pst-photos/.gitkeep
 /vendor
 Homestead.json
 Homestead.yaml
