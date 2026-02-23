@@ -8,6 +8,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
 
+use Illuminate\Support\Facades\DB;
+
 class RekapKunjunganTable extends TableWidget
 {
     protected static ?int $sort = 20;
@@ -17,12 +19,17 @@ class RekapKunjunganTable extends TableWidget
 
     public function table(Table $table): Table
     {
+        $driver = DB::connection()->getDriverName();
+        $monthExpr = $driver === 'sqlite'
+            ? "strftime('%m', tanggal)"
+            : "MONTH(tanggal)";
+
         return $table
             ->query(
                 Kunjungan::query()
                     ->selectRaw("
                         MIN(id) as id,
-                        strftime('%m', tanggal) as bulan,
+                        $monthExpr as bulan,
                         COUNT(*) as total
                     ")
                     ->groupBy('bulan')

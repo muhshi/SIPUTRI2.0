@@ -21,13 +21,21 @@ class KunjunganPerTriwulanChart extends ChartWidget
 
     protected function getData(): array
     {
-        $data = Kunjungan::select(
-            DB::raw("CASE 
+        $driver = DB::connection()->getDriverName();
+
+        if ($driver === 'sqlite') {
+            $quarterExpr = "CASE 
                     WHEN strftime('%m', tanggal) BETWEEN '01' AND '03' THEN 'Triwulan 1'
                     WHEN strftime('%m', tanggal) BETWEEN '04' AND '06' THEN 'Triwulan 2'
                     WHEN strftime('%m', tanggal) BETWEEN '07' AND '09' THEN 'Triwulan 3'
                     WHEN strftime('%m', tanggal) BETWEEN '10' AND '12' THEN 'Triwulan 4'
-                END as quarter"),
+                END";
+        } else {
+            $quarterExpr = "CONCAT('Triwulan ', QUARTER(tanggal))";
+        }
+
+        $data = Kunjungan::select(
+            DB::raw("$quarterExpr as quarter"),
             DB::raw('count(*) as count')
         )
             ->whereNotNull('tanggal')

@@ -49,8 +49,13 @@ class KunjunganPerBulanChart extends ChartWidget
         $end = $start->copy()->addMonths(2)->endOfMonth();
 
         // Query manual pengganti Laravel Trend
+        $driver = \Illuminate\Support\Facades\DB::connection()->getDriverName();
+        $dateExpr = $driver === 'sqlite'
+            ? "strftime('%Y-%m', tanggal)"
+            : "DATE_FORMAT(tanggal, '%Y-%m')";
+
         $data = Kunjungan::select(
-            \Illuminate\Support\Facades\DB::raw("strftime('%Y-%m', tanggal) as date_val"),
+            \Illuminate\Support\Facades\DB::raw("$dateExpr as date_val"),
             \Illuminate\Support\Facades\DB::raw('count(*) as aggregate')
         )
             ->whereBetween('tanggal', [$start, $end])

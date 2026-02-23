@@ -8,6 +8,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
 
+use Illuminate\Support\Facades\DB;
+
 class RekapPresensiTable extends TableWidget
 {
     protected static ?int $sort = 21;
@@ -17,12 +19,17 @@ class RekapPresensiTable extends TableWidget
 
     public function table(Table $table): Table
     {
+        $driver = DB::connection()->getDriverName();
+        $monthExpr = $driver === 'sqlite'
+            ? "strftime('%m', tanggal)"
+            : "MONTH(tanggal)";
+
         return $table
             ->query(
                 Presensi::query()
                     ->selectRaw("
                         MIN(id) as id,
-                        strftime('%m', tanggal) as bulan,
+                        $monthExpr as bulan,
                         SUM(CASE WHEN status = 'Hadir' THEN 1 ELSE 0 END) as hadir,
                         SUM(CASE WHEN status != 'Hadir' THEN 1 ELSE 0 END) as tidak_hadir,
                         COUNT(*) as total
