@@ -48,14 +48,22 @@ class PresensiResource extends Resource
                 ImageColumn::make('foto_masuk')
                     ->label('Foto Masuk')
                     ->disk('public')
-                    ->square(),
+                    ->height(60)
+                    ->width(60)
+                    ->square()
+                    ->url(fn($record) => asset('storage/' . $record->foto_masuk))
+                    ->openUrlInNewTab(false),
                 TextColumn::make('jam_masuk')
                     ->time()
                     ->sortable(),
                 ImageColumn::make('foto_keluar')
                     ->label('Foto Keluar')
                     ->disk('public')
-                    ->square(),
+                    ->height(60)
+                    ->width(60)
+                    ->square()
+                    ->url(fn($record) => asset('storage/' . $record->foto_keluar))
+                    ->openUrlInNewTab(false),
                 TextColumn::make('jam_selesai')
                     ->label('Jam Pulang')
                     ->time()

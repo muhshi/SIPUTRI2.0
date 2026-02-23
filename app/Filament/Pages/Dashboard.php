@@ -14,6 +14,8 @@ class Dashboard extends BaseDashboard
 
     protected static ?string $navigationLabel = 'Dashboard';
 
+    protected string $view = 'filament.pages.dashboard';
+
     public function getColumns(): int|array
     {
         return 12;

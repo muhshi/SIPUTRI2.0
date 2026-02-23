@@ -18,7 +18,15 @@ class PegawaiPstsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->recordUrl(null)
             ->columns([
+                ImageColumn::make('foto_pegawai')
+                    ->label('Foto Pegawai')
+                    ->disk('public')
+                    ->circular()
+                    ->size(40)
+                    ->url(fn($record) => Storage::url($record->foto_pegawai))
+                    ->openUrlInNewTab(),
                 TextColumn::make('nip_bps')
                     ->label('NIP BPS')
                     ->searchable(),
@@ -38,17 +46,6 @@ class PegawaiPstsTable
                 TextColumn::make('golongan')
                     ->label('Golongan')
                     ->searchable(),
-                ImageColumn::make('foto_pegawai')
-                    ->label('Foto Pegawai')
-                    ->size(40)
-                    ->circular()
-                    ->url(
-                        fn($record) =>
-                        $record->foto_pegawai
-                        ? Storage::url($record->foto_pegawai)
-                        : asset('images/avatar-placeholder.png')
-                    ),
-
             ])
             ->filters([
                 //

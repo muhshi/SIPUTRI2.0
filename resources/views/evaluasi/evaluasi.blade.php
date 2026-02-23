@@ -41,11 +41,13 @@
 
         .pegawai-card img {
             width: 100%;
-            height: 120px;
-            object-fit: cover;
+            height: 160px;
+            object-fit: contain;
+            background-color: #f8f9fa;
             border-radius: 8px;
             margin-bottom: 10px;
         }
+
 
         .pegawai-card h5 {
             font-size: 14px;

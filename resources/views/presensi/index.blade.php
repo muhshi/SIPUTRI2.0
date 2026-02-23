@@ -130,6 +130,7 @@
                             <option value="{{ $p->id }}">{{ $p->nama_pegawai }}</option>
                         @endforeach
                     </select>
+
                 </div>
 
                 <input type="hidden" name="image" id="image_data">
@@ -165,14 +166,53 @@
     </div>
 
     <script>
-        // Initialize Select2 searchable dropdown
+        const presensiHariIni = @json($todayPresensi);
+
         $(document).ready(function () {
+
             $('#pegawai_id').select2({
                 placeholder: '-- Pilih Nama Anda --',
                 allowClear: true
             });
+
+            function updateButton() {
+
+                const pegawaiId = $('#pegawai_id').val();
+                const btn = $('#btn-capture');
+
+                if (!pegawaiId) return;
+
+                if (presensiHariIni[pegawaiId]) {
+
+                    if (!presensiHariIni[pegawaiId].jam_selesai) {
+                        btn.html('📸 Ambil Foto Pulang');
+                        btn.prop('disabled', false);
+                        btn.removeClass('bg-blue-600 bg-gray-400')
+                            .addClass('bg-yellow-500');
+                    } else {
+                        btn.html('✔️ Presensi Sudah Lengkap');
+                        btn.prop('disabled', true);
+                        btn.removeClass('bg-blue-600 bg-yellow-500')
+                            .addClass('bg-gray-400');
+                    }
+
+                } else {
+                    btn.html('📸 Ambil Foto Masuk');
+                    btn.prop('disabled', false);
+                    btn.removeClass('bg-yellow-500 bg-gray-400')
+                        .addClass('bg-blue-600');
+                }
+            }
+
+            // Trigger saat dropdown berubah
+            $('#pegawai_id').on('change', updateButton);
+
+            // 🔥 TAMBAHAN PENTING: jalankan sekali saat halaman load
+            updateButton();
+
         });
     </script>
+
 
     <script language="JavaScript">
         Webcam.set({
