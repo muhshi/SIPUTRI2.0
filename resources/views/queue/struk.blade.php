@@ -34,14 +34,22 @@
     </style>
 </head>
 
-<body onload="window.print()">
+<body>
     <hr>
     <div>BADAN PUSAT STATISTIK</div>
     <div>Pelayanan Statistik Terpadu</div>
     <div>Kabupaten Demak</div>
     <hr>
     <div><strong>Layanan :</strong> {{ $antrian->layanan }}</div>
-    <div class="antrian-number">A{{ str_pad($antrian->nomor, 3, '0', STR_PAD_LEFT) }}</div>
+    @php
+        $prefix = match (strtolower($antrian->jenis)) {
+            'layanan' => 'L',
+            'pengaduan' => 'P',
+            'disabilitas' => 'D',
+            default => 'A',
+        };
+    @endphp
+    <div class="antrian-number">{{ $prefix }}-{{ str_pad($antrian->nomor, 3, '0', STR_PAD_LEFT) }}</div>
     <hr>
     <div><strong>Tanggal :</strong> {{ \Carbon\Carbon::parse($antrian->tanggal)->format('d-m-Y') }}</div>
     <div><strong>Waktu :</strong> {{ \Carbon\Carbon::now()->format('H:i') }} WIB</div>
@@ -59,7 +67,7 @@
         };
 
         window.onafterprint = function () {
-            window.location.href = "/";
+            window.location.href = "{{ route('queue.lihat') }}";
         };
     </script>
 </body>

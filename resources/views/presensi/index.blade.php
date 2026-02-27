@@ -318,10 +318,10 @@
                             icon: 'success',
                             title: data.type === 'masuk' ? 'Absen Masuk Berhasil!' : 'Absen Pulang Berhasil!',
                             text: data.message,
-                            timer: 3000,
+                            timer: 1500,
                             showConfirmButton: false
                         }).then(() => {
-                            location.reload();
+                            window.location.href = '/admin/presensis';
                         });
                     } else {
                         Swal.fire({

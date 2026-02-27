@@ -272,48 +272,149 @@
         </div>
 
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <!-- Modal panel -->
+            <!-- Modal panel (larger: max-w-2xl) -->
             <div
-                class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <form action="{{ route('queue.ambil') }}" method="POST">
+                class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
+                <form id="antrianForm" action="{{ route('queue.ambil') }}" method="POST">
                     @csrf
-                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                        <div class="sm:flex sm:items-start">
+                    <input type="hidden" name="jenis" id="inputJenis">
+                    <input type="hidden" name="layanan" id="inputLayanan">
+
+                    <div class="bg-white px-6 pb-6 pt-8">
+                        <!-- Header -->
+                        <div class="text-center mb-6">
                             <div
-                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
-                                <svg class="h-6 w-6 text-bps-blue" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 mb-4">
+                                <svg class="h-7 w-7 text-bps-blue" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                                 </svg>
                             </div>
-                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
-                                <h3 class="text-xl font-bold leading-6 text-gray-900" id="modal-title">Pilih Layanan
-                                </h3>
-                                <div class="mt-2">
-                                    <p class="text-sm text-gray-500 mb-4">Silakan pilih jenis layanan yang Anda
-                                        butuhkan.</p>
-
-                                    <label for="layanan" class="block mb-2 text-sm font-medium text-gray-900">Jenis
-                                        Layanan</label>
-                                    <select id="layanan" name="layanan" required
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-bps-blue focus:border-bps-blue block w-full p-2.5">
-                                        <option value="">-- Pilih Layanan --</option>
-                                        <option value="Permintaan Data">Permintaan Data</option>
-                                        <option value="Konsultasi Statistik">Konsultasi Statistik</option>
-                                        <option value="Rekomendasi Statistik">Rekomendasi Statistik</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900" id="modal-title">Pilih Kategori Layanan</h3>
+                            <p class="text-sm text-gray-500 mt-2">Silakan pilih kategori layanan yang Anda butuhkan.</p>
                         </div>
+
+                        <!-- Category Cards -->
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <!-- Layanan -->
+                            <button type="button" onclick="selectKategori('Layanan')" id="card-Layanan"
+                                class="kategori-card group relative flex flex-col items-center p-5 rounded-2xl border-2 border-gray-100 bg-white hover:border-blue-200 hover:bg-blue-50/50 transition-all duration-300 cursor-pointer focus:outline-none">
+                                <div
+                                    class="flex items-center justify-center w-14 h-14 rounded-xl bg-blue-50 text-bps-blue mb-3 group-hover:bg-bps-blue group-hover:text-white transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-blue-200">
+                                    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                                    </svg>
+                                </div>
+                                <span class="font-semibold text-gray-800 text-sm">Layanan</span>
+                                <span class="text-xs text-gray-400 mt-1">5 sub-layanan</span>
+                                <!-- Selected indicator -->
+                                <div class="kategori-check absolute top-2 right-2 hidden">
+                                    <div class="w-5 h-5 rounded-full bg-bps-blue flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor" stroke-width="3">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Sub-layanan Select -->
+                                <select
+                                    class="sub-layanan-select hidden mt-3 w-full rounded-xl border-2 border-gray-200 bg-gray-50 text-sm p-3 focus:ring-bps-blue focus:border-bps-blue transition-all duration-300">
+                                    <option value="">-- Pilih Layanan --</option>
+                                    <option value="Permintaan Data">Permintaan Data</option>
+                                    <option value="Konsultasi Statistik">Konsultasi Statistik</option>
+                                    <option value="Rekomendasi Statistik">Rekomendasi Statistik</option>
+                                    <option value="Legalisasi Dokumen Statistik">Legalisasi Dokumen Statistik</option>
+                                    <option value="Informasi Publik">Informasi Publik</option>
+                                </select>
+                            </button>
+
+                            <!-- Pengaduan -->
+                            <button type="button" onclick="selectKategori('Pengaduan')" id="card-Pengaduan"
+                                class="kategori-card group relative flex flex-col items-center p-5 rounded-2xl border-2 border-gray-100 bg-white hover:border-red-200 hover:bg-red-50/50 transition-all duration-300 cursor-pointer focus:outline-none">
+                                <div
+                                    class="flex items-center justify-center w-14 h-14 rounded-xl bg-red-50 text-red-500 mb-3 group-hover:bg-red-500 group-hover:text-white transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-red-200">
+                                    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                                    </svg>
+                                </div>
+                                <span class="font-semibold text-gray-800 text-sm">Pengaduan</span>
+                                <span class="text-xs text-gray-400 mt-1">4 sub-layanan</span>
+                                <div class="kategori-check absolute top-2 right-2 hidden">
+                                    <div class="w-5 h-5 rounded-full bg-red-500 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor" stroke-width="3">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Sub-layanan Select -->
+                                <select
+                                    class="sub-layanan-select hidden mt-3 w-full rounded-xl border-2 border-gray-200 bg-gray-50 text-sm p-3 focus:ring-bps-blue focus:border-bps-blue transition-all duration-300">
+                                    <option value="">-- Pilih Pengaduan --</option>
+                                    <option value="Pengaduan Layanan">Pengaduan Layanan</option>
+                                    <option value="Pengaduan Petugas">Pengaduan Petugas</option>
+                                    <option value="Pengaduan Data">Pengaduan Data</option>
+                                    <option value="Saran & Masukan">Saran & Masukan</option>
+                                </select>
+                            </button>
+
+                            <!-- Disabilitas -->
+                            <button type="button" onclick="selectKategori('Disabilitas')" id="card-Disabilitas"
+                                class="kategori-card group relative flex flex-col items-center p-5 rounded-2xl border-2 border-gray-100 bg-white hover:border-purple-200 hover:bg-purple-50/50 transition-all duration-300 cursor-pointer focus:outline-none">
+                                <div
+                                    class="flex items-center justify-center w-14 h-14 rounded-xl bg-purple-50 text-purple-500 mb-3 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-purple-200">
+                                    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                        stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                                    </svg>
+                                </div>
+                                <span class="font-semibold text-gray-800 text-sm">Disabilitas</span>
+                                <span class="text-xs text-gray-400 mt-1">3 sub-layanan</span>
+                                <div class="kategori-check absolute top-2 right-2 hidden">
+                                    <div class="w-5 h-5 rounded-full bg-purple-500 flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor" stroke-width="3">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Sub-layanan Select -->
+                                <select
+                                    class="sub-layanan-select hidden mt-3 w-full rounded-xl border-2 border-gray-200 bg-gray-50 text-sm p-3 focus:ring-bps-blue focus:border-bps-blue transition-all duration-300">
+                                    <option value="">-- Pilih Disabilitas --</option>
+                                    <option value="Permintaan Data (Disabilitas)">Permintaan Data (Disabilitas)</option>
+                                    <option value="Konsultasi Statistik (Disabilitas)">Konsultasi Statistik
+                                        (Disabilitas)</option>
+                                    <option value="Bantuan Akses Layanan">Bantuan Akses Layanan</option>
+                                </select>
+                            </button>
+                        </div>
+
+
                     </div>
-                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                        <button type="submit"
-                            class="inline-flex w-full justify-center rounded-lg bg-bps-blue px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-bps-dark sm:ml-3 sm:w-auto transition-colors">
+
+                    <!-- Footer -->
+                    <div class="bg-gray-50 px-6 py-4 sm:flex sm:flex-row-reverse gap-3 border-t border-gray-100">
+                        <button type="submit" id="btnSubmit" disabled
+                            class="inline-flex w-full justify-center items-center rounded-xl bg-bps-blue px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-bps-dark sm:w-auto transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-bps-blue">
+                            <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18.75 12H5.25" />
+                            </svg>
                             Ambil Nomor
                         </button>
                         <button type="button" onclick="closeModal()"
-                            class="mt-3 inline-flex w-full justify-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto transition-colors">
+                            class="mt-3 inline-flex w-full justify-center rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto transition-colors">
                             Batal
                         </button>
                     </div>
@@ -324,36 +425,102 @@
 
     <!-- Scripts -->
     <script>
+        var kategoriColors = {
+            'Layanan': { border: 'border-bps-blue', ring: 'ring-blue-200', bg: 'bg-blue-50' },
+            'Pengaduan': { border: 'border-red-500', ring: 'ring-red-200', bg: 'bg-red-50' },
+            'Disabilitas': { border: 'border-purple-500', ring: 'ring-purple-200', bg: 'bg-purple-50' }
+        };
+
+        var selectedKategori = null;
+
+        function selectKategori(kategori) {
+            selectedKategori = kategori;
+            document.getElementById('inputJenis').value = kategori;
+
+            // Reset hidden input layanan and submit button
+            document.getElementById('inputLayanan').value = '';
+            document.getElementById('btnSubmit').disabled = true;
+
+            // Reset all cards and selects
+            var cards = document.querySelectorAll('.kategori-card');
+            cards.forEach(card => {
+                card.classList.remove('border-bps-blue', 'border-red-500', 'border-purple-500', 'bg-blue-50', 'bg-red-50', 'bg-purple-50', 'ring-2', 'ring-blue-200', 'ring-red-200', 'ring-purple-200', 'shadow-md');
+                card.classList.add('border-gray-100');
+                card.querySelector('.kategori-check').classList.add('hidden');
+
+                // Hide and reset all sub-layanan selects
+                const select = card.querySelector('.sub-layanan-select');
+                if (select) {
+                    select.classList.add('hidden');
+                    select.selectedIndex = 0;
+                }
+            });
+
+            // Highlight selected card and show its select
+            var selectedCard = document.getElementById('card-' + kategori);
+            var colors = kategoriColors[kategori];
+            selectedCard.classList.remove('border-gray-100');
+            selectedCard.classList.add(colors.border, colors.bg, 'ring-2', colors.ring, 'shadow-md');
+            selectedCard.querySelector('.kategori-check').classList.remove('hidden');
+
+            // Show the specific select for this card
+            selectedCard.querySelector('.sub-layanan-select').classList.remove('hidden');
+        }
+
+        // Add Listeners to Sub-Layanan Selects
+        document.addEventListener('DOMContentLoaded', function () {
+            const selects = document.querySelectorAll('.sub-layanan-select');
+            selects.forEach(select => {
+                select.addEventListener('change', function (e) {
+                    // Prevent button click from being triggered if select is inside button
+                    e.stopPropagation();
+
+                    const val = this.value;
+                    document.getElementById('inputLayanan').value = val;
+                    document.getElementById('btnSubmit').disabled = !val;
+                });
+
+                // Also prevent click on select from triggering card re-select
+                select.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                });
+            });
+        });
+
         function openModal() {
-            const modal = document.getElementById('antrianModal');
+            var modal = document.getElementById('antrianModal');
             modal.classList.remove('hidden');
+
+            // Reset state
+            selectedKategori = null;
+            document.getElementById('inputJenis').value = '';
+            document.getElementById('inputLayanan').value = '';
+            document.getElementById('btnSubmit').disabled = true;
+
+            // Reset all cards and hide all selects
+            var cards = document.querySelectorAll('.kategori-card');
+            cards.forEach(card => {
+                card.classList.remove('border-bps-blue', 'border-red-500', 'border-purple-500', 'bg-blue-50', 'bg-red-50', 'bg-purple-50', 'ring-2', 'ring-blue-200', 'ring-red-200', 'ring-purple-200', 'shadow-md');
+                card.classList.add('border-gray-100');
+                card.querySelector('.kategori-check').classList.add('hidden');
+
+                const select = card.querySelector('.sub-layanan-select');
+                if (select) {
+                    select.classList.add('hidden');
+                    select.selectedIndex = 0;
+                }
+            });
         }
 
         function closeModal() {
-            const modal = document.getElementById('antrianModal');
-            modal.classList.add('hidden');
+            document.getElementById('antrianModal').classList.add('hidden');
         }
 
-        // Close modal when clicking escape
         document.addEventListener('keydown', function (event) {
             if (event.key === "Escape") {
                 closeModal();
             }
         });
-
-        // SweetAlert Integration
-        @if(session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                html: `{!! session('success') !!}<br><div class="mt-4"><a href="{{ route('evaluasi.index') }}" class="text-white bg-bps-blue hover:bg-bps-dark focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">Masuk ke Halaman Evaluasi</a></div>`,
-                showConfirmButton: false,
-                timer: 6000,
-                customClass: {
-                    popup: 'swal2-rounded'
-                }
-            });
-        @endif
     </script>
 </body>
 

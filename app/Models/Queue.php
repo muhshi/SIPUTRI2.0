@@ -11,6 +11,7 @@ class Queue extends Model
 
     protected $fillable = [
         'layanan',
+        'jenis',
         'nomor',
         'tanggal',
     ];

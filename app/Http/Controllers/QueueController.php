@@ -12,29 +12,48 @@ class QueueController extends Controller
     {
         $today = Carbon::today();
 
-        $lastQueue = Queue::whereDate('tanggal', $today)->latest()->first();
-        $nomorBaru = $lastQueue ? $lastQueue->nomor + 1 : 1;
+        // Cari nomor terakhir untuk jenis (kategori) yang sama pada hari ini
+        $lastQueue = Queue::whereDate('tanggal', $today)
+            ->where('jenis', $request->jenis)
+            ->latest('id')
+            ->first();
+
+        $nomorBaru = $lastQueue ? (int) $lastQueue->nomor + 1 : 1;
 
         $antrian = Queue::create([
-            'layanan' => $request->layanan,
-            'nomor'   => $nomorBaru,
+            'layanan' => $request->layanan, // Ini adalah sub-layanan (misal: Permintaan Data)
+            'jenis' => $request->jenis,     // Ini adalah kategori (Layanan, Pengaduan, Disabilitas)
+            'nomor' => $nomorBaru,
             'tanggal' => $today,
         ]);
 
-        return redirect()->route('queue.struk', $antrian->id); // <-- titik koma yang benar
+        return redirect()->route('queue.struk', $antrian->id);
     }
 
     public function lihat()
     {
         $today = Carbon::today();
 
-        $queues = Queue::whereDate('tanggal', $today)->orderBy('created_at')->get();
+        $layanan = Queue::whereDate('tanggal', $today)
+            ->where('jenis', 'Layanan')
+            ->orderBy('nomor', 'asc')
+            ->get();
 
-        $current = $queues->last();
+        $pengaduan = Queue::whereDate('tanggal', $today)
+            ->where('jenis', 'Pengaduan')
+            ->orderBy('nomor', 'asc')
+            ->get();
 
-        $total = $queues->count();
+        $disabilitas = Queue::whereDate('tanggal', $today)
+            ->where('jenis', 'Disabilitas')
+            ->orderBy('nomor', 'asc')
+            ->get();
 
-        return view('queue.lihat', compact('queues', 'current', 'total'));
+        $current = Queue::whereDate('tanggal', $today)
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        return view('queue.lihat', compact('layanan', 'pengaduan', 'disabilitas', 'current'));
     }
 
     public function cetakStruk($id)
