@@ -14,5 +14,6 @@ class Queue extends Model
         'jenis',
         'nomor',
         'tanggal',
+        'status',
     ];
 }

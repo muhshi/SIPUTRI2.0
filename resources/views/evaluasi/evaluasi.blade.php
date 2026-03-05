@@ -263,8 +263,12 @@
                 Swal.fire({
                     icon: 'info',
                     title: 'Perhatian',
-                    text: 'Anda sudah memberikan penilaian. Terimakasih🙏',
+                    text: 'Anda sudah memberikan penilaian. Terimakasih 🙏',
                     confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/";
+                    }
                 });
             @endif
 });

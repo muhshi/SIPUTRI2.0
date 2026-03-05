@@ -17,6 +17,11 @@ Route::post('/ambil-antrian', [QueueController::class, 'ambil'])->name('queue.am
 Route::get('/struk-antrian/{id}', [QueueController::class, 'cetakStruk'])->name('queue.struk');
 
 Route::get('/lihat-antrian', [QueueController::class, 'lihat'])->name('queue.lihat');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/queue/panggil/{id}', [QueueController::class, 'panggil'])->name('queue.panggil');
+    Route::post('/queue/selesai/{id}', [QueueController::class, 'selesai'])->name('queue.selesai');
+    Route::post('/queue/batal/{id}', [QueueController::class, 'batal'])->name('queue.batal');
+});
 
 Route::get('/evaluasi', [EvaluasiController::class, 'index'])->name('evaluasi.index');
 Route::post('/evaluasi/store', [EvaluasiController::class, 'store'])->name('evaluasi.store');

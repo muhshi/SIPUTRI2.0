@@ -18,7 +18,7 @@ class PegawaiPstResource extends Resource
 {
     protected static ?string $model = PegawaiPst::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 
     protected static ?string $navigationLabel = 'Pegawai PST';
 

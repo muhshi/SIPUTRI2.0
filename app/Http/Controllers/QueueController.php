@@ -36,24 +36,65 @@ class QueueController extends Controller
 
         $layanan = Queue::whereDate('tanggal', $today)
             ->where('jenis', 'Layanan')
-            ->orderBy('nomor', 'asc')
+            ->orderBy('created_at', 'asc')
             ->get();
 
         $pengaduan = Queue::whereDate('tanggal', $today)
             ->where('jenis', 'Pengaduan')
-            ->orderBy('nomor', 'asc')
+            ->orderBy('created_at', 'asc')
             ->get();
 
         $disabilitas = Queue::whereDate('tanggal', $today)
             ->where('jenis', 'Disabilitas')
-            ->orderBy('nomor', 'asc')
+            ->orderBy('created_at', 'asc')
             ->get();
 
-        $current = Queue::whereDate('tanggal', $today)
-            ->orderBy('created_at', 'desc')
-            ->first();
+        // Ambil antrean yang sedang dipanggil (aktif)
+        $myAntrian = Queue::whereDate('tanggal', $today)
+            ->where('status', 'calling')
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
-        return view('queue.lihat', compact('layanan', 'pengaduan', 'disabilitas', 'current'));
+        return view('queue.lihat', compact('layanan', 'pengaduan', 'disabilitas', 'myAntrian'));
+    }
+
+    public function panggil($id)
+    {
+        // Reset status 'calling' yang lain agar hanya satu yang aktif di display (opsional, tergantung kebutuhan multi-loket)
+        // Queue::whereDate('tanggal', Carbon::today())->where('status', 'calling')->update(['status' => 'waiting']);
+
+        $antrian = Queue::findOrFail($id);
+        $antrian->update(['status' => 'calling']);
+
+        if (request()->ajax()) {
+            return response()->json(['success' => true]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function selesai($id)
+    {
+        $antrian = Queue::findOrFail($id);
+        $antrian->update(['status' => 'finished']);
+
+        if (request()->ajax()) {
+            return response()->json(['success' => true]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function batal($id)
+    {
+        $antrian = Queue::findOrFail($id);
+        $antrian->update(['status' => 'cancelled']);
+
+        if (request()->ajax()) {
+            return response()->json(['success' => true]);
+        }
+
+        return redirect()->back();
     }
 
     public function cetakStruk($id)
