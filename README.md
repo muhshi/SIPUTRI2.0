@@ -107,8 +107,23 @@ Jika Anda menjalankan seeder bawaan, berikut adalah kredensial untuk login ke pa
 **Error: "No such function: MONTH" (SQLite)**
 - Solusi: Fitur chart dan filter telah disesuaikan agar kompatibel dengan SQLite. Jika masih error, pastikan Anda telah menarik kode terbaru (`git pull`).
 
-## Kontribusi
-Silakan buat *Pull Request* atau laporkan *Issues* jika menemukan bug atau ingin menambahkan fitur baru.
+## Changelog
+
+### 2026-03-06
+- Merge branch `feature/dashboard-antrian-baru` ke `main`
+- Install & integrasi **Filament Shield** (role & permission management)
+- Register `ShieldPlugin` di `AdminPanelProvider`
+- Tambah `HasRoles` trait ke model `User`
+- Buat **UserResource** (CRUD Pengguna) dengan fitur:
+  - Form: nama, email, password, role selector
+  - Tabel: nama, email, role (badge), tanggal dibuat
+  - Navigation group: Manajemen
+
+### 2026-02-21
+- Merge branch `feature/dashboard-refinement` ke `main`
+- Merge branch `feature/update_presensi_evaluasi` ke `main`
+- Jalankan migrasi tabel `pegawai_psts`
 
 ---
 **BPS Kabupaten Demak**
+
