@@ -15,12 +15,15 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class KunjunganResource extends Resource
 {
     protected static ?string $model = Kunjungan::class;
 
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-calendar';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-calendar';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Layanan & Kunjungan';
 
     protected static ?string $recordTitleAttribute = 'nama';
 

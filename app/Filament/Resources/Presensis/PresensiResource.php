@@ -16,6 +16,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
+use UnitEnum;
 
 
 class PresensiResource extends Resource
@@ -28,7 +29,11 @@ class PresensiResource extends Resource
 
     protected static ?string $model = Presensi::class;
 
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-clipboard-document';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Manajemen';
+
+    protected static ?string $navigationLabel = 'Presensi';
 
     protected static ?string $recordTitleAttribute = 'id';
 

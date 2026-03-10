@@ -1,0 +1,146 @@
+<?php
+
+namespace App\Filament\Pages;
+
+use App\Models\Evaluasi;
+use App\Models\Kunjungan;
+use App\Models\PegawaiPst;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Pages\Page;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+
+use Filament\Forms\Form;
+
+class Monitoring extends Page // implements HasTable, HasForms
+{
+    use InteractsWithTable;
+    use InteractsWithForms;
+
+    protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-line';
+
+    protected static string $view = 'filament.pages.monitoring';
+
+    protected static ?string $navigationGroup = 'Manajemen';
+
+    protected static ?string $navigationLabel = 'Monitoring';
+
+    protected static ?int $navigationSort = 11;
+
+    protected static ?string $title = 'Monitoring Kinerja Pegawai';
+
+    public ?array $data = [];
+
+    public function mount(): void
+    {
+        $this->form->fill([
+            'month' => now()->format('m'),
+            'year' => now()->format('Y'),
+        ]);
+    }
+
+    /*
+    public function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Select::make('month')
+                    ->label('Bulan')
+                    ->options([
+                        '01' => 'Januari',
+                        '02' => 'Februari',
+                        '03' => 'Maret',
+                        '04' => 'April',
+                        '05' => 'Mei',
+                        '06' => 'Juni',
+                        '07' => 'Juli',
+                        '08' => 'Agustus',
+                        '09' => 'September',
+                        '10' => 'Oktober',
+                        '11' => 'November',
+                        '12' => 'Desember',
+                    ])
+                    ->native(false)
+                    ->live()
+                    ->required(),
+
+                Select::make('year')
+                    ->label('Tahun')
+                    ->options(function () {
+                        $years = range(2023, now()->year);
+                        return array_combine($years, $years);
+                    })
+                    ->native(false)
+                    ->live()
+                    ->required(),
+            ])
+            ->statePath('data');
+    }
+    */
+
+    public function table(Table $table): Table
+    {
+        $month = $this->data['month'] ?? now()->format('m');
+        $year = $this->data['year'] ?? now()->format('Y');
+
+        return $table
+            ->query(
+                PegawaiPst::query()
+                    ->addSelect([
+                        'jml_layanan' => Kunjungan::selectRaw('count(*)')
+                            ->whereColumn('pegawai_id', 'pegawai_psts.id')
+                            ->whereMonth('tanggal', $month)
+                            ->whereYear('tanggal', $year),
+
+                        'avg_durasi' => Kunjungan::selectRaw('avg(timestampdiff(SECOND, waktu_mulai, waktu_selesai))')
+                            ->whereColumn('pegawai_id', 'pegawai_psts.id')
+                            ->whereMonth('tanggal', $month)
+                            ->whereYear('tanggal', $year)
+                            ->whereNotNull('waktu_mulai')
+                            ->whereNotNull('waktu_selesai'),
+
+                        'avg_evaluasi' => Evaluasi::selectRaw('avg(rating)')
+                            ->whereColumn('pegawai_id', 'pegawai_psts.id')
+                            ->whereMonth('tanggal_evaluasi', $month)
+                            ->whereYear('tanggal_evaluasi', $year),
+                    ])
+            )
+            ->columns([
+                TextColumn::make('nama_pegawai')
+                    ->label('Nama Pegawai')
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('jml_layanan')
+                    ->label('Jumlah Layanan')
+                    ->suffix(' Layanan')
+                    ->sortable(),
+
+                TextColumn::make('avg_durasi')
+                    ->label('Durasi Rata-rata')
+                    ->formatStateUsing(function ($state) {
+                        if (!$state)
+                            return '---';
+                        $minutes = floor($state / 60);
+                        $seconds = $state % 60;
+                        return "{$minutes}m {$seconds}s";
+                    })
+                    ->sortable(),
+
+                TextColumn::make('avg_evaluasi')
+                    ->label('Rating Rata-rata')
+                    ->numeric(decimalPlaces: 1)
+                    ->suffix(' / 5.0')
+                    ->sortable(),
+            ])
+            ->filters([
+                // Filters are handled by the custom form for real-time update in this custom page
+            ]);
+    }
+}

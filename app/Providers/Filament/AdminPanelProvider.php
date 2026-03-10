@@ -34,6 +34,11 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 FilamentShieldPlugin::make(),
             ])
+            ->navigationGroups([
+                'Layanan & Kunjungan',
+                'Manajemen',
+                'Pelindung',
+            ])
             ->colors([
                 'primary' => Color::Blue,
             ])

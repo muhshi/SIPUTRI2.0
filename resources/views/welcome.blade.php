@@ -192,47 +192,47 @@
                 </div>
 
                 <!-- Card 2: Buku Tamu -->
+                <div
+                    class="group bg-white rounded-3xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-green-500/10 transition-all duration-300 hover:-translate-y-2 cursor-pointer flex flex-col items-center text-center">
                     <div
-                        class="group bg-white rounded-3xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-green-500/10 transition-all duration-300 hover:-translate-y-2 cursor-pointer flex flex-col items-center text-center">
-                        <div
-                            class="flex justify-center items-center w-16 h-16 rounded-2xl bg-green-50 text-green-600 mb-6 group-hover:bg-green-600 group-hover:text-white transition-colors duration-300">
-                            <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                            </svg>
-                        </div>
-                        <h3 class="mb-3 text-xl font-bold text-gray-900">Buku Tamu</h3>
-                        <p class="text-gray-500 mb-6 flex-grow">Catat kunjungan Anda secara digital untuk pelayanan yang
-                            lebih baik.</p>
-                            <a href="{{ route('pengunjung.form') }}"
-                                class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-xl text-sm px-5 py-3 transition-colors block">
-                                Isi Buku Tamu
-                            </a>
+                        class="flex justify-center items-center w-16 h-16 rounded-2xl bg-green-50 text-green-600 mb-6 group-hover:bg-green-600 group-hover:text-white transition-colors duration-300">
+                        <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
                     </div>
-
-                    <!-- Card 3: Evaluasi -->
-                    <div
-                        class="group bg-white rounded-3xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-bps-orange/10 transition-all duration-300 hover:-translate-y-2 cursor-pointer flex flex-col items-center text-center">
-                        <div
-                            class="flex justify-center items-center w-16 h-16 rounded-2xl bg-orange-50 text-bps-orange mb-6 group-hover:bg-bps-orange group-hover:text-white transition-colors duration-300">
-                            <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                            </svg>
-                        </div>
-                        <h3 class="mb-3 text-xl font-bold text-gray-900">Evaluasi Pelayanan</h3>
-                        <p class="text-gray-500 mb-6 flex-grow">Berikan penilaian Anda untuk membantu kami meningkatkan
-                            kualitas layanan.</p>
-                            <a href="{{ route('evaluasi.index') }}"
-                                class="w-full text-white bg-bps-orange hover:bg-orange-600 focus:ring-4 focus:ring-orange-300 font-medium rounded-xl text-sm px-5 py-3 transition-colors block">
-                                Isi Evaluasi
-                            </a>
-                    </div>
-
+                    <h3 class="mb-3 text-xl font-bold text-gray-900">Buku Tamu</h3>
+                    <p class="text-gray-500 mb-6 flex-grow">Catat kunjungan Anda secara digital untuk pelayanan yang
+                        lebih baik.</p>
+                    <a href="{{ route('pengunjung.form') }}"
+                        class="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-xl text-sm px-5 py-3 transition-colors block">
+                        Isi Buku Tamu
+                    </a>
                 </div>
+
+                <!-- Card 3: Evaluasi -->
+                <div
+                    class="group bg-white rounded-3xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-bps-orange/10 transition-all duration-300 hover:-translate-y-2 cursor-pointer flex flex-col items-center text-center">
+                    <div
+                        class="flex justify-center items-center w-16 h-16 rounded-2xl bg-orange-50 text-bps-orange mb-6 group-hover:bg-bps-orange group-hover:text-white transition-colors duration-300">
+                        <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                        </svg>
+                    </div>
+                    <h3 class="mb-3 text-xl font-bold text-gray-900">Evaluasi Pelayanan</h3>
+                    <p class="text-gray-500 mb-6 flex-grow">Berikan penilaian Anda untuk membantu kami meningkatkan
+                        kualitas layanan.</p>
+                    <a href="{{ route('evaluasi.index') }}"
+                        class="w-full text-white bg-bps-orange hover:bg-orange-600 focus:ring-4 focus:ring-orange-300 font-medium rounded-xl text-sm px-5 py-3 transition-colors block">
+                        Isi Evaluasi
+                    </a>
+                </div>
+
             </div>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -319,7 +319,7 @@
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <!-- Modal panel (larger: max-w-2xl) -->
             <div
-                class="relative transform rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
+                class="relative transform rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-3xl">
                 <form id="antrianForm" action="{{ route('queue.ambil') }}" method="POST">
                     @csrf
                     <input type="hidden" name="jenis" id="inputJenis">
@@ -344,24 +344,24 @@
                         <div class="grid grid-cols-3 gap-4 mb-6">
                             <!-- Layanan -->
                             <div onclick="selectKategori('Layanan')" id="card-Layanan"
-                                class="kategori-card group relative flex flex-col items-center p-5 rounded-3xl border-2 border-gray-100 bg-white hover:border-blue-200 hover:bg-blue-50/50 transition-all duration-300 cursor-pointer shadow-sm">
+                                class="kategori-card group relative flex flex-col items-center p-8 rounded-3xl border-2 border-gray-100 bg-white hover:border-blue-200 hover:bg-blue-50/50 transition-all duration-300 cursor-pointer shadow-sm">
                                 <div
-                                    class="flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-50 text-bps-blue mb-3 group-hover:bg-bps-blue group-hover:text-white transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-blue-200">
-                                    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                    class="flex items-center justify-center w-20 h-20 rounded-2xl bg-blue-50 text-bps-blue mb-4 group-hover:bg-bps-blue group-hover:text-white transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-blue-200">
+                                    <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                                         stroke-width="1.5">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
                                     </svg>
                                 </div>
-                                <span class="font-bold text-gray-800 text-sm">Layanan</span>
+                                <span class="font-bold text-gray-800 text-lg">Layanan</span>
                                 <span
-                                    class="text-[10px] uppercase tracking-wider text-gray-400 mt-1 font-medium">Utama</span>
+                                    class="text-xs uppercase tracking-wider text-gray-400 mt-1 font-medium">Utama</span>
 
                                 <!-- Selected indicator -->
-                                <div class="kategori-check absolute top-3 right-3 hidden">
+                                <div class="kategori-check absolute top-4 right-4 hidden">
                                     <div
-                                        class="w-6 h-6 rounded-full bg-bps-blue flex items-center justify-center shadow-lg">
-                                        <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24"
+                                        class="w-7 h-7 rounded-full bg-bps-blue flex items-center justify-center shadow-lg">
+                                        <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24"
                                             stroke="currentColor" stroke-width="3">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                         </svg>
@@ -369,10 +369,10 @@
                                 </div>
 
                                 <!-- Custom Dropdown -->
-                                <div class="custom-dropdown-container hidden mt-4 w-full relative"
+                                <div class="custom-dropdown-container hidden mt-6 w-full relative"
                                     onclick="event.stopPropagation()">
                                     <button type="button"
-                                        class="dropdown-trigger flex items-center justify-between w-full h-11 px-4 rounded-full border-2 border-blue-100 bg-blue-50/30 text-[13px] text-gray-700 hover:border-blue-300 transition-all shadow-sm focus:outline-none">
+                                        class="dropdown-trigger flex items-center justify-between w-full h-12 px-5 rounded-full border-2 border-blue-100 bg-blue-50/30 text-[13px] text-gray-700 hover:border-blue-300 transition-all shadow-sm focus:outline-none">
                                         <span class="selected-label truncate">Pilih Layanan</span>
                                         <svg class="w-4 h-4 text-bps-blue ml-2 shrink-0" fill="none" viewBox="0 0 24 24"
                                             stroke="currentColor">
@@ -383,22 +383,21 @@
                                     <div
                                         class="dropdown-menu dropdown-animate dropdown-hidden absolute z-50 left-0 right-0 mt-2 bg-white rounded-[24px] border border-blue-50 shadow-2xl p-2 max-h-64 overflow-y-auto custom-scrollbar ring-8 ring-blue-50/10">
                                         <div class="dropdown-item group/item flex items-center p-3 rounded-2xl hover:bg-blue-50 cursor-pointer transition-colors"
-                                            data-value="Permintaan Data">
+                                            data-value="PERPUSTAKAAN">
                                             <div
                                                 class="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center mr-3 group-hover/item:bg-white transition-colors">
                                                 <svg class="w-5 h-5 text-gray-500 group-hover/item:text-bps-blue"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
-                                                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.247 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                                 </svg>
                                             </div>
                                             <span
-                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-bps-blue">Permintaan
-                                                Data</span>
+                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-bps-blue">PERPUSTAKAAN</span>
                                         </div>
                                         <div class="dropdown-item group/item flex items-center p-3 rounded-2xl hover:bg-blue-50 cursor-pointer transition-colors"
-                                            data-value="Konsultasi Statistik">
+                                            data-value="KONSULTASI STATISTIK">
                                             <div
                                                 class="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center mr-3 group-hover/item:bg-white transition-colors">
                                                 <svg class="w-5 h-5 text-gray-500 group-hover/item:text-bps-blue"
@@ -409,11 +408,11 @@
                                                 </svg>
                                             </div>
                                             <span
-                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-bps-blue">Konsultasi
-                                                Statistik</span>
+                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-bps-blue">KONSULTASI
+                                                STATISTIK</span>
                                         </div>
                                         <div class="dropdown-item group/item flex items-center p-3 rounded-2xl hover:bg-blue-50 cursor-pointer transition-colors"
-                                            data-value="Rekomendasi Statistik">
+                                            data-value="REKOMENDASI STATISTIK">
                                             <div
                                                 class="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center mr-3 group-hover/item:bg-white transition-colors">
                                                 <svg class="w-5 h-5 text-gray-500 group-hover/item:text-bps-blue"
@@ -424,38 +423,8 @@
                                                 </svg>
                                             </div>
                                             <span
-                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-bps-blue">Rekomendasi
-                                                Statistik</span>
-                                        </div>
-                                        <div class="dropdown-item group/item flex items-center p-3 rounded-2xl hover:bg-blue-50 cursor-pointer transition-colors"
-                                            data-value="Legalisasi Dokumen Statistik">
-                                            <div
-                                                class="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center mr-3 group-hover/item:bg-white transition-colors">
-                                                <svg class="w-5 h-5 text-gray-500 group-hover/item:text-bps-blue"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                                </svg>
-                                            </div>
-                                            <span
-                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-bps-blue">Legalisasi
-                                                Dokumen</span>
-                                        </div>
-                                        <div class="dropdown-item group/item flex items-center p-3 rounded-2xl hover:bg-blue-50 cursor-pointer transition-colors"
-                                            data-value="Informasi Publik">
-                                            <div
-                                                class="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center mr-3 group-hover/item:bg-white transition-colors">
-                                                <svg class="w-5 h-5 text-gray-500 group-hover/item:text-bps-blue"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                </svg>
-                                            </div>
-                                            <span
-                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-bps-blue">Informasi
-                                                Publik</span>
+                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-bps-blue">REKOMENDASI
+                                                STATISTIK</span>
                                         </div>
                                     </div>
                                 </div>
@@ -463,22 +432,22 @@
 
                             <!-- Pengaduan -->
                             <div onclick="selectKategori('Pengaduan')" id="card-Pengaduan"
-                                class="kategori-card group relative flex flex-col items-center p-5 rounded-3xl border-2 border-gray-100 bg-white hover:border-red-200 hover:bg-red-50/50 transition-all duration-300 cursor-pointer shadow-sm">
+                                class="kategori-card group relative flex flex-col items-center p-8 rounded-3xl border-2 border-gray-100 bg-white hover:border-red-200 hover:bg-red-50/50 transition-all duration-300 cursor-pointer shadow-sm">
                                 <div
-                                    class="flex items-center justify-center w-14 h-14 rounded-2xl bg-red-50 text-red-500 mb-3 group-hover:bg-red-500 group-hover:text-white transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-red-200">
-                                    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                    class="flex items-center justify-center w-20 h-20 rounded-2xl bg-red-50 text-red-500 mb-4 group-hover:bg-red-500 group-hover:text-white transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-red-200">
+                                    <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                                         stroke-width="1.5">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
                                     </svg>
                                 </div>
-                                <span class="font-bold text-gray-800 text-sm">Pengaduan</span>
+                                <span class="font-bold text-gray-800 text-lg">Pengaduan</span>
                                 <span
-                                    class="text-[10px] uppercase tracking-wider text-gray-400 mt-1 font-medium">Bantuan</span>
-                                <div class="kategori-check absolute top-3 right-3 hidden">
+                                    class="text-xs uppercase tracking-wider text-gray-400 mt-1 font-medium">Bantuan</span>
+                                <div class="kategori-check absolute top-4 right-4 hidden">
                                     <div
-                                        class="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center shadow-lg">
-                                        <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24"
+                                        class="w-7 h-7 rounded-full bg-red-500 flex items-center justify-center shadow-lg">
+                                        <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24"
                                             stroke="currentColor" stroke-width="3">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                         </svg>
@@ -486,10 +455,10 @@
                                 </div>
 
                                 <!-- Custom Dropdown -->
-                                <div class="custom-dropdown-container hidden mt-4 w-full relative"
+                                <div class="custom-dropdown-container hidden mt-6 w-full relative"
                                     onclick="event.stopPropagation()">
                                     <button type="button"
-                                        class="dropdown-trigger flex items-center justify-between w-full h-11 px-4 rounded-full border-2 border-red-100 bg-red-50/30 text-[13px] text-gray-700 hover:border-red-300 transition-all shadow-sm focus:outline-none">
+                                        class="dropdown-trigger flex items-center justify-between w-full h-12 px-5 rounded-full border-2 border-red-100 bg-red-50/30 text-[13px] text-gray-700 hover:border-red-300 transition-all shadow-sm focus:outline-none">
                                         <span class="selected-label truncate">Pilih Pengaduan</span>
                                         <svg class="w-4 h-4 text-red-500 ml-2 shrink-0" fill="none" viewBox="0 0 24 24"
                                             stroke="currentColor">
@@ -545,7 +514,7 @@
                                                 Data</span>
                                         </div>
                                         <div class="dropdown-item group/item flex items-center p-3 rounded-2xl hover:bg-red-50 cursor-pointer transition-colors"
-                                            data-value="Saran & Masukan">
+                                            data-value="LAINNYA">
                                             <div
                                                 class="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center mr-3 group-hover/item:bg-white transition-colors">
                                                 <svg class="w-5 h-5 text-gray-500 group-hover/item:text-red-500"
@@ -556,8 +525,7 @@
                                                 </svg>
                                             </div>
                                             <span
-                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-red-500">Saran
-                                                & Masukan</span>
+                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-red-500">LAINNYA</span>
                                         </div>
                                     </div>
                                 </div>
@@ -565,22 +533,22 @@
 
                             <!-- Disabilitas -->
                             <div onclick="selectKategori('Disabilitas')" id="card-Disabilitas"
-                                class="kategori-card group relative flex flex-col items-center p-5 rounded-3xl border-2 border-gray-100 bg-white hover:border-purple-200 hover:bg-purple-50/50 transition-all duration-300 cursor-pointer shadow-sm">
+                                class="kategori-card group relative flex flex-col items-center p-8 rounded-3xl border-2 border-gray-100 bg-white hover:border-purple-200 hover:bg-purple-50/50 transition-all duration-300 cursor-pointer shadow-sm">
                                 <div
-                                    class="flex items-center justify-center w-14 h-14 rounded-2xl bg-purple-50 text-purple-500 mb-3 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-purple-200">
-                                    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                    class="flex items-center justify-center w-20 h-20 rounded-2xl bg-purple-50 text-purple-500 mb-4 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-purple-200">
+                                    <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                                         stroke-width="1.5">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                                     </svg>
                                 </div>
-                                <span class="font-bold text-gray-800 text-sm">Prioritas</span>
+                                <span class="font-bold text-gray-800 text-lg">Prioritas</span>
                                 <span
-                                    class="text-[10px] uppercase tracking-wider text-gray-400 mt-1 font-medium">Disabilitas</span>
-                                <div class="kategori-check absolute top-3 right-3 hidden">
+                                    class="text-xs uppercase tracking-wider text-gray-400 mt-1 font-medium">Disabilitas</span>
+                                <div class="kategori-check absolute top-4 right-4 hidden">
                                     <div
-                                        class="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center shadow-lg">
-                                        <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24"
+                                        class="w-7 h-7 rounded-full bg-purple-500 flex items-center justify-center shadow-lg">
+                                        <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24"
                                             stroke="currentColor" stroke-width="3">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                         </svg>
@@ -588,10 +556,10 @@
                                 </div>
 
                                 <!-- Custom Dropdown -->
-                                <div class="custom-dropdown-container hidden mt-4 w-full relative"
+                                <div class="custom-dropdown-container hidden mt-6 w-full relative"
                                     onclick="event.stopPropagation()">
                                     <button type="button"
-                                        class="dropdown-trigger flex items-center justify-between w-full h-11 px-4 rounded-full border-2 border-purple-100 bg-purple-50/30 text-[13px] text-gray-700 hover:border-purple-300 transition-all shadow-sm focus:outline-none">
+                                        class="dropdown-trigger flex items-center justify-between w-full h-12 px-5 rounded-full border-2 border-purple-100 bg-purple-50/30 text-[13px] text-gray-700 hover:border-purple-300 transition-all shadow-sm focus:outline-none">
                                         <span class="selected-label truncate">Pilih Layanan</span>
                                         <svg class="w-4 h-4 text-purple-500 ml-2 shrink-0" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
@@ -602,49 +570,48 @@
                                     <div
                                         class="dropdown-menu dropdown-animate dropdown-hidden absolute z-50 left-0 right-0 mt-2 bg-white rounded-[24px] border border-purple-50 shadow-2xl p-2 max-h-64 overflow-y-auto custom-scrollbar ring-8 ring-purple-50/10">
                                         <div class="dropdown-item group/item flex items-center p-3 rounded-2xl hover:bg-purple-50 cursor-pointer transition-colors"
-                                            data-value="Permintaan Data (Disabilitas)">
+                                            data-value="PERPUSTAKAAN">
                                             <div
                                                 class="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center mr-3 group-hover/item:bg-white transition-colors">
                                                 <svg class="w-5 h-5 text-gray-500 group-hover/item:text-purple-500"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
-                                                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.247 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                                 </svg>
                                             </div>
                                             <span
-                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-purple-500">Permintaan
-                                                Data</span>
+                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-purple-500">PERPUSTAKAAN</span>
                                         </div>
                                         <div class="dropdown-item group/item flex items-center p-3 rounded-2xl hover:bg-purple-50 cursor-pointer transition-colors"
-                                            data-value="Konsultasi Statistik (Disabilitas)">
+                                            data-value="KONSULTASI STATISTIK">
                                             <div
                                                 class="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center mr-3 group-hover/item:bg-white transition-colors">
                                                 <svg class="w-5 h-5 text-gray-500 group-hover/item:text-purple-500"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
-                                                        d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                                                        d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                                                 </svg>
                                             </div>
                                             <span
-                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-purple-500">Konsultasi
-                                                Statistik</span>
+                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-purple-500">KONSULTASI
+                                                STATISTIK</span>
                                         </div>
                                         <div class="dropdown-item group/item flex items-center p-3 rounded-2xl hover:bg-purple-50 cursor-pointer transition-colors"
-                                            data-value="Bantuan Akses Layanan">
+                                            data-value="REKOMENDASI STATISTIK">
                                             <div
                                                 class="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center mr-3 group-hover/item:bg-white transition-colors">
                                                 <svg class="w-5 h-5 text-gray-500 group-hover/item:text-purple-500"
                                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         stroke-width="2"
-                                                        d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        d="M5 3v4M3 5h4M6 17v4M4 19h4m9-15v4m-2-2h4m-7 4l.89 2.67a1 1 0 00.95.68h2.84a1 1 0 01.59 1.81l-2.3 1.67a1 1 0 00-.36 1.12l.89 2.67a1 1 0 01-1.54 1.11l-2.31-1.67a1 1 0 00-1.17 0l-2.31 1.67a1 1 0 01-1.54-1.11l.89-2.67a1 1 0 00-.36-1.12l-2.3-1.67a1 1 0 01.59-1.81h2.84a1 1 0 00.95-.68L12 7z" />
                                                 </svg>
                                             </div>
                                             <span
-                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-purple-500">Bantuan
-                                                Akses</span>
+                                                class="text-[13px] font-medium text-gray-700 group-hover/item:text-purple-500">REKOMENDASI
+                                                STATISTIK</span>
                                         </div>
                                     </div>
                                 </div>
@@ -806,12 +773,235 @@
             document.getElementById('antrianModal').classList.add('hidden');
         }
 
+        // ==========================================
+        //  NEW: AJAX QUEUE & CONFIRMATION LOGIC
+        // ==========================================
+        let currentAntrianId = null;
+
+        document.getElementById('antrianForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmit');
+            const originalText = btn.innerHTML;
+
+            // Show loading state
+            btn.disabled = true;
+            btn.innerHTML = `<svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Memproses...`;
+
+            const formData = new FormData(this);
+
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentAntrianId = data.id;
+                        populateConfirmModal(data);
+                        closeModal(); // Close selection modal
+                        openConfirmModal(); // Open print confirmation
+                    } else {
+                        alert('Gagal mengambil antrean. Silakan coba lagi.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan sistem.');
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                });
+        });
+
+        function openConfirmModal() {
+            document.getElementById('printConfirmModal').classList.remove('hidden');
+        }
+
+        function populateConfirmModal(data) {
+            document.getElementById('displayNomor').textContent = data.nomor_label;
+            document.getElementById('displayLayanan').textContent = data.layanan;
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('printConfirmModal').classList.add('hidden');
+        }
+
+        function doPrint() {
+            if (!currentAntrianId) return;
+
+            // 1. Ganti isi modal menjadi feedback terima kasih SEBELUM cetak
+            document.getElementById('confirmContent').classList.add('hidden');
+            document.getElementById('thanksContent').classList.remove('hidden');
+            
+            const modalHeader = document.querySelector('#printConfirmModal .h-32');
+            if (modalHeader) {
+                modalHeader.classList.remove('bg-blue-600');
+                modalHeader.classList.add('bg-green-500');
+            }
+
+            // 2. Trigger isi iframe untuk mencetak setelah delay sangat singkat
+            setTimeout(() => {
+                const printFrame = document.getElementById('printFrame');
+                printFrame.src = "{{ url('/struk-antrian') }}/" + currentAntrianId;
+            }, 300);
+
+            // 3. TUTUP dan kembali ke Dashboard (Reload) dalam 2.8 detik
+            setTimeout(() => {
+                window.location.reload(); 
+            }, 2800);
+        }
+
+        function startAutoRedirect() {
+            // Reload otomatis setelah 60 detik (1 menit) jika tidak ada interaksi sama sekali (safety reset)
+            setTimeout(() => {
+                if (!document.getElementById('printConfirmModal').classList.contains('hidden')) {
+                    window.location.reload();
+                }
+            }, 60000);
+        }
+
+        function populateConfirmModal(data) {
+            document.getElementById('displayNomor').textContent = data.nomor_label;
+            document.getElementById('displayLayanan').textContent = data.layanan;
+
+            startAutoRedirect();
+        }
+
+        function skipPrint() {
+            // Jika memilih TIDAK cetak, tampilkan feedback "Sampai Jumpa" lalu reload cepat
+            document.getElementById('confirmContent').classList.add('hidden');
+            document.getElementById('thanksContent').classList.remove('hidden');
+
+            // Ubah teks feedback untuk skenario tidak cetak
+            const thanksMsg = document.querySelector('#thanksContent p');
+            if (thanksMsg) {
+                thanksMsg.innerHTML = 'Data antrean Anda telah tersimpan.<br>Silakan ingat nomor antrean Anda.';
+            }
+
+            const modalHeader = document.querySelector('#printConfirmModal .h-32');
+            if (modalHeader) {
+                modalHeader.classList.remove('bg-blue-600', 'bg-red-500');
+                modalHeader.classList.add('bg-green-500');
+            }
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        }
+
+        // Callback from iframe (struk.blade.php) when print is started
+        window.onPrintStarted = function () {
+            console.log('Printing started in background...');
+        };
+
         document.addEventListener('keydown', function (event) {
             if (event.key === "Escape") {
                 closeModal();
+                closeConfirmModal();
             }
         });
     </script>
+    <!-- Print Confirmation Modal (Hidden by default) -->
+    <div id="printConfirmModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4"
+        style="background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px);">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full overflow-hidden animate-[scale-in_0.3s_ease-out]">
+            <div class="h-32 bg-blue-600 flex items-center justify-center relative overflow-hidden">
+                <div class="absolute inset-0 opacity-20">
+                    <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M0 100 C 20 0 50 0 100 100 Z" fill="white"></path>
+                    </svg>
+                </div>
+                <div
+                    class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 shadow-xl">
+                    <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                    </svg>
+                </div>
+            </div>
+            <!-- Preview & Confirm Content -->
+            <div id="confirmContent" class="p-8 text-center text-slate-800">
+                <div class="mb-4">
+                    <img src="{{ asset('bps.png') }}" class="h-10 mx-auto mb-2">
+                    <h3 class="text-[10px] font-bold text-blue-600 uppercase tracking-[0.2em]">PST BPS KABUPATEN DEMAK
+                    </h3>
+                </div>
+
+                <div class="w-full border-t border-dashed border-slate-200 my-4"></div>
+
+                <div class="mb-4">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Nomor
+                        Antrean Anda</p>
+                    <div id="displayNomor"
+                        class="text-6xl font-black text-slate-900 tracking-tighter leading-none mb-2">---</div>
+                    <div id="displayLayanan" class="text-xs font-extrabold text-slate-700 uppercase break-words px-4">
+                        ---</div>
+                </div>
+
+                <div class="w-full border-t border-dashed border-slate-200 my-4"></div>
+
+                <p class="text-slate-500 text-[10px] italic mb-6">
+                    Apakah Anda ingin mencetak struk fisik?
+                </p>
+
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <button onclick="skipPrint()"
+                        class="px-6 py-3 rounded-2xl text-slate-600 font-bold bg-slate-100 hover:bg-slate-200 transition-all text-xs uppercase tracking-wider">
+                        TUTUP
+                    </button>
+                    <button onclick="doPrint()"
+                        class="px-6 py-3 rounded-2xl text-white font-bold bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all text-xs uppercase tracking-wider">
+                        CETAK STRUK
+                    </button>
+                </div>
+
+                <div class="text-[10px] text-slate-400 font-medium italic">
+                    Proses Selesai
+                </div>
+            </div>
+
+            <!-- Success / Thanks Content (Hidden by default) -->
+            <div id="thanksContent" class="hidden p-10 text-center animate-[scale-in_0.3s_ease-out]">
+                <div
+                    class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6 scale-110 shadow-sm border border-green-100">
+                    <svg class="w-10 h-10 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-black text-slate-900 mb-2">Terima Kasih!</h3>
+                <p class="text-slate-500 mb-8 leading-relaxed">
+                    Struk antrean Anda sedang dicetak.<br>Silakan ambil dan tunggu panggilan petugas.
+                </p>
+                <div class="text-[11px] font-bold text-blue-600 uppercase tracking-[0.2em] bg-blue-50 py-2 rounded-xl">
+                    Selesai
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Iframe for Silent Print -->
+    <iframe id="printFrame" src="about:blank"
+        style="display:none; width:0; height:0; border:none; visibility:hidden;"></iframe>
+
+    <style>
+        @keyframes scale-in {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
 </body>
 
 </html>

@@ -102,4 +102,14 @@ class PegawaiPst extends Model
     {
         return $this->hasMany(Presensi::class, 'pegawai_id');
     }
+
+    public function kunjungans()
+    {
+        return $this->hasMany(Kunjungan::class, 'pegawai_id');
+    }
+
+    public function evaluasis()
+    {
+        return $this->hasMany(Evaluasi::class, 'pegawai_id');
+    }
 }

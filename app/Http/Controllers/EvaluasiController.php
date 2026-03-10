@@ -63,6 +63,7 @@ class EvaluasiController extends Controller
             'pegawai_id' => $request->pegawai_id,
             'rating' => $request->rating,
             'pengunjung_id' => $pengunjungId,
+            'tanggal_evaluasi' => now(),
         ]);
 
         return redirect()

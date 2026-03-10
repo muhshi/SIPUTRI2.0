@@ -27,6 +27,24 @@ class QueueController extends Controller
             'tanggal' => $today,
         ]);
 
+        if ($request->wantsJson()) {
+            $prefix = match (strtolower($antrian->jenis)) {
+                'layanan' => 'L',
+                'pengaduan' => 'P',
+                'disabilitas' => 'D',
+                default => 'A',
+            };
+            $label = $prefix . '-' . str_pad($antrian->nomor, 3, '0', STR_PAD_LEFT);
+
+            return response()->json([
+                'success' => true,
+                'id' => $antrian->id,
+                'nomor_label' => $label,
+                'layanan' => $antrian->layanan,
+                'message' => 'Antrian berhasil ditambahkan'
+            ]);
+        }
+
         return redirect()->route('queue.struk', $antrian->id);
     }
 

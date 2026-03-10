@@ -13,14 +13,17 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class PegawaiPstResource extends Resource
 {
     protected static ?string $model = PegawaiPst::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedIdentification;
 
-    protected static ?string $navigationLabel = 'Pegawai PST';
+    protected static string|UnitEnum|null $navigationGroup = 'Manajemen';
+
+    protected static ?string $navigationLabel = 'Pegawai';
 
     protected static ?int $navigationSort = 10;
 

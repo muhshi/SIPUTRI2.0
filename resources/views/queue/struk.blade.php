@@ -3,44 +3,90 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Struk Antrian</title>
+    <title>Struk Antrian - BPS Demak</title>
     <style>
+        @page {
+            size: 80mm auto;
+            margin: 0;
+        }
+
         body {
-            font-family: monospace;
-            font-size: 14px;
-            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            width: 72mm;
+            /* Safe width for 80mm paper */
+            margin: 0 auto;
             padding: 10px;
+            text-align: center;
+            background: white;
+            color: black;
         }
 
-        .antrian-number {
-            font-size: 48px;
-            /* PERBESAR di sini */
+        .header {
+            font-size: 14px;
             font-weight: bold;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .sub-header {
+            font-size: 10px;
+            margin-bottom: 10px;
+        }
+
+        .divider {
+            border-top: 1px dashed black;
             margin: 10px 0;
         }
 
-        hr {
-            border: none;
-            border-top: 1px dashed #000;
-            margin: 10px 0;
+        .layanan-title {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .nomor-antrian {
+            font-size: 52px;
+            font-weight: bold;
+            margin: 15px 0;
+            letter-spacing: -2px;
+        }
+
+        .info {
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            text-align: left;
+        }
+
+        .footer {
+            font-size: 10px;
+            margin-top: 15px;
+            line-height: 1.4;
         }
 
         @media print {
             body {
-                width: 58mm;
-                margin: 0 auto;
+                width: 100%;
+                margin: 0;
+                padding: 5mm;
             }
         }
     </style>
 </head>
 
 <body>
-    <hr>
-    <div>BADAN PUSAT STATISTIK</div>
-    <div>Pelayanan Statistik Terpadu</div>
-    <div>Kabupaten Demak</div>
-    <hr>
-    <div><strong>Layanan :</strong> {{ $antrian->layanan }}</div>
+    <div class="header">
+        <img src="{{ asset('bps.png') }}" style="height: 40px; margin-bottom: 5px; filter: grayscale(1);"><br>
+        BADAN PUSAT STATISTIK<br>KABUPATEN DEMAK
+    </div>
+    <div class="sub-header">PELAYANAN STATISTIK TERPADU</div>
+
+    <div class="divider"></div>
+
+    <div class="layanan-title">{{ $antrian->layanan }}</div>
+
     @php
         $prefix = match (strtolower($antrian->jenis)) {
             'layanan' => 'L',
@@ -48,28 +94,28 @@
             'disabilitas' => 'D',
             default => 'A',
         };
+        $label = $prefix . '-' . str_pad($antrian->nomor, 3, '0', STR_PAD_LEFT);
     @endphp
-    <div class="antrian-number">{{ $prefix }}-{{ str_pad($antrian->nomor, 3, '0', STR_PAD_LEFT) }}</div>
-    <hr>
-    <div><strong>Tanggal :</strong> {{ \Carbon\Carbon::parse($antrian->tanggal)->format('d-m-Y') }}</div>
-    <div><strong>Waktu :</strong> {{ \Carbon\Carbon::now()->format('H:i') }} WIB</div>
-    <hr>
-    <div>Silakan menunggu hingga</div>
-    <div>nomor Anda dipanggil oleh petugas</div>
-    <hr>
-    ...
-    <div>Terima kasih atas kunjungan Anda</div>
-    <hr>
 
-    <script>
-        window.onload = function () {
-            window.print();
-        };
+    <div class="nomor-antrian">{{ $label }}</div>
 
-        window.onafterprint = function () {
-            window.location.href = "{{ route('queue.lihat') }}";
-        };
-    </script>
+    <div class="divider"></div>
+
+    <div class="info">
+        <span>TANGGAL:</span>
+        <span>{{ \Carbon\Carbon::parse($antrian->tanggal)->format('d/m/Y') }}</span>
+    </div>
+    <div class="info">
+        <span>WAKTU:</span>
+        <span>{{ \Carbon\Carbon::now()->format('H:i') }} WIB</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="footer">
+        Silakan menunggu hingga nomor Anda dipanggil oleh petugas loket.<br><br>
+        <em>"Terima kasih atas kunjungan Anda"</em>
+    </div>
 </body>
 
 </html>

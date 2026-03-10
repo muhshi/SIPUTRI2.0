@@ -21,6 +21,11 @@ class EvaluasisTable
                 TextColumn::make('rating')
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('tanggal_evaluasi')
+                    ->label('Tanggal Evaluasi')
+                    ->date('d-m-Y')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

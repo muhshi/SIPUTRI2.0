@@ -13,14 +13,17 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class EvaluasiResource extends Resource
 {
     protected static ?string $model = Evaluasi::class;
 
-    protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-users';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
 
-    protected static ?string $recordTitleAttribute = 'id';
+    protected static string|UnitEnum|null $navigationGroup = 'Layanan & Kunjungan';
+
+    protected static ?string $navigationLabel = 'Evaluasi & Rating';
 
     public static function form(Schema $schema): Schema
     {
