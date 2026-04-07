@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between gap-x-3">
             <div class="flex-1">
                 <h2 class="text-lg font-bold tracking-tight text-gray-950 dark:text-white">
-                    Presensi Pegawai
+                    PRESENSI JAKET PADU
                 </h2>
                 <p class="text-sm text-gray-500 dark:text-gray-400">
                     Klik tombol di bawah untuk melakukan pengambilan foto presensi (Masuk/Pulang).
