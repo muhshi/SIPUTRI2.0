@@ -116,6 +116,10 @@ Jika Anda menjalankan seeder bawaan, berikut adalah kredensial untuk login ke pa
 - Integrasi dan lokalisasi **SurveyJS Builder** di dalam Filament Admin Panel
 - Pembuatan portal khusus untuk petugas (Field Enumerator) dengan sistem otentikasi terpisah
 
+### 2026-04-07
+- Rebranding Halaman Presensi menjadi **PRESENSI JAKET PADU**
+- Update UI Halaman Presensi (Camera) & Form Presensi
+- Update Judul Widget Presensi di Dashboard Admin
 ### 2026-03-06
 - Merge branch `feature/dashboard-antrian-baru` ke `main`
 - Install & integrasi **Filament Shield** (role & permission management)
