@@ -23,6 +23,7 @@ class PengunjungController extends Controller
             'jenis_kelamin' => 'nullable|string',
             'instansi' => 'nullable|string',
             'email' => 'nullable|email',
+            'telepon' => 'nullable|string|max:20',
             'pemanfaatan' => 'nullable|string',
             'tahun_lahir' => 'nullable|integer',
             'layanan' => 'nullable|string',

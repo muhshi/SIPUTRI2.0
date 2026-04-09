@@ -20,6 +20,7 @@ class Kunjungan extends Model
         'jenis_kelamin',
         'instansi',
         'email',
+        'telepon',
         'pemanfaatan',
         'tahun_lahir',
         'layanan',

@@ -58,6 +58,10 @@ class KunjunganForm
                     ->label('Email')
                     ->email(),
 
+                TextInput::make('telepon')
+                    ->label('Nomor Telepon')
+                    ->tel(),
+
                 TextInput::make('pemanfaatan')
                     ->label('Pemanfaatan Data'),
 

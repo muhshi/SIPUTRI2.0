@@ -141,6 +141,13 @@
                                 </div>
 
                                 <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-2">Nomor Telepon</label>
+                                    <input type="tel" name="telepon"
+                                        class="block w-full rounded-lg border-slate-300 shadow-sm focus:border-bps-500 focus:ring-bps-500 sm:text-sm py-2.5 px-3 border transition-colors hover:border-slate-400"
+                                        placeholder="08xx xxxx xxxx">
+                                </div>
+
+                                <div>
                                     <label class="block text-sm font-medium text-slate-700 mb-2">Jenis Kelamin</label>
                                     <div class="flex gap-4">
                                         <label
@@ -262,7 +269,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-slate-700 mb-2">Tanggal
                                         Kunjungan</label>
-                                    <input type="date" name="tanggal" required
+                                    <input type="date" name="tanggal" required value="{{ date('Y-m-d') }}"
                                         class="block w-full rounded-lg border-slate-300 shadow-sm focus:border-bps-500 focus:ring-bps-500 sm:text-sm py-2.5 px-3 border transition-colors hover:border-slate-400">
                                 </div>
 

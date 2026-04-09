@@ -109,6 +109,13 @@ Jika Anda menjalankan seeder bawaan, berikut adalah kredensial untuk login ke pa
 
 ## Changelog
 
+### 2026-04-09
+- Modernisasi UI Landing Page Microsite dengan tema gelap premium dan animasi dinamis
+- Pembuatan **Project Look Book** untuk standarisasi desain visual (warna, tipografi, komponen)
+- Penambahan input field "Nomor Telepon" pada form Identitas Diri (Pengunjung)
+- Integrasi dan lokalisasi **SurveyJS Builder** di dalam Filament Admin Panel
+- Pembuatan portal khusus untuk petugas (Field Enumerator) dengan sistem otentikasi terpisah
+
 ### 2026-03-06
 - Merge branch `feature/dashboard-antrian-baru` ke `main`
 - Install & integrasi **Filament Shield** (role & permission management)
