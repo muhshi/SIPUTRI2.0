@@ -109,6 +109,12 @@ Jika Anda menjalankan seeder bawaan, berikut adalah kredensial untuk login ke pa
 
 ## Changelog
 
+### 2026-04-13
+- Upgrade fitur unduhan dari CSV menjadi **format Excel asli (.xlsx)** menggunakan OpenSpout
+- Redesain total **halaman cetak/unduhan PDF** dengan estetika BPS premium dan layout landscape profesional
+- Perbaikan bug filter pada fitur ekspor; sekarang unduhan Excel dan PDF telah sesuai dengan filter (Tahun/Triwulan) yang aktif di tabel
+- Sinkronisasi parameter filter antara Filament Table dan pengontrol cetak laporan
+
 ### 2026-04-09
 - Modernisasi UI Landing Page Microsite dengan tema gelap premium dan animasi dinamis
 - Pembuatan **Project Look Book** untuk standarisasi desain visual (warna, tipografi, komponen)
