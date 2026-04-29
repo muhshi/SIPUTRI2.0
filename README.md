@@ -124,6 +124,7 @@ Jika Anda menjalankan seeder bawaan, berikut adalah kredensial untuk login ke pa
 - Implementasi integrasi SIPETRA SSO (Socialite Passport)
 - Penambahan tombol login SSO pada halaman autentikasi
 - Update aset Filament dan vendor Laravel ERD
+- Perbaikan error `password cannot be null` saat pendaftaran user baru via SSO
 
 ### 2026-04-14
 - **Upgrade Laravel 12 → 13** dan **Filament 4 → 5** (beserta Livewire 3 → 4)
