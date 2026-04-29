@@ -119,6 +119,12 @@ Jika Anda menjalankan seeder bawaan, berikut adalah kredensial untuk login ke pa
 
 ## Changelog
 
+### 2026-04-29
+- Merge branch `feat/sso-integration-and-updates` ke `main`
+- Implementasi integrasi SIPETRA SSO (Socialite Passport)
+- Penambahan tombol login SSO pada halaman autentikasi
+- Update aset Filament dan vendor Laravel ERD
+
 ### 2026-04-14
 - **Upgrade Laravel 12 → 13** dan **Filament 4 → 5** (beserta Livewire 3 → 4)
 - Update `laravel/tinker` ke versi `^3.0` untuk kompatibilitas Laravel 13
