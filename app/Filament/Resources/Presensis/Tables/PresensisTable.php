@@ -15,14 +15,18 @@ class PresensisTable
     {
         return $table
             ->columns([
-                TextColumn::make('pegawai.nama')
+                TextColumn::make('pegawai.nama_pegawai')
                     ->label('Nama Pegawai')
                     ->searchable()
                     ->sortable(),
                 ImageColumn::make('foto_masuk')
                     ->label('Foto Masuk')
                     ->disk('public')
-                    ->square(),
+                    ->height(60)
+                    ->width(60)
+                    ->square()
+                    ->url(fn($record) => asset('storage/' . $record->foto_masuk))
+                    ->openUrlInNewTab(false),
                 TextColumn::make('jam_masuk')
                     ->time()
                     ->sortable(),

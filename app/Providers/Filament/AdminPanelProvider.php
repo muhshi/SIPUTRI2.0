@@ -19,6 +19,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Support\Facades\Blade;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -127,6 +129,10 @@ class AdminPanelProvider extends PanelProvider
                         border-right: 1px solid rgba(0, 0, 0, 0.02) !important;
                     }
                 </style>',
+            )
+            ->renderHook(
+                PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
+                fn (): string => Blade::render('@include("auth.sso-button")'),
             )
             ->authMiddleware([
                 Authenticate::class,
