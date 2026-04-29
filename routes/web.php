@@ -5,6 +5,7 @@ use App\Http\Controllers\PengunjungController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\EvaluasiController;
 use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\Auth\SsoController;
 
 Route::get('/presensi', [PresensiController::class, 'index'])->name('presensi.index');
 Route::post('/presensi/form', [PresensiController::class, 'form'])->name('presensi.form');
@@ -31,4 +32,7 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/print/kunjungan', \App\Http\Controllers\PrintKunjunganController::class)->name('print.kunjungan');//->middleware('auth'); // Uncomment middleware if auth is required and working
+
+Route::get('/auth/sipetra/redirect', [SsoController::class, 'redirect'])->name('sipetra.login');
+Route::get('/auth/sipetra/callback', [SsoController::class, 'callback']);
 

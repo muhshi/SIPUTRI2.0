@@ -1,11 +1,21 @@
 # SIPUTRI2.0 - Sistem Informasi Pelayanan Umum Terpadu & Terintegrasi
 
-SIPUTRI2.0 adalah aplikasi portal layanan untuk BPS Kabupaten Demak yang mencakup fitur Buku Tamu, Antrian, Evaluasi Pelayanan, dan Sistem Presensi Pegawai. Aplikasi ini dibangun menggunakan **Laravel** dan **Filament**.
+SIPUTRI2.0 adalah aplikasi portal layanan untuk BPS Kabupaten Demak yang mencakup fitur Buku Tamu, Antrian, Evaluasi Pelayanan, dan Sistem Presensi Pegawai. Aplikasi ini dibangun menggunakan **Laravel 13** dan **Filament 5**.
+
+## Tech Stack
+
+| Teknologi | Versi |
+|---|---|
+| PHP | >= 8.3 |
+| Laravel | 13.x |
+| Filament | 5.x |
+| Livewire | 4.x |
+| Node.js | LTS |
 
 ## Persyaratan Sistem
 
 Pastikan komputer Anda sudah terinstall:
-- [PHP](https://www.php.net/) >= 8.2
+- [PHP](https://www.php.net/) >= 8.3
 - [Composer](https://getcomposer.org/)
 - [Node.js](https://nodejs.org/) & NPM
 - Database (SQLite / MySQL / PostgreSQL)
@@ -108,6 +118,13 @@ Jika Anda menjalankan seeder bawaan, berikut adalah kredensial untuk login ke pa
 - Solusi: Fitur chart dan filter telah disesuaikan agar kompatibel dengan SQLite. Jika masih error, pastikan Anda telah menarik kode terbaru (`git pull`).
 
 ## Changelog
+
+### 2026-04-14
+- **Upgrade Laravel 12 → 13** dan **Filament 4 → 5** (beserta Livewire 3 → 4)
+- Update `laravel/tinker` ke versi `^3.0` untuk kompatibilitas Laravel 13
+- Resolve ulang dependency tree secara penuh (composer.lock diperbarui)
+- Jalankan `php artisan filament:upgrade` — semua asset Filament v5 dipublish ulang
+- Update persyaratan PHP minimum menjadi >= 8.3
 
 ### 2026-04-13
 - Upgrade fitur unduhan dari CSV menjadi **format Excel asli (.xlsx)** menggunakan OpenSpout

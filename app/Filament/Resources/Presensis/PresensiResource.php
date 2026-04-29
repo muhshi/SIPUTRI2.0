@@ -44,58 +44,7 @@ class PresensiResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                TextColumn::make('pegawai.nama_pegawai')
-                    ->label('Nama Pegawai')
-                    ->searchable()
-                    ->sortable(),
-                ImageColumn::make('foto_masuk')
-                    ->label('Foto Masuk')
-                    ->disk('public')
-                    ->height(60)
-                    ->width(60)
-                    ->square()
-                    ->url(fn($record) => asset('storage/' . $record->foto_masuk))
-                    ->openUrlInNewTab(false),
-                TextColumn::make('jam_masuk')
-                    ->time()
-                    ->sortable(),
-                ImageColumn::make('foto_keluar')
-                    ->label('Foto Keluar')
-                    ->disk('public')
-                    ->height(60)
-                    ->width(60)
-                    ->square()
-                    ->url(fn($record) => asset('storage/' . $record->foto_keluar))
-                    ->openUrlInNewTab(false),
-                TextColumn::make('jam_selesai')
-                    ->label('Jam Pulang')
-                    ->time()
-                    ->sortable(),
-                TextColumn::make('tanggal')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('status')
-                    ->badge()
-                    ->color(fn(string $state): string => match ($state) {
-                        'Hadir' => 'success',
-                        'Izin' => 'warning',
-                        'Sakit' => 'danger',
-                        default => 'gray',
-                    }),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                // your filters
-            ]);
+        return PresensisTable::configure($table);
     }
 
     public static function getRelations(): array
