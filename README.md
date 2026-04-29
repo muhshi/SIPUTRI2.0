@@ -125,6 +125,8 @@ Jika Anda menjalankan seeder bawaan, berikut adalah kredensial untuk login ke pa
 - Penambahan tombol login SSO pada halaman autentikasi
 - Update aset Filament dan vendor Laravel ERD
 - Perbaikan error `password cannot be null` saat pendaftaran user baru via SSO
+- Update `UserResource`: Penambahan field NIP, Jabatan, dan relasi ke data Pegawai
+- Update Model `User`: Penambahan relasi `pegawai()` untuk menghubungkan user dengan data Pegawai PST via NIP
 
 ### 2026-04-14
 - **Upgrade Laravel 12 → 13** dan **Filament 4 → 5** (beserta Livewire 3 → 4)

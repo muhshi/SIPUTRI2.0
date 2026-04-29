@@ -35,6 +35,14 @@ class UserForm
                     ->required(fn(string $operation): bool => $operation === 'create')
                     ->rule(Password::default()),
 
+                TextInput::make('nip')
+                    ->label('NIP')
+                    ->maxLength(255),
+
+                TextInput::make('jabatan')
+                    ->label('Jabatan')
+                    ->maxLength(255),
+
                 Select::make('roles')
                     ->label('Role')
                     ->relationship('roles', 'name')

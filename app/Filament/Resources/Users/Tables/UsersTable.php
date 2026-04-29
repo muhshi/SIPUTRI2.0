@@ -24,6 +24,17 @@ class UsersTable
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('nip')
+                    ->label('NIP')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('pegawai.nama_pegawai')
+                    ->label('Pegawai Terhubung')
+                    ->placeholder('Tidak Terhubung')
+                    ->searchable()
+                    ->color('info'),
+
                 TextColumn::make('roles.name')
                     ->label('Role')
                     ->badge()
