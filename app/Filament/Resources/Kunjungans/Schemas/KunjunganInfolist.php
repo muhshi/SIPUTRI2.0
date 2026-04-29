@@ -20,6 +20,8 @@ class KunjunganInfolist
                 TextEntry::make('instansi'),
                 TextEntry::make('email')
                     ->label('Email address'),
+                TextEntry::make('telepon')
+                    ->label('Nomor Telepon'),
                 TextEntry::make('pemanfaatan'),
                 TextEntry::make('tahun_lahir')
                     ->numeric(),
