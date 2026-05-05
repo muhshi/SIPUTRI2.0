@@ -119,6 +119,13 @@ Jika Anda menjalankan seeder bawaan, berikut adalah kredensial untuk login ke pa
 
 ## Changelog
 
+### 2026-05-05
+- Merge branch `feature/presensi-update` ke `main`
+- Implementasi Mode Presensi Manual (tanggal, jam masuk, dan jam selesai kustom)
+- Perbaikan logika pengecekan status tombol Masuk/Pulang pada halaman Presensi
+- Sinkronisasi data presensi dengan user yang sedang login (auth user pegawai)
+- Penambahan filter dan optimasi query pada halaman list presensi admin
+
 ### 2026-04-29
 - Merge branch `feat/sso-integration-and-updates` ke `main`
 - Implementasi integrasi SIPETRA SSO (Socialite Passport)
