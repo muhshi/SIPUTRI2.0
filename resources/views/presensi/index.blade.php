@@ -122,7 +122,22 @@
 
             <!-- Controls -->
             <div class="space-y-4">
-                <!-- Employee Selection (Ideally this should be auto-detected from Auth) -->
+                <!-- Employee Selection -->
+                @if($authPegawai)
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-center gap-4 mb-2">
+                    <div class="bg-blue-100 p-3 rounded-full text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-blue-500 uppercase tracking-wider">Pegawai Terdeteksi</p>
+                        <h2 class="text-lg font-bold text-gray-800 leading-tight">{{ $authPegawai->nama_pegawai }}</h2>
+                        <p class="text-xs text-gray-500 mt-0.5">NIP: {{ $authPegawai->nip }}</p>
+                    </div>
+                    <input type="hidden" id="pegawai_id" value="{{ $authPegawai->id }}">
+                </div>
+                @else
                 <div class="relative">
                     <select id="pegawai_id" style="width: 100%">
                         <option value="">-- Pilih Nama Anda --</option>
@@ -130,8 +145,30 @@
                             <option value="{{ $p->id }}">{{ $p->nama_pegawai }}</option>
                         @endforeach
                     </select>
-
                 </div>
+                @endif
+
+                @if($mode === 'manual')
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Tanggal</label>
+                        <input type="date" id="manual_tanggal" value="{{ date('Y-m-d') }}"
+                            class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Jam Masuk</label>
+                            <input type="time" id="manual_jam_masuk"
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Jam Pulang</label>
+                            <input type="time" id="manual_jam_selesai"
+                                class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all">
+                        </div>
+                    </div>
+                </div>
+                @endif
 
                 <input type="hidden" name="image" id="image_data">
 
@@ -167,13 +204,16 @@
 
     <script>
         const presensiHariIni = @json($todayPresensi);
+        const mode = "{{ $mode }}";
 
         $(document).ready(function () {
 
-            $('#pegawai_id').select2({
-                placeholder: '-- Pilih Nama Anda --',
-                allowClear: true
-            });
+            if ($('#pegawai_id').is('select')) {
+                $('#pegawai_id').select2({
+                    placeholder: '-- Pilih Nama Anda --',
+                    allowClear: true
+                });
+            }
 
             function updateButton() {
 
@@ -181,6 +221,14 @@
                 const btn = $('#btn-capture');
 
                 if (!pegawaiId) return;
+
+                if (mode === 'manual') {
+                    btn.html('📸 Ambil Foto Presensi');
+                    btn.prop('disabled', false);
+                    btn.removeClass('bg-yellow-500 bg-gray-400')
+                        .addClass('bg-blue-600');
+                    return;
+                }
 
                 if (presensiHariIni[pegawaiId]) {
 
@@ -295,7 +343,11 @@
                 },
                 body: JSON.stringify({
                     pegawai_id: pegawaiId,
-                    image: imageData
+                    image: imageData,
+                    mode: mode,
+                    tanggal: document.getElementById('manual_tanggal')?.value,
+                    jam_masuk: document.getElementById('manual_jam_masuk')?.value,
+                    jam_selesai: document.getElementById('manual_jam_selesai')?.value
                 })
             })
                 .then(async response => {

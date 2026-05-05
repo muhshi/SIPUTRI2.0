@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Presensis\Pages;
 
 use App\Filament\Resources\Presensis\PresensiResource;
-use Filament\Actions\CreateAction;
+use Filament\Actions\Action;
 use Filament\Resources\Pages\ListRecords;
 
 class ListPresensis extends ListRecords
@@ -13,7 +13,11 @@ class ListPresensis extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            Action::make('buat_presensi')
+                ->label('Buat presensi')
+                ->url('/presensi?mode=manual')
+                ->icon('heroicon-o-plus')
+                ->color('primary'),
         ];
     }
 }

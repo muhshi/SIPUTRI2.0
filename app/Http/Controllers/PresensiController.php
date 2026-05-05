@@ -10,9 +10,10 @@ use Carbon\Carbon;
 class PresensiController extends Controller
 {
     // Halaman utama
-    public function index()
+    public function index(Request $request)
     {
         $pegawais = PegawaiPst::orderBy('nama_pegawai')->get();
+        $mode = $request->query('mode', 'normal'); // 'normal' or 'manual'
 
         // Data presensi hari ini (untuk tabel / list jika ada)
         $presensis = Presensi::with('pegawai')
@@ -24,7 +25,10 @@ class PresensiController extends Controller
             ->get()
             ->keyBy('pegawai_id');
 
-        return view('presensi.index', compact('pegawais', 'presensis', 'todayPresensi'));
+        // Authenticated user's employee
+        $authPegawai = auth()->check() ? auth()->user()->pegawai : null;
+
+        return view('presensi.index', compact('pegawais', 'presensis', 'todayPresensi', 'mode', 'authPegawai'));
     }
 
 
@@ -48,7 +52,20 @@ class PresensiController extends Controller
         try {
             $pegawaiId = $request->pegawai_id;
             $image = $request->image;
-            $today = Carbon::today()->toDateString();
+            $mode = $request->mode ?? 'normal';
+
+            // Manual mode: gunakan tanggal & jam dari form
+            $today = $mode === 'manual' && $request->tanggal
+                ? $request->tanggal
+                : Carbon::today()->toDateString();
+
+            $jamMasuk = $mode === 'manual' && $request->jam_masuk
+                ? $request->jam_masuk
+                : Carbon::now()->format('H:i:s');
+
+            $jamSelesai = $mode === 'manual' && $request->jam_selesai
+                ? $request->jam_selesai
+                : Carbon::now()->format('H:i:s');
 
             if (!$image) {
                 return response()->json(['status' => 'error', 'message' => 'Foto tidak ditemukan.']);
@@ -71,18 +88,25 @@ class PresensiController extends Controller
                 // ======================
                 // PRESENSI MASUK
                 // ======================
-                Presensi::create([
+                $data = [
                     'pegawai_id' => $pegawaiId,
                     'tanggal' => $today,
-                    'jam_masuk' => Carbon::now()->format('H:i:s'),
+                    'jam_masuk' => $jamMasuk,
                     'foto_masuk' => $filePath,
                     'status' => 'Hadir',
-                ]);
+                ];
+
+                if ($mode === 'manual' && $request->jam_selesai) {
+                    $data['jam_selesai'] = $jamSelesai;
+                    $data['foto_keluar'] = $filePath; // Using same photo for both if entered manually? 
+                }
+
+                Presensi::create($data);
 
                 return response()->json([
                     'status' => 'success',
                     'type' => 'masuk',
-                    'message' => 'Halo, Selamat Bekerja! Absensi Masuk Berhasil.'
+                    'message' => $mode === 'manual' ? 'Data presensi manual berhasil disimpan.' : 'Halo, Selamat Bekerja! Absensi Masuk Berhasil.'
                 ]);
             }
 
@@ -96,7 +120,7 @@ class PresensiController extends Controller
                 }
 
                 $presensi->update([
-                    'jam_selesai' => Carbon::now()->format('H:i:s'),
+                    'jam_selesai' => $jamSelesai,
                     'foto_keluar' => $filePath
                 ]);
 
