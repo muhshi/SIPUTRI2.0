@@ -119,6 +119,12 @@ Jika Anda menjalankan seeder bawaan, berikut adalah kredensial untuk login ke pa
 
 ## Changelog
 
+### 2026-05-06
+- Merge branch `feature/presensi-auto-name` ke `main`
+- Implementasi auto-detect pegawai berdasarkan nama pada login SSO Presensi (fallback jika NIP tidak cocok)
+- Update relasi model `User`: Relasi `pegawai()` kini menggunakan mapping nama (name) ke nama_pegawai
+- Perbaikan format tanggal pada ekspor data Kunjungan
+
 ### 2026-05-05
 - Merge branch `feature/presensi-update` ke `main`
 - Implementasi Mode Presensi Manual (tanggal, jam masuk, dan jam selesai kustom)
