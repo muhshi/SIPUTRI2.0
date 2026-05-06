@@ -36,7 +36,7 @@ class ListKunjungans extends ListRecords
                                 $writer->addRow(\OpenSpout\Common\Entity\Row::fromValues([
                                     $row->nama,
                                     $row->instansi,
-                                    $row->tanggal,
+                                    $row->tanggal?->format('d M Y') ?? '',
                                     $row->jenis_kelamin,
                                     $row->pendidikan,
                                     $row->pekerjaan,
