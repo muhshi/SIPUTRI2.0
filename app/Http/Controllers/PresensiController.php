@@ -25,8 +25,17 @@ class PresensiController extends Controller
             ->get()
             ->keyBy('pegawai_id');
 
-        // Authenticated user's employee
-        $authPegawai = auth()->check() ? auth()->user()->pegawai : null;
+        // Authenticated user's employee - match by name
+        $authPegawai = null;
+        if (auth()->check()) {
+            $user = auth()->user();
+            // Try exact relationship first
+            $authPegawai = $user->pegawai;
+            // Fallback: case-insensitive name matching
+            if (!$authPegawai && $user->name) {
+                $authPegawai = PegawaiPst::whereRaw('LOWER(nama_pegawai) = ?', [strtolower(trim($user->name))])->first();
+            }
+        }
 
         return view('presensi.index', compact('pegawais', 'presensis', 'todayPresensi', 'mode', 'authPegawai'));
     }
