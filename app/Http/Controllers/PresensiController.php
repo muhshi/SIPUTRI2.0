@@ -41,7 +41,12 @@ class PresensiController extends Controller
             }
         }
 
-        return view('presensi.index', compact('pegawais', 'presensis', 'todayPresensi', 'mode', 'authPegawai'));
+        $isAdmin = auth()->check() && (
+            (bool) (auth()->user()->is_admin ?? false) ||
+            (method_exists(auth()->user(), 'hasRole') && (auth()->user()->hasRole('super_admin') || auth()->user()->hasRole('admin')))
+        );
+
+        return view('presensi.index', compact('pegawais', 'presensis', 'todayPresensi', 'mode', 'authPegawai', 'isAdmin'));
     }
 
 
@@ -63,6 +68,29 @@ class PresensiController extends Controller
     public function store(Request $request)
     {
         try {
+            // Validasi hak akses jika user login tapi bukan admin
+            if (auth()->check()) {
+                $user = auth()->user();
+                $isAdmin = (bool) ($user->is_admin ?? false) ||
+                    (method_exists($user, 'hasRole') && ($user->hasRole('super_admin') || $user->hasRole('admin')));
+
+                if (!$isAdmin) {
+                    $userPegawai = $user->pegawai;
+                    if (!$userPegawai) {
+                        return response()->json([
+                            'status' => 'error',
+                            'message' => 'Akun Anda belum terdaftar sebagai Petugas PST. Silakan hubungi admin.',
+                        ], 403);
+                    }
+                    if ($userPegawai->id != $request->pegawai_id) {
+                        return response()->json([
+                            'status' => 'error',
+                            'message' => 'Anda tidak memiliki hak akses untuk melakukan presensi atas nama pegawai lain.',
+                        ], 403);
+                    }
+                }
+            }
+
             $pegawaiId = $request->pegawai_id;
             $image = $request->image;
             $mode = $request->mode ?? 'normal';

@@ -125,6 +125,7 @@ Jika Anda menjalankan seeder bawaan, berikut adalah kredensial untuk login ke pa
 - Penambahan tombol aksi *"Jadikan Petugas PST"* pada tabel Pengguna (`UsersTable`) untuk pengguna yang belum terhubung sebagai petugas PST
 - Peningkatan relasi model `User` dan `PegawaiPst`: sinkronisasi otomatis `user_id`, nama, NIP, serta auto-linking saat login/presensi
 - Penambahan kolom Akun Pengguna pada tabel Petugas PST (`PegawaiPstsTable`)
+- Perbaikan hak akses presensi: Pengguna login yang bukan petugas PST dan bukan admin tidak lagi dapat melihat dropdown pegawai lain, melainkan menampilkan peringatan status akun dan menonaktifkan tombol presensi (proteksi backend 403)
 
 ### 2026-05-06
 - Merge branch `feature/presensi-auto-name` ke `main`

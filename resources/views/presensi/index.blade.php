@@ -137,6 +137,20 @@
                     </div>
                     <input type="hidden" id="pegawai_id" value="{{ $authPegawai->id }}">
                 </div>
+                @elseif(auth()->check() && !$isAdmin)
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3 mb-2">
+                    <div class="bg-amber-100 p-2.5 rounded-full text-amber-600 mt-0.5 shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-gray-800">Bukan Petugas PST</h3>
+                        <p class="text-xs text-gray-600 mt-1 leading-relaxed">
+                            Akun Anda (<strong>{{ auth()->user()->name }}</strong>) belum terdaftar sebagai Petugas PST. Silakan hubungi admin untuk menambahkan akun Anda ke data Petugas PST.
+                        </p>
+                    </div>
+                </div>
                 @else
                 <div class="relative">
                     <select id="pegawai_id" style="width: 100%">
@@ -172,6 +186,15 @@
 
                 <input type="hidden" name="image" id="image_data">
 
+                @if(auth()->check() && !$isAdmin && !$authPegawai)
+                <button type="button" disabled
+                    class="w-full text-white bg-gray-400 font-bold rounded-xl text-sm px-5 py-3.5 cursor-not-allowed flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                    </svg>
+                    Presensi Tidak Tersedia
+                </button>
+                @else
                 <!-- Capture Button -->
                 <button type="button" onClick="take_snapshot()" id="btn-capture"
                     class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-bold rounded-xl text-lg px-5 py-4 w-full transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 group">
@@ -184,6 +207,7 @@
                     </svg>
                     Ambil Foto Absen
                 </button>
+                @endif
 
                 <!-- Submit Button (Hidden initially) -->
                 <button type="button" onClick="submitPresensi()" id="btn-submit"

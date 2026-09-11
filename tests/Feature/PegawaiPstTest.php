@@ -53,4 +53,27 @@ class PegawaiPstTest extends TestCase
         $this->assertEquals($user->id, $pegawai->user_id);
         $this->assertEquals($pegawai->id, $user->fresh()->pegawai->id);
     }
+
+    public function test_non_petugas_user_cannot_access_dropdown_or_submit_presensi(): void
+    {
+        $user = User::create([
+            'name' => 'Adib Sulton Muammal',
+            'email' => 'muammal.adib@bps.go.id',
+            'password' => bcrypt('password'),
+            'nip' => '199501012020121001',
+            'jabatan' => 'Pranata Komputer Pertama',
+        ]);
+
+        $response = $this->actingAs($user)->get('/presensi');
+        $response->assertStatus(200);
+        $response->assertSee('Bukan Petugas PST');
+        $response->assertDontSee('<select id="pegawai_id"', false);
+
+        // Test POST store blocked
+        $postResponse = $this->actingAs($user)->postJson('/presensi', [
+            'pegawai_id' => 999,
+            'image' => 'data:image/jpeg;base64,dGVzdA==',
+        ]);
+        $postResponse->assertStatus(403);
+    }
 }
