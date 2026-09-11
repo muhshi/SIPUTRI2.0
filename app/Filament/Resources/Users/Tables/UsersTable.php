@@ -2,9 +2,13 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Filament\Resources\PegawaiPsts\PegawaiPstResource;
+use App\Models\User;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -48,6 +52,12 @@ class UsersTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->recordActions([
+                Action::make('jadikan_petugas_pst')
+                    ->label('Jadikan Petugas PST')
+                    ->icon(Heroicon::OutlinedUserPlus)
+                    ->color('success')
+                    ->visible(fn(User $record) => !$record->pegawai)
+                    ->url(fn(User $record) => PegawaiPstResource::getUrl('create', ['user_id' => $record->id])),
                 EditAction::make(),
             ])
             ->toolbarActions([

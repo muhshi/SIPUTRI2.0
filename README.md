@@ -119,6 +119,13 @@ Jika Anda menjalankan seeder bawaan, berikut adalah kredensial untuk login ke pa
 
 ## Changelog
 
+### 2026-09-11
+- Fitur penambahan Petugas PST dari Pengguna: penambahan dropdown pilihan pegawai (`user_id`) pada `PegawaiPstForm` dengan auto-fill nama, NIP, dan jabatan
+- Migrasi penambahan kolom `user_id` pada tabel `pegawai_psts` untuk menghubungkan akun pengguna secara langsung
+- Penambahan tombol aksi *"Jadikan Petugas PST"* pada tabel Pengguna (`UsersTable`) untuk pengguna yang belum terhubung sebagai petugas PST
+- Peningkatan relasi model `User` dan `PegawaiPst`: sinkronisasi otomatis `user_id`, nama, NIP, serta auto-linking saat login/presensi
+- Penambahan kolom Akun Pengguna pada tabel Petugas PST (`PegawaiPstsTable`)
+
 ### 2026-05-06
 - Merge branch `feature/presensi-auto-name` ke `main`
 - Implementasi auto-detect pegawai berdasarkan nama pada login SSO Presensi (fallback jika NIP tidak cocok)

@@ -25,7 +25,7 @@ class PresensiController extends Controller
             ->get()
             ->keyBy('pegawai_id');
 
-        // Authenticated user's employee - match by name
+        // Authenticated user's employee - match by name / user_id / nip
         $authPegawai = null;
         if (auth()->check()) {
             $user = auth()->user();
@@ -34,6 +34,10 @@ class PresensiController extends Controller
             // Fallback: case-insensitive name matching
             if (!$authPegawai && $user->name) {
                 $authPegawai = PegawaiPst::whereRaw('LOWER(nama_pegawai) = ?', [strtolower(trim($user->name))])->first();
+            }
+            // Auto-link user_id jika belum terhubung
+            if ($authPegawai && !$authPegawai->user_id) {
+                $authPegawai->update(['user_id' => $user->id]);
             }
         }
 

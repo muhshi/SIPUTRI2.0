@@ -37,6 +37,12 @@ class PegawaiPstsTable
                     ->label('Nama Pegawai')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('user.email')
+                    ->label('Akun Pengguna')
+                    ->placeholder('Belum terhubung')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('jabatan')
                     ->label('Jabatan')
                     ->searchable(),

@@ -54,6 +54,21 @@ class User extends Authenticatable
 
     public function pegawai()
     {
+        return $this->hasOne(PegawaiPst::class, 'user_id');
+    }
+
+    public function pegawaiByName()
+    {
         return $this->hasOne(PegawaiPst::class, 'nama_pegawai', 'name');
+    }
+
+    public function pegawaiByNip()
+    {
+        return $this->hasOne(PegawaiPst::class, 'nip', 'nip');
+    }
+
+    public function getPegawaiAttribute()
+    {
+        return $this->getRelationValue('pegawai') ?? $this->pegawaiByName ?? $this->pegawaiByNip;
     }
 }

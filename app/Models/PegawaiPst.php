@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class PegawaiPst extends Model
 {
     protected $fillable = [
+        'user_id',
         'nip_bps',
         'nip',
         'nama_pegawai',
@@ -19,6 +20,30 @@ class PegawaiPst extends Model
 
     protected static function booted(): void
     {
+        static::saving(function (PegawaiPst $pegawai) {
+            // Sinkronisasi data dari user jika user_id diset
+            if ($pegawai->user_id) {
+                $user = User::find($pegawai->user_id);
+                if ($user) {
+                    if (empty($pegawai->nama_pegawai)) {
+                        $pegawai->nama_pegawai = $user->name;
+                    }
+                    if (empty($pegawai->nip) && $user->nip) {
+                        $pegawai->nip = $user->nip;
+                    }
+                    if (empty($pegawai->jabatan) && $user->jabatan) {
+                        $pegawai->jabatan = $user->jabatan;
+                    }
+                }
+            } elseif ($pegawai->nip) {
+                // Cari user berdasarkan NIP jika user_id belum terisi
+                $user = User::where('nip', $pegawai->nip)->first();
+                if ($user) {
+                    $pegawai->user_id = $user->id;
+                }
+            }
+        });
+
         static::saved(function (PegawaiPst $pegawai) {
             // Kompresi foto setelah disimpan/diupdate
             if ($pegawai->wasChanged('foto_pegawai') && $pegawai->foto_pegawai) {
@@ -96,6 +121,11 @@ class PegawaiPst extends Model
         };
 
         imagedestroy($source);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function presensis()
