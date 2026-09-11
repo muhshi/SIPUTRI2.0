@@ -145,6 +145,7 @@ chmod +x deploy.sh
 ## Changelog
 
 ### 2026-09-11
+- Peningkatan `deploy.sh`: Dukungan eksekusi perintah PHP/Artisan/Composer via container Docker (`siputri-franken`) dan auto-fallback build frontend via image `node:22-alpine` jika Node di host server usang (< 20)
 - Pembuatan script deploy cerdas `deploy.sh` dengan deteksi otomatis perubahan commit (hanya build frontend & composer saat dibutuhkan)
 - Fitur penambahan Petugas PST dari Pengguna: penambahan dropdown pilihan pegawai (`user_id`) pada `PegawaiPstForm` dengan auto-fill nama, NIP, dan jabatan
 - Migrasi penambahan kolom `user_id` pada tabel `pegawai_psts` untuk menghubungkan akun pengguna secara langsung
