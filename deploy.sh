@@ -92,6 +92,12 @@ fi
 
 echo -e "${BLUE}📌 Target Branch: ${YELLOW}${BRANCH}${NC}"
 
+# Amankan jika ada perubahan file lokal di server (misal package-lock.json dari npm)
+if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then
+    echo -e "${YELLOW}⚠️  Terdeteksi perubahan file lokal di server. Menyimpan sementara (git stash)...${NC}"
+    git stash || true
+fi
+
 OLD_COMMIT=$(git rev-parse HEAD 2>/dev/null || echo "initial")
 
 echo -e "${BLUE}⬇️  Menarik perubahan dari remote (git pull origin ${BRANCH})...${NC}"
