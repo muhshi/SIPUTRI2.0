@@ -117,9 +117,35 @@ Jika Anda menjalankan seeder bawaan, berikut adalah kredensial untuk login ke pa
 **Error: "No such function: MONTH" (SQLite)**
 - Solusi: Fitur chart dan filter telah disesuaikan agar kompatibel dengan SQLite. Jika masih error, pastikan Anda telah menarik kode terbaru (`git pull`).
 
+## Deployment ke Server (`deploy.sh`)
+
+Telah disediakan script otomatisasi deploy cerdas (`deploy.sh`) yang mendeteksi perubahan commit secara otomatis dan **hanya melakukan build aset/install dependensi saat dibutuhkan**:
+
+```bash
+# Memberikan izin eksekusi (jika belum)
+chmod +x deploy.sh
+
+# Jalankan deploy cerdas (otomatis git pull, cek diff, migrasi, dan cache)
+./deploy.sh
+
+# Atau jika ingin memaksa build ulang aset frontend:
+./deploy.sh --force-build
+
+# Melewati build frontend:
+./deploy.sh --skip-build
+```
+
+### Keunggulan `deploy.sh`:
+1. **Smart Build**: Hanya menjalankan `npm run build` jika terdeteksi perubahan pada folder `resources/`, `vite.config.js`, `package.json`, atau jika `public/build/manifest.json` belum ada.
+2. **Smart Composer**: Hanya menjalankan `composer install` jika `composer.json` atau `composer.lock` berubah.
+3. **Safe Migration**: Menjalankan `php artisan migrate --force` secara aman tanpa menghapus/merusak data yang sudah ada.
+4. **Auto Caching**: Mengoptimalkan cache Laravel (`config:cache`, `route:cache`, `view:cache`, `filament:cache-components`).
+5. **Auto Reload Docker/FrankenPHP**: Otomatis me-restart container `siputri-franken` jika server menggunakan docker-compose.
+
 ## Changelog
 
 ### 2026-09-11
+- Pembuatan script deploy cerdas `deploy.sh` dengan deteksi otomatis perubahan commit (hanya build frontend & composer saat dibutuhkan)
 - Fitur penambahan Petugas PST dari Pengguna: penambahan dropdown pilihan pegawai (`user_id`) pada `PegawaiPstForm` dengan auto-fill nama, NIP, dan jabatan
 - Migrasi penambahan kolom `user_id` pada tabel `pegawai_psts` untuk menghubungkan akun pengguna secara langsung
 - Penambahan tombol aksi *"Jadikan Petugas PST"* pada tabel Pengguna (`UsersTable`) untuk pengguna yang belum terhubung sebagai petugas PST
