@@ -56,6 +56,15 @@ class PegawaiPstForm
                                     ->maxLength(255),
                             ]),
 
+                        TextInput::make('no_hp')
+                            ->label('No. HP / WhatsApp')
+                            ->placeholder('Contoh: 08123456789 atau 628123456789')
+                            ->helperText('Nomor ini digunakan untuk pengiriman notifikasi jadwal piket via WhatsApp.')
+                            ->tel()
+                            ->maxLength(20)
+                            ->nullable()
+                            ->columnSpanFull(),
+
                         FileUpload::make('foto_pegawai')
                             ->label('Foto Pegawai')
                             ->helperText('Unggah foto resmi petugas PST (Format: JPG, PNG, WEBP, Maks: 5MB).')
