@@ -12,6 +12,7 @@ class PegawaiPst extends Model
         'nip_bps',
         'nip',
         'nama_pegawai',
+        'no_hp',
         'jabatan',
         'pangkat',
         'golongan',
