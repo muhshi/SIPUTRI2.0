@@ -167,6 +167,13 @@ chmod +x deploy.sh
 - Sinkronisasi data presensi dengan user yang sedang login (auth user pegawai)
 - Penambahan filter dan optimasi query pada halaman list presensi admin
 
+### 2026-10-16
+- Merge branch `adit` ke `main`
+- Penambahan fitur Jadwal Piket Petugas PST (Resource Filament, kalender jadwal piket, form input 2 kolom: Pelayanan & Pengaduan)
+- Penambahan command notifikasi WhatsApp otomatis untuk jadwal piket (`SendPiketNotification`)
+- Penambahan kolom `no_hp` pada data Pegawai PST
+- Perbaikan dependensi `composer.json` (mempertahankan Filament `^5.0`) dan fallback kompatibilitas PHP pada `config/database.php`
+
 ### 2026-04-29
 - Merge branch `feat/sso-integration-and-updates` ke `main`
 - Implementasi integrasi SIPETRA SSO (Socialite Passport)
