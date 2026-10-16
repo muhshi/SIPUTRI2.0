@@ -196,8 +196,21 @@ fi
 # ------------------------------------------------------------------------------
 # Database Migration
 # ------------------------------------------------------------------------------
-echo -e "${BLUE}🗄️  Menjalankan migrasi database...${NC}"
-run_artisan migrate --force
+NEED_MIGRATE=false
+
+if [ "$FORCE_BUILD" = true ]; then
+    NEED_MIGRATE=true
+elif echo "$CHANGED_FILES" | grep -qE '^database/migrations/'; then
+    echo -e "${YELLOW}🗄️  Terdeteksi file migrasi baru pada database/migrations/.${NC}"
+    NEED_MIGRATE=true
+fi
+
+if [ "$NEED_MIGRATE" = true ]; then
+    echo -e "${BLUE}🗄️  Menjalankan migrasi database (hanya menambahkan tabel/kolom baru)...${NC}"
+    run_artisan migrate --force
+else
+    echo -e "${GREEN}⏩ Tidak ada perubahan pada file migrasi. Skip migrate.${NC}"
+fi
 
 # ------------------------------------------------------------------------------
 # Optimasi Cache Laravel

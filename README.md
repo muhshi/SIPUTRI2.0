@@ -173,6 +173,7 @@ chmod +x deploy.sh
 - Penambahan command notifikasi WhatsApp otomatis untuk jadwal piket (`SendPiketNotification`)
 - Penambahan kolom `no_hp` pada data Pegawai PST
 - Perbaikan dependensi `composer.json` (mempertahankan Filament `^5.0`) dan fallback kompatibilitas PHP pada `config/database.php`
+- Penyempurnaan `deploy.sh`: penambahan deteksi pintar perubahan file migrasi database (skip `migrate` jika tidak ada file migrasi baru)
 
 ### 2026-04-29
 - Merge branch `feat/sso-integration-and-updates` ke `main`
