@@ -144,6 +144,10 @@ chmod +x deploy.sh
 
 ## Changelog
 
+### 2026-10-31
+- Perubahan default sorting pada tabel Presensi: data terbaru otomatis tampil di urutan paling atas (`tanggal` descending)
+- Penambahan fitur filter berdasarkan Pegawai pada tabel Presensi di panel admin Filament
+
 ### 2026-09-11
 - Peningkatan `deploy.sh`: Dukungan eksekusi perintah PHP/Artisan/Composer via container Docker (`siputri-franken`) dan auto-fallback build frontend via image `node:22-alpine` jika Node di host server usang (< 20)
 - Pembuatan script deploy cerdas `deploy.sh` dengan deteksi otomatis perubahan commit (hanya build frontend & composer saat dibutuhkan)
