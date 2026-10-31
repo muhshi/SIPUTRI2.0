@@ -32,6 +32,7 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/print/kunjungan', \App\Http\Controllers\PrintKunjunganController::class)->name('print.kunjungan');//->middleware('auth'); // Uncomment middleware if auth is required and working
+Route::get('/print/presensi', \App\Http\Controllers\PrintPresensiController::class)->name('print.presensi');
 
 Route::get('/auth/sipetra/redirect', [SsoController::class, 'redirect'])->name('sipetra.login');
 Route::get('/auth/sipetra/callback', [SsoController::class, 'callback']);
