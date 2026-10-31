@@ -145,8 +145,12 @@ chmod +x deploy.sh
 ## Changelog
 
 ### 2026-10-31
-- Perubahan default sorting pada tabel Presensi: data terbaru otomatis tampil di urutan paling atas (`tanggal` descending)
-- Penambahan fitur filter berdasarkan Pegawai pada tabel Presensi di panel admin Filament
+- **Default Sort & Filter Presensi**: Perubahan default sorting pada tabel Presensi ke `tanggal` descending (data terbaru paling atas) dan penambahan filter berdasarkan Pegawai
+- **Widget Petugas Piket Hari Ini**: Widget monitoring piket PST & pengaduan harian di Dashboard Admin Filament dengan deteksi live status kehadiran (Belum Presensi / Hadir / Selesai Piket)
+- **Kompresi Otomatis Foto Presensi**: Optimasi penyimpanan dengan kompresi GD (resize proporsional maks. 800px & JPEG 75%) pada `PresensiController` untuk menghemat storage server
+- **Sanitasi Respons Error**: Peningkatan keamanan API presensi dengan sanitasi respons error (mencegah kebocoran trace/path internal server ke klien) dan logging server terpusat
+- **Ekspor Excel & PDF Presensi**: Penambahan tombol aksi *Export Excel (.xlsx)* via OpenSpout dan *Print / Save PDF* rekapitulasi presensi berdesain resmi BPS
+- **Optimasi Indeks Database**: Penambahan composite index non-destruktif pada tabel `presensis` (`tanggal, pegawai_id`) dan `jadwal_pikets` (`tanggal, is_notified`)
 
 ### 2026-09-11
 - Peningkatan `deploy.sh`: Dukungan eksekusi perintah PHP/Artisan/Composer via container Docker (`siputri-franken`) dan auto-fallback build frontend via image `node:22-alpine` jika Node di host server usang (< 20)
