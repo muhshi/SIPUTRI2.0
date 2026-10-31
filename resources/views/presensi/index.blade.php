@@ -14,7 +14,6 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- SweetAlert2 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
     <style>
         /* Select2 custom styling to match Tailwind design */
         .select2-container--default .select2-selection--single {
@@ -77,7 +76,8 @@
         }
 
         /* Pastikan video webcam dan preview tidak terdistorsi (proporsional 1:1) */
-        #my_camera, #my_camera video {
+        #camera_wrapper video,
+        #webcam_video {
             width: 100% !important;
             height: 100% !important;
             object-fit: cover !important;
@@ -114,7 +114,7 @@
             <!-- Camera View -->
             <div id="camera_wrapper"
                 class="relative w-full aspect-square bg-black rounded-xl overflow-hidden mb-6 shadow-inner ring-4 ring-gray-100 flex items-center justify-center">
-                <div id="my_camera" class="w-full h-full flex items-center justify-center"></div>
+                <video id="webcam_video" autoplay playsinline muted class="w-full h-full object-cover transform -scale-x-100"></video>
                 <!-- Shutter Flash Animation -->
                 <div id="shutter_flash"
                     class="absolute inset-0 bg-white opacity-0 pointer-events-none transition-opacity duration-200">
@@ -302,21 +302,36 @@
 
 
     <script language="JavaScript">
-        Webcam.set({
-            width: 480,
-            height: 480,
-            dest_width: 640,
-            dest_height: 480,
-            crop_width: 480,
-            crop_height: 480,
-            image_format: 'jpeg',
-            jpeg_quality: 90,
-            flip_horiz: true
-        });
+        let localStream = null;
+        const videoElement = document.getElementById('webcam_video');
 
-        // Initialize camera
-        function initCamera() {
-            Webcam.attach('#my_camera');
+        // Initialize native camera
+        async function initCamera() {
+            try {
+                if (localStream) {
+                    localStream.getTracks().forEach(track => track.stop());
+                }
+
+                localStream = await navigator.mediaDevices.getUserMedia({
+                    audio: false,
+                    video: {
+                        facingMode: 'user',
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    }
+                });
+
+                if (videoElement) {
+                    videoElement.srcObject = localStream;
+                }
+            } catch (err) {
+                console.error("Camera access error:", err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Akses Kamera Gagal',
+                    text: 'Tidak dapat mengakses kamera. Pastikan browser memiliki izin mengakses webcam.',
+                });
+            }
         }
 
         // Run init on load
@@ -334,24 +349,52 @@
                 return;
             }
 
-            // Play shutter sound effect
-            // const audio = new Audio('path/to/shutter.mp3'); audio.play(); 
+            if (!videoElement || !videoElement.videoWidth || !videoElement.videoHeight) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Kamera Belum Siap',
+                    text: 'Silakan tunggu feed kamera aktif atau segarkan halaman.',
+                });
+                return;
+            }
 
             // Visual flash effect
             const flash = document.getElementById('shutter_flash');
-            flash.classList.remove('opacity-0');
-            setTimeout(() => flash.classList.add('opacity-0'), 100);
+            if (flash) {
+                flash.classList.remove('opacity-0');
+                setTimeout(() => flash.classList.add('opacity-0'), 100);
+            }
 
-            Webcam.snap(function (data_uri) {
-                document.getElementById('image_data').value = data_uri;
-                document.getElementById('results').innerHTML = '<img src="' + data_uri + '" class="w-full h-full object-cover"/>';
+            // 100% Proportional 1:1 Center-Crop:
+            // Ambil ukuran persegi terkecil dari resolusi asli kamera (misal 720x720 dari 1280x720)
+            const vw = videoElement.videoWidth;
+            const vh = videoElement.videoHeight;
+            const size = Math.min(vw, vh);
+            const startX = (vw - size) / 2;
+            const startY = (vh - size) / 2;
 
-                // Toggle views
-                document.getElementById('camera_wrapper').classList.add('hidden');
-                document.getElementById('result_wrapper').classList.remove('hidden');
-                document.getElementById('btn-capture').classList.add('hidden');
-                document.getElementById('btn-submit').classList.remove('hidden');
-            });
+            const canvas = document.createElement('canvas');
+            canvas.width = 600;
+            canvas.height = 600;
+            const ctx = canvas.getContext('2d');
+
+            // Mirror flip (horizontal) agar serasi dengan preview kamera
+            ctx.translate(canvas.width, 0);
+            ctx.scale(-1, 1);
+
+            // Gambar potongan persegi tepat di tengah frame video asli
+            ctx.drawImage(videoElement, startX, startY, size, size, 0, 0, canvas.width, canvas.height);
+
+            const data_uri = canvas.toDataURL('image/jpeg', 0.85);
+
+            document.getElementById('image_data').value = data_uri;
+            document.getElementById('results').innerHTML = '<img src="' + data_uri + '" class="w-full h-full object-cover"/>';
+
+            // Toggle views
+            document.getElementById('camera_wrapper').classList.add('hidden');
+            document.getElementById('result_wrapper').classList.remove('hidden');
+            document.getElementById('btn-capture').classList.add('hidden');
+            document.getElementById('btn-submit').classList.remove('hidden');
         }
 
         function retakePhoto() {

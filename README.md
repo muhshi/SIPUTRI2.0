@@ -145,7 +145,7 @@ chmod +x deploy.sh
 ## Changelog
 
 ### 2026-10-31
-- **Fix Proporsi Foto Presensi (Anti-Mleyot)**: Perbaikan konfigurasi tangkapan kamera WebcamJS menggunakan sensor native 4:3 (640x480) dengan center-crop 1:1 (480x480) dan CSS object-fit cover pada container kamera presensi, sehingga hasil foto wajah 100% proporsional alami tanpa terdistorsi/gepeng.
+- **Fix Proporsi Foto Presensi (Anti-Mleyot Total)**: Migrasi dari library lawas WebcamJS ke native HTML5 MediaDevices API (`getUserMedia`) dengan kalkulasi center-crop dinamis berdasarkan resolusi riil perangkat (`videoWidth` & `videoHeight`), serta preview mirror natural. Menghilangkan distorsi/kompresi paksa sensor sehingga foto 100% proporsional di semua jenis kamera (laptop 16:9, webcam 4:3, maupun smartphone).
 - **Profil & Password Terpusat SIPETRA & Sinkronisasi 1-Klik**:
   - Menambahkan menu "Profil & Password (SIPETRA)" pada dropdown user Filament yang membuka modal pengaturan akun terpusat di `https://bpsdemak.com/account`.
   - Menambahkan opsi "Sinkronkan Profil dari SIPETRA" untuk menyegarkan data nama, NIP, email, dan jabatan secara instan dari SIPETRA SSO.
