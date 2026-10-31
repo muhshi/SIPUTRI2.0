@@ -12,12 +12,15 @@
         ];
 
         $filterClass = \App\Filament\Widgets\DashboardFilterWidget::class;
+        $piketClass = \App\Filament\Widgets\PetugasPiketHariIniWidget::class;
 
         foreach ($visibleWidgets as $widget) {
             if (in_array($widget, $topStatClasses)) {
                 $topStats[] = $widget;
             } elseif ($widget === $filterClass) {
                 $filter[] = $widget;
+            } elseif ($widget === $piketClass) {
+                // Handled explicitly in dashboard layout
             } else {
                 $charts[] = $widget;
             }
@@ -27,6 +30,10 @@
     @if (!empty($topStats))
         <x-filament-widgets::widgets :widgets="$topStats" :columns="$this->getColumns()" />
     @endif
+
+    <div class="mt-6">
+        @livewire(\App\Filament\Widgets\PetugasPiketHariIniWidget::class)
+    </div>
 
     @if (!empty($filter))
         <x-filament-widgets::widgets :widgets="$filter" :columns="$this->getColumns()" />
