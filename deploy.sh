@@ -168,6 +168,9 @@ else
 fi
 
 if [ "$NEED_NPM_BUILD" = true ] && [ "$SKIP_BUILD" = false ]; then
+    # Bersihkan temp vite jika ada
+    rm -rf node_modules/.vite-temp 2>/dev/null || true
+
     # Cek versi Node di host
     HOST_NODE_VER=0
     if command -v node &> /dev/null; then
