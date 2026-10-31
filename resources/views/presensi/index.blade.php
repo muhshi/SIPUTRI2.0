@@ -75,6 +75,21 @@
             outline: none;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
+
+        /* Pastikan video webcam dan preview tidak terdistorsi (proporsional 1:1) */
+        #my_camera, #my_camera video {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            border-radius: 0.75rem;
+        }
+
+        #results, #results img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            border-radius: 0.75rem;
+        }
     </style>
 </head>
 
@@ -98,8 +113,8 @@
         <div class="p-6">
             <!-- Camera View -->
             <div id="camera_wrapper"
-                class="relative w-full h-80 bg-black rounded-xl overflow-hidden mb-6 shadow-inner ring-4 ring-gray-100">
-                <div id="my_camera" class="w-full h-full object-cover"></div>
+                class="relative w-full aspect-square bg-black rounded-xl overflow-hidden mb-6 shadow-inner ring-4 ring-gray-100 flex items-center justify-center">
+                <div id="my_camera" class="w-full h-full flex items-center justify-center"></div>
                 <!-- Shutter Flash Animation -->
                 <div id="shutter_flash"
                     class="absolute inset-0 bg-white opacity-0 pointer-events-none transition-opacity duration-200">
@@ -108,7 +123,7 @@
 
             <!-- Result View (Hidden by default) -->
             <div id="result_wrapper"
-                class="hidden relative w-full h-80 bg-gray-900 rounded-xl overflow-hidden mb-6 shadow-inner ring-4 ring-gray-100">
+                class="hidden relative w-full aspect-square bg-gray-900 rounded-xl overflow-hidden mb-6 shadow-inner ring-4 ring-gray-100 flex items-center justify-center">
                 <div id="results" class="w-full h-full flex items-center justify-center"></div>
                 <button onclick="retakePhoto()"
                     class="absolute top-2 right-2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white p-2 rounded-full transition-all">
@@ -288,8 +303,12 @@
 
     <script language="JavaScript">
         Webcam.set({
-            width: 400,
-            height: 400,
+            width: 480,
+            height: 480,
+            dest_width: 640,
+            dest_height: 480,
+            crop_width: 480,
+            crop_height: 480,
             image_format: 'jpeg',
             jpeg_quality: 90,
             flip_horiz: true
