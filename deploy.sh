@@ -171,6 +171,11 @@ if [ "$NEED_NPM_BUILD" = true ] && [ "$SKIP_BUILD" = false ]; then
     # Bersihkan temp vite jika ada
     rm -rf node_modules/.vite-temp 2>/dev/null || true
 
+    # Pastikan kepemilikan folder build dan node_modules writable jika pernah dijalankan via docker
+    if ([ ! -w "public/build" ] || [ ! -w "node_modules" ]) && command -v docker &> /dev/null; then
+        docker run --rm -v "$(pwd):/app" alpine chown -R 1000:1000 /app/public/build /app/node_modules 2>/dev/null || true
+    fi
+
     # Cek versi Node di host
     HOST_NODE_VER=0
     if command -v node &> /dev/null; then
