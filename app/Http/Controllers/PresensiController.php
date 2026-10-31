@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Presensi;
 use App\Models\PegawaiPst;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class PresensiController extends Controller
 {
@@ -114,12 +116,12 @@ class PresensiController extends Controller
 
             // Process Base64 Image
             $image_parts = explode(";base64,", $image);
-            $image_base64 = base64_decode($image_parts[1]);
+            $image_base64 = base64_decode($image_parts[1] ?? $image);
             $fileName = 'presensi_' . $pegawaiId . '_' . time() . '.jpg';
             $filePath = 'presensi/' . $fileName;
 
-            // Save Image to Storage
-            \Illuminate\Support\Facades\Storage::disk('public')->put($filePath, $image_base64);
+            // Save and Compress Image to Storage
+            $this->compressAndSaveImage($image_base64, $filePath);
 
             $presensi = Presensi::where('pegawai_id', $pegawaiId)
                 ->where('tanggal', $today)
@@ -139,7 +141,7 @@ class PresensiController extends Controller
 
                 if ($mode === 'manual' && $request->jam_selesai) {
                     $data['jam_selesai'] = $jamSelesai;
-                    $data['foto_keluar'] = $filePath; // Using same photo for both if entered manually? 
+                    $data['foto_keluar'] = $filePath;
                 }
 
                 Presensi::create($data);
@@ -157,7 +159,7 @@ class PresensiController extends Controller
                 // ======================
 
                 if ($presensi->foto_keluar) {
-                    \Illuminate\Support\Facades\Storage::disk('public')->delete($presensi->foto_keluar);
+                    Storage::disk('public')->delete($presensi->foto_keluar);
                 }
 
                 $presensi->update([
@@ -174,13 +176,56 @@ class PresensiController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan sistem.']);
 
         } catch (\Throwable $e) {
+            Log::error('Error saat menyimpan presensi: ' . $e->getMessage(), [
+                'exception' => $e,
+            ]);
+
             return response()->json([
                 'status' => 'error',
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
+                'message' => 'Terjadi kesalahan sistem saat memproses presensi. Silakan coba beberapa saat lagi.',
             ], 500);
         }
+    }
+
+    /**
+     * Kompresi dan simpan gambar presensi ke storage.
+     * Resize max 800px dan kualitas JPEG 75%.
+     */
+    protected function compressAndSaveImage(string $binaryData, string $filePath, int $maxWidth = 800, int $quality = 75): void
+    {
+        $source = @imagecreatefromstring($binaryData);
+
+        if (!$source) {
+            // Fallback: simpan raw bytes jika GD gagal membaca image
+            Storage::disk('public')->put($filePath, $binaryData);
+            return;
+        }
+
+        $origWidth = imagesx($source);
+        $origHeight = imagesy($source);
+
+        $newWidth = $origWidth;
+        $newHeight = $origHeight;
+
+        if ($origWidth > $maxWidth) {
+            $ratio = $maxWidth / $origWidth;
+            $newWidth = $maxWidth;
+            $newHeight = (int) round($origHeight * $ratio);
+        }
+
+        if ($newWidth !== $origWidth || $newHeight !== $origHeight) {
+            $resized = imagecreatetruecolor($newWidth, $newHeight);
+            imagecopyresampled($resized, $source, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
+            imagedestroy($source);
+            $source = $resized;
+        }
+
+        ob_start();
+        imagejpeg($source, null, $quality);
+        $compressed = ob_get_clean();
+        imagedestroy($source);
+
+        Storage::disk('public')->put($filePath, $compressed ?: $binaryData);
     }
 
     // Relationship removed (incorrectly placed in Controller)
