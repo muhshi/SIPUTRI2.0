@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Http\Responses\SsoLogoutResponse;
+use Filament\Auth\Http\Responses\Contracts\LogoutResponse;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Socialite\Contracts\Factory;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        if (interface_exists(LogoutResponse::class)) {
+            $this->app->singleton(LogoutResponse::class, SsoLogoutResponse::class);
+        }
     }
 
     /**
@@ -19,10 +24,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $socialite = $this->app->make(\Laravel\Socialite\Contracts\Factory::class);
+        $socialite = $this->app->make(Factory::class);
         $socialite->extend('sipetra', function ($app) use ($socialite) {
             $config = $app['config']['services.sipetra'];
-            return $socialite->buildProvider(\App\Providers\SipetraSocialiteProvider::class, $config);
+
+            return $socialite->buildProvider(SipetraSocialiteProvider::class, $config);
         });
     }
 }

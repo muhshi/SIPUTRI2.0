@@ -145,6 +145,9 @@ chmod +x deploy.sh
 ## Changelog
 
 ### 2026-10-31
+- **Federated Single Logout (SLO) & Anti Double-Click SSO Button**:
+  - Implementasi `SsoLogoutResponse` pada Filament agar logout pengguna otomatis memutus sesi terpusat di SIPETRA (`/oauth/logout`) dan mencegah login otomatis tanpa kredensial.
+  - Menambahkan animasi loading spinner dan disable state pada tombol "Masuk dengan SIPETRA SSO" untuk mencegah submit ganda.
 - **Default Sort & Filter Presensi**: Perubahan default sorting pada tabel Presensi ke `tanggal` descending (data terbaru paling atas) dan penambahan filter berdasarkan Pegawai
 - **Widget Petugas Piket Hari Ini**: Widget monitoring piket PST & pengaduan harian di Dashboard Admin Filament dengan deteksi live status kehadiran (Belum Presensi / Hadir / Selesai Piket)
 - **Kompresi Otomatis Foto Presensi**: Optimasi penyimpanan dengan kompresi GD (resize proporsional maks. 800px & JPEG 75%) pada `PresensiController` untuk menghemat storage server
