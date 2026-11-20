@@ -144,6 +144,14 @@ chmod +x deploy.sh
 
 ## Changelog
 
+### 2026-11-20
+- **Pembaruan Alur & Form Pengaturan Jadwal Piket Petugas PST**:
+  - **Matriks Input Harian 4-Slot**: Pengelompokan pengisian jadwal harian dalam satu form ringkas dan intuitif: Shift Pagi (08.00 - 12.00) untuk Petugas Pelayanan & Pengaduan/Disabilitas, serta Shift Siang (12.00 - 15.30) untuk Petugas Pelayanan & Pengaduan/Disabilitas.
+  - **Pencegahan Bentrok Petugas**: Validasi real-time dan backend agar petugas yang sama tidak dapat dijadwalkan pada lebih dari satu slot di hari yang sama.
+  - **Generator Rotasi Otomatis (Auto-Scheduler Bulanan)**: Fitur "Rotasi Otomatis (Generate)" pada widget kalender untuk mengenerate jadwal sebulan penuh (Senin s.d. Jumat) secara adil menggunakan rotasi round-robin dari daftar petugas aktif, lengkap dengan opsi overwrite jadwal existing.
+  - **Visualisasi Kalender Piket Terstruktur**: Tampilan kalender widget yang dikelompokkan rapi per shift (Pagi ☀️ dan Siang 🌤️) lengkap dengan avatar nama petugas dan trigger modal ubah cepat.
+  - **Sinkronisasi Create & Edit Record Filament**: Integrasi penuh `CreateJadwalPiket` dan `EditJadwalPiket` dengan `JadwalPiketService` untuk multi-slot saving/clearing yang seamless dan aman tanpa merusak struktur database.
+
 ### 2026-10-31
 - **Fix Proporsi Foto Presensi (Anti-Mleyot Total)**: Migrasi dari library lawas WebcamJS ke native HTML5 MediaDevices API (`getUserMedia`) dengan kalkulasi center-crop dinamis berdasarkan resolusi riil perangkat (`videoWidth` & `videoHeight`), serta preview mirror natural. Menghilangkan distorsi/kompresi paksa sensor sehingga foto 100% proporsional di semua jenis kamera (laptop 16:9, webcam 4:3, maupun smartphone).
 - **Profil & Password Terpusat SIPETRA & Sinkronisasi 1-Klik**:

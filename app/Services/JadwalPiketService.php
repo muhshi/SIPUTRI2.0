@@ -38,9 +38,13 @@ class JadwalPiketService
     /**
      * Mengambil 4 slot petugas untuk tanggal tertentu.
      */
-    public function getDailySlots(string $date): array
+    public function getDailySlots(string|\DateTimeInterface $date): array
     {
-        $existing = JadwalPiket::whereDate('tanggal', $date)->get();
+        $dateStr = $date instanceof \DateTimeInterface
+            ? Carbon::instance($date)->timezone(config('app.timezone'))->format('Y-m-d')
+            : Carbon::parse($date)->timezone(config('app.timezone'))->format('Y-m-d');
+
+        $existing = JadwalPiket::whereDate('tanggal', $dateStr)->get();
 
         $slots = [];
         foreach (self::ROLE_CONFIG as $slotKey => $config) {
@@ -57,8 +61,12 @@ class JadwalPiketService
      * Menyimpan/memperbarui 4 slot petugas untuk tanggal tertentu.
      * Mencegah duplikasi petugas di hari yang sama.
      */
-    public function saveDailySlots(string $date, array $slots, bool $sendWhatsApp = false): array
+    public function saveDailySlots(string|\DateTimeInterface $date, array $slots, bool $sendWhatsApp = false): array
     {
+        $dateStr = $date instanceof \DateTimeInterface
+            ? Carbon::instance($date)->timezone(config('app.timezone'))->format('Y-m-d')
+            : Carbon::parse($date)->timezone(config('app.timezone'))->format('Y-m-d');
+
         // Ambil ID yang terisi
         $assignedIds = [];
         foreach (array_keys(self::ROLE_CONFIG) as $key) {
@@ -80,7 +88,7 @@ class JadwalPiketService
             if ($officerId) {
                 $jadwal = JadwalPiket::updateOrCreate(
                     [
-                        'tanggal' => $date,
+                        'tanggal' => $dateStr,
                         'shift' => $config['shift'],
                         'jenis_piket' => $config['jenis_piket'],
                     ],
@@ -96,7 +104,7 @@ class JadwalPiketService
                 $results[$slotKey] = $jadwal;
             } else {
                 // Jika slot dikosongkan, hapus jadwal lama jika ada
-                JadwalPiket::whereDate('tanggal', $date)
+                JadwalPiket::whereDate('tanggal', $dateStr)
                     ->where('shift', $config['shift'])
                     ->where('jenis_piket', $config['jenis_piket'])
                     ->delete();

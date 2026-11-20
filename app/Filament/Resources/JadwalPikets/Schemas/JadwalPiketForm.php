@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\JadwalPikets\Schemas;
 
+use App\Models\PegawaiPst;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
@@ -13,34 +14,47 @@ class JadwalPiketForm
     {
         return $schema
             ->components([
-                \Filament\Forms\Components\Select::make('pegawai_pst_id')
-                    ->label('Pegawai Piket')
-                    ->relationship('pegawaiPst', 'nama_pegawai')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
                 DatePicker::make('tanggal')
                     ->label('Tanggal Piket')
-                    ->required(),
-                \Filament\Forms\Components\Select::make('jenis_piket')
-                    ->label('Jenis Piket')
-                    ->options([
-                        'Pelayanan' => 'Pelayanan',
-                        'Pengaduan/Disabilitas' => 'Pengaduan/Disabilitas',
-                    ])
                     ->required()
-                    ->default('Pelayanan'),
-                \Filament\Forms\Components\Select::make('shift')
-                    ->label('Shift')
-                    ->options([
-                        'Pagi' => 'Pagi',
-                        'Siang' => 'Siang',
-                    ])
-                    ->required()
-                    ->default('Pagi'),
-                Toggle::make('is_notified')
-                    ->label('Notifikasi Terkirim?')
-                    ->default(false),
+                    ->default(now()),
+
+                \Filament\Schemas\Components\Grid::make(2)
+                    ->schema([
+                        \Filament\Schemas\Components\Section::make('☀️ Shift Pagi (08.00 - 12.00)')
+                            ->description('Piket pelayanan dan pengaduan pagi')
+                            ->schema([
+                                Select::make('pagi_pelayanan_id')
+                                    ->label('Petugas Pelayanan')
+                                    ->options(fn () => PegawaiPst::orderBy('nama_pegawai')->pluck('nama_pegawai', 'id'))
+                                    ->searchable()
+                                    ->placeholder('-- Pilih Petugas Pelayanan --'),
+                                Select::make('pagi_pengaduan_id')
+                                    ->label('Petugas Pengaduan / Disabilitas')
+                                    ->options(fn () => PegawaiPst::orderBy('nama_pegawai')->pluck('nama_pegawai', 'id'))
+                                    ->searchable()
+                                    ->placeholder('-- Pilih Petugas Pengaduan --'),
+                            ]),
+
+                        \Filament\Schemas\Components\Section::make('🌤️ Shift Siang (12.00 - 15.30)')
+                            ->description('Piket pelayanan dan pengaduan siang')
+                            ->schema([
+                                Select::make('siang_pelayanan_id')
+                                    ->label('Petugas Pelayanan')
+                                    ->options(fn () => PegawaiPst::orderBy('nama_pegawai')->pluck('nama_pegawai', 'id'))
+                                    ->searchable()
+                                    ->placeholder('-- Pilih Petugas Pelayanan --'),
+                                Select::make('siang_pengaduan_id')
+                                    ->label('Petugas Pengaduan / Disabilitas')
+                                    ->options(fn () => PegawaiPst::orderBy('nama_pegawai')->pluck('nama_pegawai', 'id'))
+                                    ->searchable()
+                                    ->placeholder('-- Pilih Petugas Pengaduan --'),
+                            ]),
+                    ]),
+
+                Toggle::make('send_whatsapp')
+                    ->label('Kirim Notifikasi WhatsApp ke Petugas Baru')
+                    ->default(true),
             ]);
     }
 }
