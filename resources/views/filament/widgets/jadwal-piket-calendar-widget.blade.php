@@ -1,95 +1,178 @@
 <x-filament-widgets::widget>
     <x-filament::card>
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-                <select wire:model.live="currentMonth" style="font-size: 1.25rem; font-weight: bold; border: 1px solid #e5e7eb; border-radius: 0.375rem; padding: 0.25rem 2rem 0.25rem 0.5rem; background-color: transparent; cursor: pointer; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23111827%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 0.7rem top 50%; background-size: 0.65rem auto;">
+        <!-- Header Navigasi & Aksi -->
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-4 pb-4 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-2">
+                <select wire:model.live="currentMonth" class="text-lg font-bold rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-3 py-1.5 focus:ring-primary-500">
                     @foreach(range(1, 12) as $m)
                         <option value="{{ $m }}">{{ \Carbon\Carbon::create()->month($m)->translatedFormat('F') }}</option>
                     @endforeach
                 </select>
-                <select wire:model.live="currentYear" style="font-size: 1.25rem; font-weight: bold; border: 1px solid #e5e7eb; border-radius: 0.375rem; padding: 0.25rem 2rem 0.25rem 0.5rem; background-color: transparent; cursor: pointer; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23111827%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 0.7rem top 50%; background-size: 0.65rem auto;">
-                    @foreach(range(2020, 2035) as $y)
+                <select wire:model.live="currentYear" class="text-lg font-bold rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-3 py-1.5 focus:ring-primary-500">
+                    @foreach(range(2025, 2035) as $y)
                         <option value="{{ $y }}">{{ $y }}</option>
                     @endforeach
                 </select>
             </div>
-            <div style="display: flex; gap: 0.5rem;">
+
+            <div class="flex flex-wrap items-center gap-2">
+                <!-- Tombol Generate Rotasi Otomatis -->
+                <x-filament::button
+                    wire:click="mountAction('generateRotation')"
+                    color="primary"
+                    size="sm"
+                    icon="heroicon-o-sparkles"
+                >
+                    Rotasi Otomatis (Generate)
+                </x-filament::button>
+
                 <!-- Tombol Edit Mode -->
                 @if($isEditMode)
-                    <x-filament::button wire:click="toggleEditMode" color="success" size="sm">
-                        Simpan (Selesai Edit)
+                    <x-filament::button wire:click="toggleEditMode" color="success" size="sm" icon="heroicon-o-check">
+                        Selesai Edit
                     </x-filament::button>
                 @else
-                    <x-filament::button wire:click="toggleEditMode" color="danger" size="sm" icon="heroicon-o-pencil-square">
-                        Edit
+                    <x-filament::button wire:click="toggleEditMode" color="warning" size="sm" icon="heroicon-o-pencil-square">
+                        Mode Edit
                     </x-filament::button>
                 @endif
 
                 <x-filament::button wire:click="previousMonth" color="gray" size="sm">
-                    &laquo; Bulan Sebelumnya
+                    &laquo; Bulan Lalu
                 </x-filament::button>
                 <x-filament::button wire:click="nextMonth" color="gray" size="sm">
-                    Bulan Berikutnya &raquo;
+                    Bulan Depan &raquo;
                 </x-filament::button>
             </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; text-align: center; font-size: 0.875rem; font-weight: 600; color: #6b7280; margin-bottom: 0.5rem;">
-            <div>Min</div><div>Sen</div><div>Sel</div><div>Rab</div><div>Kam</div><div>Jum</div><div>Sab</div>
+        <!-- Legend Shift -->
+        <div class="flex flex-wrap items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-3 px-1 gap-2">
+            <div class="flex items-center gap-4">
+                <span class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span> Pelayanan (Pagi/Siang)
+                </span>
+                <span class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-amber-500"></span> Pengaduan/Disabilitas (Pagi/Siang)
+                </span>
+            </div>
+            <div>
+                <span class="text-primary-600 dark:text-primary-400 font-medium">Klik pada tanggal / tombol edit untuk mengatur 4 slot harian</span>
+            </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px;">
+        <!-- Header Hari -->
+        <div class="grid grid-cols-7 gap-1.5 text-center text-xs font-bold text-gray-600 dark:text-gray-300 mb-2">
+            <div class="py-1 text-red-500">Min</div>
+            <div class="py-1">Sen</div>
+            <div class="py-1">Sel</div>
+            <div class="py-1">Rab</div>
+            <div class="py-1">Kam</div>
+            <div class="py-1">Jum</div>
+            <div class="py-1 text-red-500">Sab</div>
+        </div>
+
+        <!-- Grid Kalender -->
+        <div class="grid grid-cols-7 gap-1.5">
             @foreach ($days as $day)
-                <div style="min-height: 120px; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 0.5rem; position: relative; {{ $day['isCurrentMonth'] ? 'background-color: #ffffff;' : 'background-color: #f9fafb;' }}">
-                    <div style="text-align: right; font-size: 0.875rem; font-weight: 500; {{ $day['isCurrentMonth'] ? 'color: #111827;' : 'color: #9ca3af;' }}">
-                        {{ $day['date']->format('j') }}
-                    </div>
-                    
-                    <div style="margin-top: 0.5rem; display: flex; flex-direction: column; gap: 4px;">
-                        @foreach ($day['jadwals'] as $jadwal)
-                            @php
-                                $bgColor = '';
-                                $textColor = '';
-                                if ($jadwal->jenis_piket == 'Pelayanan') {
-                                    $bgColor = $jadwal->shift == 'Pagi' ? '#F4D03F' : '#D5F5E3';
-                                    $textColor = '#000000';
-                                } else {
-                                    $bgColor = $jadwal->shift == 'Pagi' ? '#FCF3CF' : '#3498DB';
-                                    $textColor = $jadwal->shift == 'Pagi' ? '#000000' : '#ffffff';
-                                }
-                            @endphp
-                            <div style="position: relative; font-size: 0.75rem; padding: 4px 6px; border-radius: 0.25rem; background-color: {{ $bgColor }}; color: {{ $textColor }}; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
-                                <div style="font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: {{ $isEditMode ? '20px' : '0' }};">{{ $jadwal->pegawaiPst->nama_pegawai ?? 'Unknown' }}</div>
-                                <div style="font-size: 10px; opacity: 0.8;">{{ $jadwal->jenis_piket }} ({{ $jadwal->shift }})</div>
-                                
-                                @if($isEditMode)
-                                    <button 
-                                        wire:click="mountAction('deleteJadwal', { id: {{ $jadwal->id }} })"
-                                        style="position: absolute; right: 4px; top: 50%; transform: translateY(-50%); color: red; background: white; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; cursor: pointer; border: 1px solid red;"
-                                    >
-                                        x
-                                    </button>
-                                @endif
-                            </div>
-                        @endforeach
-                        
-                        @if($isEditMode && !$day['isFull'])
-                            <button 
+                @php
+                    $isWeekend = $day['isWeekend'];
+                    $isCurrentMonth = $day['isCurrentMonth'];
+                    $slots = $day['slots'];
+                @endphp
+                <div class="min-h-[140px] rounded-xl border border-gray-200 dark:border-gray-800 p-2 flex flex-col justify-between transition-all {{ $isCurrentMonth ? ($isWeekend ? 'bg-gray-50/60 dark:bg-gray-900/40' : 'bg-white dark:bg-gray-900 shadow-2xs') : 'bg-gray-50/30 dark:bg-gray-950/20 opacity-40' }}">
+                    <!-- Header Cell Tanggal -->
+                    <div class="flex items-center justify-between mb-1.5">
+                        <span class="text-xs font-bold {{ $isWeekend ? 'text-red-500' : ($isCurrentMonth ? 'text-gray-900 dark:text-white' : 'text-gray-400') }}">
+                            {{ $day['date']->format('j') }}
+                        </span>
+
+                        @if($isEditMode || $day['filledCount'] > 0)
+                            <button
                                 wire:click="mountAction('addJadwal', { tanggal: '{{ $day['dateString'] }}' })"
-                                style="margin-top: 4px; display: flex; align-items: center; justify-content: center; padding: 4px; border: 2px dashed #f87171; border-radius: 0.25rem; color: #ef4444; cursor: pointer; background: transparent; transition: all 0.2s;"
-                                onmouseover="this.style.backgroundColor='#fee2e2'"
-                                onmouseout="this.style.backgroundColor='transparent'"
+                                class="text-[10px] text-primary-600 hover:text-primary-700 dark:text-primary-400 font-semibold flex items-center gap-0.5 hover:underline"
+                                title="Atur 4 Slot Piket"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
+                                <x-filament::icon icon="heroicon-m-pencil" class="w-3 h-3" />
+                                <span>{{ $day['filledCount'] }}/4</span>
                             </button>
+                        @endif
+                    </div>
+
+                    <!-- Slot Kontainer -->
+                    <div class="space-y-1.5 flex-1 flex flex-col justify-center">
+                        @if($day['filledCount'] === 0 && !$isWeekend && $isEditMode)
+                            <button
+                                wire:click="mountAction('addJadwal', { tanggal: '{{ $day['dateString'] }}' })"
+                                class="w-full py-3 border border-dashed border-gray-300 dark:border-gray-700 rounded-lg text-[11px] text-gray-400 hover:text-primary-600 hover:border-primary-400 flex flex-col items-center justify-center gap-1 transition-all"
+                            >
+                                <x-filament::icon icon="heroicon-o-plus" class="w-4 h-4" />
+                                <span>Isi 4 Slot</span>
+                            </button>
+                        @elseif($day['filledCount'] === 0 && $isWeekend)
+                            <div class="text-center py-4 text-[10px] text-gray-400 italic">Libur</div>
+                        @else
+                            <!-- Shift Pagi -->
+                            <div class="rounded-md bg-gray-50 dark:bg-gray-800/60 p-1 border border-gray-100 dark:border-gray-800">
+                                <div class="text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-0.5 flex items-center gap-1">
+                                    <span>☀️ Pagi</span>
+                                </div>
+                                <div class="space-y-0.5">
+                                    <!-- Pelayanan Pagi -->
+                                    @if($slots['pagi_pelayanan'])
+                                        <div class="text-[10px] bg-emerald-50 text-emerald-900 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800 px-1.5 py-0.5 rounded flex items-center justify-between">
+                                            <span class="truncate font-medium" title="Pelayanan Pagi">{{ $slots['pagi_pelayanan']->pegawaiPst->nama_pegawai ?? '-' }}</span>
+                                            @if($isEditMode)
+                                                <button wire:click="mountAction('deleteJadwal', { id: {{ $slots['pagi_pelayanan']->id }} })" class="text-red-500 hover:text-red-700 ml-1 font-bold">&times;</button>
+                                            @endif
+                                        </div>
+                                    @endif
+
+                                    <!-- Pengaduan Pagi -->
+                                    @if($slots['pagi_pengaduan'])
+                                        <div class="text-[10px] bg-amber-50 text-amber-900 border border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800 px-1.5 py-0.5 rounded flex items-center justify-between">
+                                            <span class="truncate font-medium" title="Pengaduan Pagi">{{ $slots['pagi_pengaduan']->pegawaiPst->nama_pegawai ?? '-' }}</span>
+                                            @if($isEditMode)
+                                                <button wire:click="mountAction('deleteJadwal', { id: {{ $slots['pagi_pengaduan']->id }} })" class="text-red-500 hover:text-red-700 ml-1 font-bold">&times;</button>
+                                            @endif
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <!-- Shift Siang -->
+                            <div class="rounded-md bg-gray-50 dark:bg-gray-800/60 p-1 border border-gray-100 dark:border-gray-800">
+                                <div class="text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-0.5 flex items-center gap-1">
+                                    <span>🌤️ Siang</span>
+                                </div>
+                                <div class="space-y-0.5">
+                                    <!-- Pelayanan Siang -->
+                                    @if($slots['siang_pelayanan'])
+                                        <div class="text-[10px] bg-emerald-50 text-emerald-900 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800 px-1.5 py-0.5 rounded flex items-center justify-between">
+                                            <span class="truncate font-medium" title="Pelayanan Siang">{{ $slots['siang_pelayanan']->pegawaiPst->nama_pegawai ?? '-' }}</span>
+                                            @if($isEditMode)
+                                                <button wire:click="mountAction('deleteJadwal', { id: {{ $slots['siang_pelayanan']->id }} })" class="text-red-500 hover:text-red-700 ml-1 font-bold">&times;</button>
+                                            @endif
+                                        </div>
+                                    @endif
+
+                                    <!-- Pengaduan Siang -->
+                                    @if($slots['siang_pengaduan'])
+                                        <div class="text-[10px] bg-amber-50 text-amber-900 border border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800 px-1.5 py-0.5 rounded flex items-center justify-between">
+                                            <span class="truncate font-medium" title="Pengaduan Siang">{{ $slots['siang_pengaduan']->pegawaiPst->nama_pegawai ?? '-' }}</span>
+                                            @if($isEditMode)
+                                                <button wire:click="mountAction('deleteJadwal', { id: {{ $slots['siang_pengaduan']->id }} })" class="text-red-500 hover:text-red-700 ml-1 font-bold">&times;</button>
+                                            @endif
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
                         @endif
                     </div>
                 </div>
             @endforeach
         </div>
-        
+
         <x-filament-actions::modals />
     </x-filament::card>
 </x-filament-widgets::widget>
