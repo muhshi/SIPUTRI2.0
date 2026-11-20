@@ -144,6 +144,11 @@ chmod +x deploy.sh
 
 ## Changelog
 
+### 2026-11-21
+- **Fix Layout & Styling Kalender Piket (Mobile-Friendly & Bulletproof CSS)**:
+  - Memperbaiki tampilan kalender yang unstyled / runtuh vertikal di browser & mobile dengan menyematkan scoped dedicated CSS terisolasi (grid 7 kolom, styling cell, badge shift, dan tombol aksi) yang mandiri di dalam blade widget tanpa ketergantungan utility CSS eksternal.
+  - Menambahkan container scrollable responsif horizontal (`overflow-x: auto; min-width: 680px; -webkit-overflow-scrolling: touch;`) sehingga kalender bulanan 7 kolom dapat dilihat secara utuh, rapi, dan mudah digeser di smartphone tanpa gepeng atau berantakan.
+
 ### 2026-11-20
 - **Pembaruan Alur & Form Pengaturan Jadwal Piket Petugas PST**:
   - **Matriks Input Harian 4-Slot**: Pengelompokan pengisian jadwal harian dalam satu form ringkas dan intuitif: Shift Pagi (08.00 - 12.00) untuk Petugas Pelayanan & Pengaduan/Disabilitas, serta Shift Siang (12.00 - 15.30) untuk Petugas Pelayanan & Pengaduan/Disabilitas.
