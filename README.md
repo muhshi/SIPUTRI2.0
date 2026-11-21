@@ -145,6 +145,9 @@ chmod +x deploy.sh
 ## Changelog
 
 ### 2026-11-21
+- **Fix & Hardening Styling Login SSO (Bulletproof Scoped CSS & Inline Styles)**:
+  - Menyematkan scoped dedicated CSS dan styling inline pada `login.blade.php` agar komponen antarmuka (tombol hero SSO biru `#005596`, badge logo BPS 34x34px, teks putih tebal, icon arrow, flash alert error/status, serta accordion fallback) tampil rapi, simetris, dan pixel-perfect di semua browser tanpa ketergantungan pada class utilitas Tailwind eksternal atau vendor Filament v5 CSS treeshaking.
+  - Mempercantik kartu login Filament (`.fi-simple-main`) dengan border halus, shadow lembut, serta padding proporsional.
 - **Implementasi Login Tunggal SIPETRA SSO (Single Sign-On BPS Kab. Demak)**:
   - **Custom Filament Login Page**: Antarmuka autentikasi modern berbasis SIPETRA SSO dengan tombol heroik single-button biru BPS (`#005596`), badge logo BPS putih, feedback interaktif saat diklik ("Menghubungkan ke SIPETRA..."), SVG spinner, serta pencegahan klik ganda.
   - **Akses Darurat / Pengembang**: Accordion tersembunyi interaktif (Alpine.js) untuk form login email/password bawaan Filament, aktif otomatis jika parameter URL `?fallback=1` disertakan.
