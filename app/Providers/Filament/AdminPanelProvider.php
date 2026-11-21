@@ -34,7 +34,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(\App\Filament\Pages\Auth\Login::class)
             ->userMenuItems([
                 MenuItem::make()
                     ->label('Profil & Password (SIPETRA)')
@@ -143,10 +143,6 @@ class AdminPanelProvider extends PanelProvider
                         border-right: 1px solid rgba(0, 0, 0, 0.02) !important;
                     }
                 </style>',
-            )
-            ->renderHook(
-                PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
-                fn (): string => Blade::render('@include("auth.sso-button")'),
             )
             ->authMiddleware([
                 Authenticate::class,

@@ -145,6 +145,12 @@ chmod +x deploy.sh
 ## Changelog
 
 ### 2026-11-21
+- **Implementasi Login Tunggal SIPETRA SSO (Single Sign-On BPS Kab. Demak)**:
+  - **Custom Filament Login Page**: Antarmuka autentikasi modern berbasis SIPETRA SSO dengan tombol heroik single-button biru BPS (`#005596`), badge logo BPS putih, feedback interaktif saat diklik ("Menghubungkan ke SIPETRA..."), SVG spinner, serta pencegahan klik ganda.
+  - **Akses Darurat / Pengembang**: Accordion tersembunyi interaktif (Alpine.js) untuk form login email/password bawaan Filament, aktif otomatis jika parameter URL `?fallback=1` disertakan.
+  - **Pembersihan Auth Legacy**: Menghapus render hook lama `PanelsRenderHook::AUTH_LOGIN_FORM_AFTER` dan view legacy `sso-button.blade.php`, serta memastikan registrasi lokal mandiri tetap nonaktif.
+  - **Penanganan Callback SSO Terproteksi**: Redirect error callback diarahkan aman ke `filament.admin.auth.login` disertai flash session error (anti-infinite loop), auto-provisioning akun baru dengan role default `Pegawai`, dan auto-linking ke petugas PST yang relevan.
+  - **Harmonisasi Halaman Manajemen Profil/Pengguna**: Penambahan helper text edukatif pada input password bahwa kredensial dan sandi utama dikelola terpusat di SIPETRA SSO.
 - **Fix Layout & Styling Kalender Piket (Mobile-Friendly & Bulletproof CSS)**:
   - Memperbaiki tampilan kalender yang unstyled / runtuh vertikal di browser & mobile dengan menyematkan scoped dedicated CSS terisolasi (grid 7 kolom, styling cell, badge shift, dan tombol aksi) yang mandiri di dalam blade widget tanpa ketergantungan utility CSS eksternal.
   - Menambahkan container scrollable responsif horizontal (`overflow-x: auto; min-width: 680px; -webkit-overflow-scrolling: touch;`) sehingga kalender bulanan 7 kolom dapat dilihat secara utuh, rapi, dan mudah digeser di smartphone tanpa gepeng atau berantakan.

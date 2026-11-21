@@ -33,7 +33,8 @@ class UserForm
                     ->dehydrateStateUsing(fn(string $state): string => Hash::make($state))
                     ->dehydrated(fn(?string $state): bool => filled($state))
                     ->required(fn(string $operation): bool => $operation === 'create')
-                    ->rule(Password::default()),
+                    ->rule(Password::default())
+                    ->helperText('Kredensial dan kata sandi utama pegawai dikelola secara terpusat di SIPETRA SSO. Password lokal ini hanya berfungsi sebagai akses darurat/pengembang jika server SSO tidak dapat diakses.'),
 
                 TextInput::make('nip')
                     ->label('NIP')
