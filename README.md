@@ -144,6 +144,14 @@ chmod +x deploy.sh
 
 ## Changelog
 
+### 2026-11-23
+- **Fix Tampilan Dashboard & Ukuran Foto Petugas Piket (Anti-Overflow & Bulletproof CSS)**:
+  - Memperbaiki gambar foto petugas piket yang sebelumnya tampil penuh satu layar dan merusak layout dashboard karena ketiadaan styling bawaan untuk class Tailwind pada Filament standalone CSS.
+  - Menerapkan pembatasan ukuran avatar petugas yang aman dan terkunci (48x48px circle, `object-fit: cover`, `border-radius: 9999px`) menggunakan kombinasi atribut HTML `width/height`, inline styles, class avatar Filament, dan wrapper berpelindung overflow.
+  - Memperbaiki layout kartu petugas piket menjadi grid responsif modern (1 kolom mobile, 2 kolom desktop) dengan styling kartu, avatar fallback inisial nama, teks elipsis rapi untuk nama/NIP/jabatan, serta badge jenis piket, shift, dan status presensi yang proporsional.
+  - Menambahkan global safeguard rule pada `AdminPanelProvider` agar seluruh gambar dan avatar dalam widget/section Filament tidak dapat meluap melebihi batas kontainernya.
+  - Merapikan spacing vertikal dan container header laporan statistik pada halaman dashboard.
+
 ### 2026-11-21
 - **Fix & Hardening Styling Login SSO (Bulletproof Scoped CSS & Inline Styles)**:
   - Menyematkan scoped dedicated CSS dan styling inline pada `login.blade.php` agar komponen antarmuka (tombol hero SSO biru `#005596`, badge logo BPS 34x34px, teks putih tebal, icon arrow, flash alert error/status, serta accordion fallback) tampil rapi, simetris, dan pixel-perfect di semua browser tanpa ketergantungan pada class utilitas Tailwind eksternal atau vendor Filament v5 CSS treeshaking.

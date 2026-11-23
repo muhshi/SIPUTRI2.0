@@ -142,6 +142,25 @@ class AdminPanelProvider extends PanelProvider
                         backdrop-filter: blur(10px) !important;
                         border-right: 1px solid rgba(0, 0, 0, 0.02) !important;
                     }
+
+                    /* 7. SAFEGUARD: Avatar & Images inside widgets */
+                    .fi-wi-widget img,
+                    .fi-section img {
+                        max-width: 100%;
+                    }
+                    .piket-avatar-img,
+                    .piket-avatar-wrap img {
+                        width: 48px !important;
+                        height: 48px !important;
+                        min-width: 48px !important;
+                        min-height: 48px !important;
+                        max-width: 48px !important;
+                        max-height: 48px !important;
+                        border-radius: 9999px !important;
+                        object-fit: cover !important;
+                        object-position: center !important;
+                        display: block !important;
+                    }
                 </style>',
             )
             ->authMiddleware([

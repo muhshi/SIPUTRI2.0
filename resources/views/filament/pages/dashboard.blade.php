@@ -31,7 +31,7 @@
         <x-filament-widgets::widgets :widgets="$topStats" :columns="$this->getColumns()" />
     @endif
 
-    <div class="mt-6">
+    <div class="mt-6" style="margin-top: 1.5rem;">
         @livewire(\App\Filament\Widgets\PetugasPiketHariIniWidget::class)
     </div>
 
@@ -40,12 +40,12 @@
     @endif
 
     @if (!empty($charts))
-        <div id="chart-report-section" class="mt-8 space-y-8">
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div id="chart-report-section" class="mt-8 space-y-8" style="margin-top: 2rem;">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6" style="background-color: #ffffff; border-radius: 20px; border: 1px solid #e5e7eb; padding: 1.5rem; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.05); margin-bottom: 1.5rem;">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
                     <div>
-                        <h2 class="text-2xl font-semibold text-gray-900">Laporan Statistik</h2>
-                        <p class="text-gray-500 text-sm mt-1">Ringkasan data triwulan dalam format PNG.</p>
+                        <h2 class="text-2xl font-semibold text-gray-900" style="font-size: 1.5rem; font-weight: 600; color: #111827; margin: 0;">Laporan Statistik</h2>
+                        <p class="text-gray-500 text-sm mt-1" style="font-size: 0.875rem; color: #6b7280; margin: 0.25rem 0 0 0;">Ringkasan data triwulan dalam format PNG.</p>
                     </div>
                     <x-filament::button type="button" color="primary" icon="heroicon-o-arrow-down-tray" onclick="downloadChartReport()">
                         Download PNG
