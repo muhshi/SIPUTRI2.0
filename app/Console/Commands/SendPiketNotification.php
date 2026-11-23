@@ -25,8 +25,9 @@ class SendPiketNotification extends Command
             return;
         }
 
-        $apiUrl = env('OPENWA_API_URL', 'http://localhost:3000');
-        $sessionId = env('OPENWA_SESSION_ID', 'bot-piket');
+        $apiUrl = config('services.openwa.url', env('OPENWA_API_URL', 'http://openwa-api:2785'));
+        $sessionId = config('services.openwa.session_id', env('OPENWA_SESSION_ID', 'wa-dspot-pst'));
+        $apiKey = config('services.openwa.api_key', env('OPENWA_API_KEY'));
 
         foreach ($jadwals as $jadwal) {
             $pegawai = $jadwal->pegawaiPst;
@@ -68,7 +69,12 @@ class SendPiketNotification extends Command
             $pesan .= "Mohon laksanakan tugas dengan baik. Terima kasih!";
 
             try {
-                $response = \Illuminate\Support\Facades\Http::post("{$apiUrl}/api/sessions/{$sessionId}/messages/send-text", [
+                $req = \Illuminate\Support\Facades\Http::timeout(5);
+                if ($apiKey) {
+                    $req->withHeaders(['X-API-Key' => $apiKey]);
+                }
+
+                $response = $req->post("{$apiUrl}/api/sessions/{$sessionId}/messages/send-text", [
                     'chatId' => $chatId,
                     'text' => $pesan,
                 ]);

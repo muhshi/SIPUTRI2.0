@@ -43,4 +43,10 @@ return [
         'scopes' => ['identity_pegawai:read', 'employee:read', 'contact:read', 'roles:read'],
     ],
 
+    'openwa' => [
+        'url' => env('OPENWA_API_URL', 'http://openwa-api:2785'),
+        'session_id' => env('OPENWA_SESSION_ID', 'wa-dspot-pst'),
+        'api_key' => env('OPENWA_API_KEY'),
+    ],
+
 ];

@@ -145,6 +145,10 @@ chmod +x deploy.sh
 ## Changelog
 
 ### 2026-11-23
+- **Konfigurasi & Integrasi OpenWA Gateway untuk Notifikasi WhatsApp**:
+  - Menambahkan konfigurasi layanan OpenWA (`OPENWA_API_URL`, `OPENWA_SESSION_ID`, `OPENWA_API_KEY`) ke dalam `config/services.php`.
+  - Memperbarui command `piket:notify` (`SendPiketNotification`) dan `JadwalPiketService` untuk mendukung header otentikasi `X-API-Key` dan pembacaan konfigurasi yang aman dari config cache.
+  - Memperbarui kredensial OpenWA di server production dan memverifikasi pengiriman push notifikasi WhatsApp via OpenWA session `wa-dspot-pst`.
 - **Fix Tampilan Dashboard & Ukuran Foto Petugas Piket (Anti-Overflow & Bulletproof CSS)**:
   - Memperbaiki gambar foto petugas piket yang sebelumnya tampil penuh satu layar dan merusak layout dashboard karena ketiadaan styling bawaan untuk class Tailwind pada Filament standalone CSS.
   - Menerapkan pembatasan ukuran avatar petugas yang aman dan terkunci (48x48px circle, `object-fit: cover`, `border-radius: 9999px`) menggunakan kombinasi atribut HTML `width/height`, inline styles, class avatar Filament, dan wrapper berpelindung overflow.

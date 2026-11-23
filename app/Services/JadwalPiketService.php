@@ -191,9 +191,9 @@ class JadwalPiketService
         $pesan = "Halo *{$pegawai->nama_pegawai}*,\n\nAnda telah dijadwalkan untuk piket pada:\n📅 Tanggal: {$tanggalFormat}\n🏢 Bagian: {$jadwal->jenis_piket}\n⏰ Shift: {$jadwal->shift}\n\nTerima kasih.\n_Sistem SIPUTRI2.0_";
 
         try {
-            $apiUrl = env('OPENWA_API_URL', 'http://localhost:3000');
-            $sessionId = env('OPENWA_SESSION_ID', 'bot-piket');
-            $apiKey = env('OPENWA_API_KEY');
+            $apiUrl = config('services.openwa.url', env('OPENWA_API_URL', 'http://openwa-api:2785'));
+            $sessionId = config('services.openwa.session_id', env('OPENWA_SESSION_ID', 'wa-dspot-pst'));
+            $apiKey = config('services.openwa.api_key', env('OPENWA_API_KEY'));
 
             $req = Http::timeout(5);
             if ($apiKey) {
@@ -209,7 +209,7 @@ class JadwalPiketService
                 $jadwal->update(['is_notified' => true]);
             }
         } catch (\Throwable $e) {
-            // Log or ignore network error for WA
+            \Illuminate\Support\Facades\Log::error('Gagal mengirim WhatsApp JadwalPiket: ' . $e->getMessage());
         }
     }
 }
